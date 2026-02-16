@@ -1,0 +1,65 @@
+name: Build Mobilizon Release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: "1.15"
+          otp-version: "26"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential curl unzip openssl git cmake file
+
+      - name: Install Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: Install Hex and Rebar
+        run: |
+          mix local.hex --force
+          mix local.rebar --force
+
+      - name: Fetch deps
+        run: mix deps.get
+
+      - name: Compile
+        run: MIX_ENV=prod mix compile
+
+      - name: Build assets
+        run: |
+          npm install
+          npm run build
+
+      - name: Create a digest of the static assets
+        run: MIX_ENV=prod mix phx.digest
+
+      - name: Build release
+        run: |
+          MIX_ENV=prod mix release
+
+      - name: Package release
+        run: |
+          cd _build/prod/rel
+          tar czf mobilizon-release.tar.gz mobilizon
+
+      - name: Upload release
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobilizon-release
+          path: _build/prod/rel/mobilizon-release.tar.gz
+
