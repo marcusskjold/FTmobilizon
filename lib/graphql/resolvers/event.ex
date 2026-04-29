@@ -281,8 +281,8 @@ defmodule Mobilizon.GraphQL.Resolvers.Event do
            {:organizer_group_member, organizer_group_member?(args)},
          args_with_organizer <-
            args |> Map.put(:organizer_actor, organizer_actor) |> extract_timezone(user.id),
-         {:askismet, :ham} <-
-           {:askismet,
+         {:anti_spam, :ham} <-
+           {:anti_spam,
             AntiSpam.service().check_event(
               args.description,
               organizer_actor.preferred_username,
@@ -318,7 +318,7 @@ defmodule Mobilizon.GraphQL.Resolvers.Event do
            "Organizer profile doesn't have permission to create an event on behalf of this group"
          )}
 
-      {:askismet, _} ->
+      {:anti_spam, _} ->
         {:error,
          dgettext(
            "errors",

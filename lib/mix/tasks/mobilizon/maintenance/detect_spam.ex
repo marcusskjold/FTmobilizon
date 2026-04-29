@@ -39,7 +39,7 @@ defmodule Mix.Tasks.Mobilizon.Maintenance.DetectSpam do
     start_mobilizon()
 
     unless anti_spam().ready?() do
-      shell_error("Akismet is missing an API key in the configuration")
+      shell_error("Anti-spam module is not ready: maybe missing an API key in the configuration?")
     end
 
     anonymous_actor_id = Config.anonymous_actor_id()
@@ -155,7 +155,7 @@ defmodule Mix.Tasks.Mobilizon.Maintenance.DetectSpam do
       %{
         reported_id: organizer_actor_id,
         reporter_id: Keyword.fetch!(options, :anonymous_actor_id),
-        content: "This is an automatic report issued by Akismet"
+        content: "This is an automatic report issued by the Anti-Spam module"
       },
       Keyword.get(options, :forward_reports, false)
     )
@@ -177,7 +177,7 @@ defmodule Mix.Tasks.Mobilizon.Maintenance.DetectSpam do
         reported_id: organizer_actor_id,
         reporter_id: Keyword.fetch!(options, :anonymous_actor_id),
         event_id: event_id,
-        content: "This is an automatic report issued by Akismet"
+        content: "This is an automatic report issued by the Anti-Spam module"
       },
       Keyword.get(options, :forward_reports, false)
     )
