@@ -5,6 +5,7 @@ defmodule Mobilizon.Service.AntiSpam.Provider do
   ## Supported backends
 
     * `Mobilizon.Service.AntiSpam.Akismet` [🔗](https://akismet.com/)
+    * `Mobilizon.Service.AntiSpam.Keyword` (a simple keyword-based provider)
 
   """
 
