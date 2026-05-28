@@ -81,7 +81,7 @@ jobs:
           if [[ "$GITHUB_REF" == refs/tags/* ]]; then
             FILENAME="mobilizon-${REF}.tar.gz"
           else
-            SHORT_SHA=$(git rev-parse --short HEAD)
+            SHORT_SHA=${GITHUB_SHA::7}
             FILENAME="mobilizon-${VERSION}-ftdev-${SHORT_SHA}.tar.gz"
           fi
           echo "filename=$FILENAME" >> "$GITHUB_OUTPUT"

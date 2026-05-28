@@ -13,6 +13,17 @@
 
 BUILD_DIR="/git/floortips_build"
 
+# Unset GIT_DIR and GIT_WORK_TREE so git commands inside the worktree
+# do not inherit the bare repo context from the push environment.
+unset GIT_DIR GIT_WORK_TREE
+
+# Source shell profiles and common tool paths so act, mix, node, etc. are found.
+# (Non-interactive shells do not read .bashrc/.profile by default.)
+export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH"
+for rc in "$HOME/.bashrc" "$HOME/.profile" "$HOME/.bash_profile"; do
+  [ -f "$rc" ] && source "$rc"
+done
+
 log() {
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"
 }
