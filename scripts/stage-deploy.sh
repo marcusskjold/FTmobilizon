@@ -28,6 +28,6 @@ echo "==> Extracted $(ls "${DEPLOY_DIR}/releases/"/*.tar.gz)"
 
 echo "==> Deploying to staging..."
 cd "$DEPLOY_DIR"
-ansible-playbook -i inv/staging upgrade.yml
+ansible-playbook -i inv/staging.yml upgrade.yml
 
 echo "==> Staging deploy complete."
