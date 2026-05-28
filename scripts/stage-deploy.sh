@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# stage-deploy.sh — build ftdev via act and deploy to staging.
+# stage-deploy.sh — build ftdev via act, archive to freezer, and deploy to staging.
 # Runs on the server inside /git/floortips_build.
 
 BUILD_DIR="/git/floortips_build"
