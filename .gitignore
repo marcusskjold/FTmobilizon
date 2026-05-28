@@ -1,5 +1,6 @@
 # floor.tips
 .artifacts/*
+.build_version
 
 # App artifacts
 /_build

@@ -4,14 +4,18 @@ defmodule Mobilizon.Service.GitStatus do
   """
   require Logger
 
-  @commit (case System.cmd("git", ["describe", "--tags", "--dirty"]) do
-             {hash, 0} ->
-               String.trim(hash)
+  @commit (if File.exists?(".build_version") do
+             File.read!(".build_version") |> String.trim()
+           else
+             case System.cmd("git", ["describe", "--tags", "--dirty"]) do
+               {hash, 0} ->
+                 String.trim(hash)
 
-             _ ->
-               # Fallback on Mix version
-               Logger.warning("Could not read git commit hash, using Mix version code instead.")
-               Mix.Project.config()[:version]
+               _ ->
+                 # Fallback on Mix version
+                 Logger.warning("Could not read git commit hash, using Mix version code instead.")
+                 Mix.Project.config()[:version]
+             end
            end)
 
   @doc """
