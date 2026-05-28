@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# post-receive hook for /git/floortips.git
+#
+# Setup (run once on server):
+#   cd /git/floortips.git
+#   git worktree add /git/floortips_build ftdev
+#   cp server/post-receive /git/floortips.git/hooks/post-receive
+#   chmod +x /git/floortips.git/hooks/post-receive
+#
+# /git/floortips_build is a proper git worktree linked to the bare repo.
+# It has a normal .git file, so git commands and act work as expected.
+
+BUILD_DIR="/git/floortips_build"
+
+log() {
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"
+}
+
+while read OLDREV NEWREV REFNAME; do
+  log "Received $REFNAME ($OLDREV → $NEWREV)"
+
+  # Branch push: ftdev → reset worktree to new commit and deploy
+  if [ "$REFNAME" = "refs/heads/ftdev" ]; then
+    log "Updating ${BUILD_DIR} to ${NEWREV}"
+    cd "$BUILD_DIR"
+    git reset --hard "$NEWREV"
+
+    log "Running staging deploy..."
+    ./scripts/stage-deploy.sh
+    continue
+  fi
+
+  # Tag push: custom release → detached checkout and build artifact
+  if [[ "$REFNAME" == refs/tags/* ]]; then
+    TAG="${REFNAME#refs/tags/}"
+    if echo "$TAG" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+(-[^-]+)?-ft\.[0-9]+$'; then
+      log "Checking out tag ${TAG} → ${BUILD_DIR}"
+      cd "$BUILD_DIR"
+      git checkout -f "$TAG"
+
+      log "Building release ${TAG}..."
+      ./scripts/build-release.sh "$TAG"
+      continue
+    fi
+  fi
+done

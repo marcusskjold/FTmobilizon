@@ -2,7 +2,11 @@ name: Build Mobilizon Release
 
 on:
   push:
-    branches: [ main ]
+    branches: [ftdev]
+    tags: ["v*"]
+
+env:
+  MIX_ENV: prod
 
 jobs:
   build:
@@ -29,6 +33,24 @@ jobs:
         with:
           node-version: 20
 
+      - name: Restore Mix deps cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            deps
+            _build
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-
+
+      - name: Restore Node modules cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install Hex and Rebar
         run: |
           mix local.hex --force
@@ -38,7 +60,7 @@ jobs:
         run: mix deps.get
 
       - name: Compile
-        run: MIX_ENV=prod mix compile
+        run: mix compile
 
       - name: Build assets
         run: |
@@ -46,20 +68,42 @@ jobs:
           npm run build
 
       - name: Create a digest of the static assets
-        run: MIX_ENV=prod mix phx.digest
+        run: mix phx.digest
 
       - name: Build release
+        run: mix release
+
+      - name: Set release filename
+        id: vars
         run: |
-          MIX_ENV=prod mix release
+          VERSION=$(grep '@version ' mix.exs | head -1 | sed 's/.*"\(.*\)".*/\1/')
+          REF=${GITHUB_REF_NAME}
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            FILENAME="mobilizon-${REF}.tar.gz"
+          else
+            SHORT_SHA=$(git rev-parse --short HEAD)
+            FILENAME="mobilizon-${VERSION}-ftdev-${SHORT_SHA}.tar.gz"
+          fi
+          echo "filename=$FILENAME" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Package release
         run: |
           cd _build/prod/rel
-          tar czf mobilizon-release.tar.gz mobilizon
+          tar czf ${{ steps.vars.outputs.filename }} mobilizon
 
-      - name: Upload release
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: mobilizon-release
-          path: _build/prod/rel/mobilizon-release.tar.gz
+          path: _build/prod/rel/${{ steps.vars.outputs.filename }}
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: _build/prod/rel/${{ steps.vars.outputs.filename }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
