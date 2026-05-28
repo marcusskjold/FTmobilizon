@@ -14,6 +14,8 @@ echo "==> Running act build..."
 
 echo "==> Extracting artifact..."
 mkdir -p "${DEPLOY_DIR}/releases"
+FREEZER_DIR="/freezer/2/FT/builds"
+mkdir -p "${FREEZER_DIR}"
 
 # act stores uploaded artifacts under .artifacts/{run}/{name}/{name}.zip
 ZIP=$(find .artifacts -name 'mobilizon-release.zip' -type f | sort | tail -1)
@@ -28,6 +30,12 @@ echo "==> Extracted $(ls "${DEPLOY_DIR}/releases/"/*.tar.gz)"
 
 # Copy the zip itself — the Ansible playbook stats this file for updates
 cp "$ZIP" "${DEPLOY_DIR}/releases/mobilizon-release.zip"
+
+# Archive the build in the freezer for rollback / production selection
+TARBALL=$(ls -t "${DEPLOY_DIR}/releases/"/*.tar.gz | head -1)
+cp "$TARBALL" "${FREEZER_DIR}/"
+ln -sf "$(basename "$TARBALL")" "${FREEZER_DIR}/latest.tar.gz"
+echo "==> Build archived to ${FREEZER_DIR}/$(basename "$TARBALL")"
 
 echo "==> Deploying to staging..."
 cd "$DEPLOY_DIR"

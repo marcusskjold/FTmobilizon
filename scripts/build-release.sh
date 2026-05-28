@@ -31,5 +31,15 @@ fi
 
 unzip -j -o "$ZIP" -d "${DEPLOY_DIR}/releases/"
 cp "$ZIP" "${DEPLOY_DIR}/releases/mobilizon-release.zip"
-echo "==> Release built and saved:"
+
+# Archive the build in the freezer for rollback / production selection
+FREEZER_DIR="/freezer/2/FT/builds"
+mkdir -p "${FREEZER_DIR}"
+TARBALL=$(ls -t "${DEPLOY_DIR}/releases/"/*.tar.gz | head -1)
+cp "$TARBALL" "${FREEZER_DIR}/"
+ln -sf "$(basename "$TARBALL")" "${FREEZER_DIR}/latest.tar.gz"
+echo "==> Release built and archived:"
 ls -la "${DEPLOY_DIR}/releases/"/*.tar.gz
+echo "==> Freezer:"
+ls -la "${FREEZER_DIR}/"*.tar.gz
+ls -la "${FREEZER_DIR}/latest.tar.gz"
