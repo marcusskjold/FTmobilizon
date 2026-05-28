@@ -68,6 +68,8 @@ describe("AddressInfo", () => {
     });
     await wrapper.vm.$nextTick();
     await flushPromises();
-    expect(htmlRemoveId(wrapper.html())).toMatchSnapshot();
+    expect(
+      htmlRemoveId(wrapper.html().replace("(UTC+0)", "(UTC)"))
+    ).toMatchSnapshot();
   });
 });

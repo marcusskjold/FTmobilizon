@@ -1,7 +1,7 @@
 defimpl Mobilizon.Service.Metadata, for: Mobilizon.Discussions.Comment do
-  alias PhoenixHTMLHelpers.Tag
   alias Mobilizon.Actors.Actor
   alias Mobilizon.Discussions.Comment
+  alias PhoenixHTMLHelpers.Tag
   import Mobilizon.Service.Metadata.Utils, only: [escape_text: 1]
 
   @spec build_tags(Comment.t(), String.t()) :: list(Phoenix.HTML.safe())

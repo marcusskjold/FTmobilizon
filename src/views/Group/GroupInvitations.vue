@@ -212,7 +212,7 @@ import {
   GROUP_INVITATIONS_CREATE,
   GROUP_INVITATIONS_UPDATE,
 } from "@/graphql/invitations";
-import { usernameWithDomain, displayName, IGroup } from "@/types/actor";
+import { usernameWithDomain, displayName } from "@/types/actor";
 import { useHead } from "@/utils/head";
 import { useI18n } from "vue-i18n";
 import { useMutation, useQuery } from "@vue/apollo-composable";
@@ -222,7 +222,7 @@ import { IInvitation } from "@/types/actor/invitation.model";
 import { useCurrentActorClient } from "@/composition/apollo/actor";
 import ShareModal from "@/components/Share/ShareModal.vue";
 import { IMember } from "@/types/actor/member.model";
-import { GROUP_MEMBERS, INVITE_MEMBER } from "@/graphql/member";
+import { INVITE_MEMBER } from "@/graphql/member";
 import { Dialog } from "@/plugins/dialog";
 
 const { t } = useI18n({ useScope: "global" });
@@ -284,7 +284,7 @@ onInviteMemberDone(() => {
 const inviteMember = async (): Promise<void> => {
   inviteMemberMutation({
     groupId: group.value?.id,
-    targetActorUsername: newMemberUsername.value,
+    targetActorUsername: newMemberUsername.value.toLowerCase(),
   });
 };
 
@@ -440,6 +440,6 @@ const triggerShare = (url: string): void => {
       url: url,
     })
     .then(() => console.debug("Successful share"))
-    .catch((error: any) => console.debug("Error sharing", error));
+    .catch((error) => console.debug("Error sharing", error));
 };
 </script>

@@ -82,9 +82,9 @@ export class Address implements IAddress {
 
 export function addressToPoiInfos(address: IAddress): IPoiInfo {
   /* generate name corresponding to poi type */
-  let name = "";
-  let alternativeName = "";
-  let poiIcon: IPOIIcon = poiIcons.default;
+  let name;
+  let alternativeName;
+  let poiIcon: IPOIIcon;
   let addressType = address.type;
   // Google Maps doesn't have a type
   if (address.type == null && address.description === address.street) {

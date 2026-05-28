@@ -92,6 +92,8 @@ export const UNBAN_ACCOUNT_AS_MODERATOR = gql`
   }
 `;
 
+// This GraphQL request is never sent to the server
+// @client means only in the Apollo local cache
 export const CURRENT_USER_CLIENT = gql`
   query CurrentUserClient {
     currentUser @client {
@@ -103,6 +105,8 @@ export const CURRENT_USER_CLIENT = gql`
   }
 `;
 
+// This GraphQL request is never sent to the server
+// @client means only in the Apollo local cache
 export const UPDATE_CURRENT_USER_CLIENT = gql`
   mutation UpdateCurrentUser(
     $id: String

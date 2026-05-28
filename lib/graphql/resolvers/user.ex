@@ -11,7 +11,7 @@ defmodule Mobilizon.GraphQL.Resolvers.User do
   alias Mobilizon.Service.AntiSpam
   alias Mobilizon.Service.Auth.Authenticator
   alias Mobilizon.Service.Statistics
-  alias Mobilizon.Storage.{Page, Repo}
+  alias Mobilizon.Storage.Page
   alias Mobilizon.Users.{Setting, User}
 
   alias Mobilizon.Web.{Auth, Email}

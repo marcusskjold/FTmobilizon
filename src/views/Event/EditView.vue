@@ -13,7 +13,10 @@
     <form ref="form">
       <h2>{{ t("General information") }}</h2>
 
-      <o-field :label="t('Headline picture')">
+      <div v-if="onFetchEventLoading" class="h-24 relative">
+        <o-loading :active="true" :full-page="false" />
+      </div>
+      <o-field v-else :label="t('Headline picture')">
         <picture-upload
           v-model:modelValue="pictureFile"
           :textFallback="t('Headline picture')"
@@ -337,7 +340,7 @@
           :label="t('Number of places')"
           v-show="registerOption === RegisterOption.MOBILIZON"
         >
-          <o-switch v-model="limitedPlaces">{{
+          <o-switch v-model="limitedPlaces" :disabled="onFetchEventLoading">{{
             t("Limited number of places")
           }}</o-switch>
         </o-field>
@@ -557,6 +560,7 @@
             expanded
             variant="text"
             @click="confirmGoBack"
+            :loading="saving || onFetchEventLoading"
             class="dark:!text-black ml-auto"
             >{{ t("Cancel") }}</o-button
           >
@@ -569,14 +573,14 @@
             outlined
             @click="createOrUpdateDraft"
             :disabled="saving"
-            :loading="saving"
+            :loading="saving || onFetchEventLoading"
             >{{ t("Save draft") }}</o-button
           >
           <o-button
             expanded
             variant="primary"
             :disabled="saving"
-            :loading="saving"
+            :loading="saving || onFetchEventLoading"
             @click="createOrUpdatePublish"
             @keyup.enter="createOrUpdatePublish"
           >
@@ -643,7 +647,9 @@ import RouteName from "@/router/name";
 import "intersection-observer";
 import {
   ApolloCache,
+  ApolloError,
   FetchResult,
+  InMemoryCache,
   InternalRefetchQueriesInclude,
 } from "@apollo/client/core";
 import cloneDeep from "lodash/cloneDeep";
@@ -825,8 +831,6 @@ onMounted(async () => {
     observer.value.observe(bottomObserver.value);
   }
 
-  pictureFile.value = await buildFileFromIMedia(event.value.picture);
-  limitedPlaces.value = eventOptions.value.maximumAttendeeCapacity > 0;
   if (!(props.isUpdate || props.isDuplicate)) {
     initializeNewEvent();
   } else {
@@ -876,10 +880,8 @@ const {
   onDone: onCreateEventMutationDone,
   onError: onCreateEventMutationError,
 } = useMutation<{ createEvent: IEvent }>(CREATE_EVENT, () => ({
-  update: (
-    store: ApolloCache<{ createEvent: IEvent }>,
-    { data: updatedData }: FetchResult
-  ) => postCreateOrUpdate(store, updatedData?.createEvent),
+  update: (store, { data: updatedData }: FetchResult) =>
+    postCreateOrUpdate(store, updatedData?.createEvent),
   refetchQueries: ({ data: updatedData }: FetchResult) =>
     postRefetchQueries(updatedData?.createEvent),
 }));
@@ -921,10 +923,8 @@ const {
   onDone: onEditEventMutationDone,
   onError: onEditEventMutationError,
 } = useMutation(EDIT_EVENT, () => ({
-  update: (
-    store: ApolloCache<{ updateEvent: IEvent }>,
-    { data: updatedData }: FetchResult
-  ) => postCreateOrUpdate(store, updatedData?.updateEvent),
+  update: (store, { data: updatedData }: FetchResult) =>
+    postCreateOrUpdate(store, updatedData?.updateEvent),
   refetchQueries: ({ data }: FetchResult) =>
     postRefetchQueries(data?.updateEvent),
 }));
@@ -987,40 +987,40 @@ const updateEventMessage = computed((): string => {
 
 const notifier = inject<Notifier>("notifier");
 
-const handleError = (err: any) => {
+const handleError = (err: ApolloError) => {
   console.error(err);
 
-  if (err.graphQLErrors !== undefined) {
-    err.graphQLErrors.forEach(
-      ({
-        message,
-        field,
-      }: {
-        message: string | { slug?: string[] }[];
-        field: string;
-      }) => {
-        if (
-          field === "tags" &&
-          Array.isArray(message) &&
-          message.some((msg) => msg.slug)
-        ) {
-          const finalMsg = message.find((msg) => msg.slug?.[0]);
-          notifier?.error(
-            t("Error while adding tag: {error}", { error: finalMsg?.slug?.[0] })
-          );
-        } else if (typeof message === "string") {
-          notifier?.error(message);
-        }
-      }
-    );
-  }
+  err.graphQLErrors.forEach((gqlError) => {
+    const { message, extensions } = gqlError;
+
+    const field = extensions?.field;
+    const details = extensions?.message;
+
+    if (
+      field === "tags" &&
+      Array.isArray(details) &&
+      details.some((msg) => msg?.slug)
+    ) {
+      const finalMsg = details.find((msg) => msg?.slug?.[0]);
+      notifier?.error(
+        t("Error while adding tag: {error}", {
+          error: finalMsg?.slug?.[0],
+        })
+      );
+    } else if (typeof message === "string") {
+      notifier?.error(message);
+    }
+  });
 };
 
 /**
  * Put in cache the updated or created event.
  * If the event is not a draft anymore, also put in cache the participation
  */
-const postCreateOrUpdate = (store: any, updatedEvent: IEvent) => {
+const postCreateOrUpdate = (
+  store: ApolloCache<InMemoryCache>,
+  updatedEvent: IEvent
+) => {
   const resultEvent: IEvent = { ...updatedEvent };
   if (!updatedEvent.draft) {
     store.writeQuery({
@@ -1163,7 +1163,10 @@ const hideParticipants = computed({
     return event.value?.options.hideNumberOfParticipants;
   },
   set(value: boolean) {
-    event.value.options.hideNumberOfParticipants = value;
+    event.value.options = {
+      ...event.value.options,
+      hideNumberOfParticipants: value,
+    };
   },
 });
 
@@ -1465,9 +1468,11 @@ const maximumAttendeeCapacity = computed({
   },
 });
 
-const { event: fetchedEvent, onResult: onFetchEventResult } = useFetchEvent(
-  eventId.value
-);
+const {
+  event: fetchedEvent,
+  onResult: onFetchEventResult,
+  loading: onFetchEventLoading,
+} = useFetchEvent(eventId.value);
 
 // update the date components if the event changed (after fetching it, for example)
 watch(event, () => {
@@ -1492,10 +1497,12 @@ watch(
   { immediate: true }
 );
 
-onFetchEventResult((result) => {
-  if (!result.loading && result.data?.event) {
-    event.value = { ...result.data?.event };
-  }
+onFetchEventResult(async (result) => {
+  if (result.loading || !result.data?.event) return;
+
+  event.value = { ...result.data?.event };
+  limitedPlaces.value = eventOptions.value.maximumAttendeeCapacity > 0;
+  pictureFile.value = await buildFileFromIMedia(event.value.picture);
 });
 
 const groupFederatedUsername = computed(() =>

@@ -182,19 +182,6 @@ export const eventMetaDataList: IEventMetadataDescription[] = [
     category: EventMetadataCategories.TOOLS,
   },
   {
-    icon: "twitter",
-    key: "mz:social:twitter:account",
-    label: t("Twitter account") as string,
-    description: t(
-      "A twitter account handle to follow for event updates"
-    ) as string,
-    value: "",
-    placeholder: "@JoinMobilizon",
-    type: EventMetadataType.STRING,
-    keyType: EventMetadataKeyType.HANDLE,
-    category: EventMetadataCategories.SOCIAL,
-  },
-  {
     icon: "mz:icon:fediverse",
     key: "mz:social:fediverse:account_url",
     label: t("Fediverse account") as string,

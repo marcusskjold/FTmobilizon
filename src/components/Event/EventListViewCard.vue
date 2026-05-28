@@ -38,7 +38,7 @@
         <Lock v-if="event.visibility === EventVisibility.PRIVATE" />
       </span>
       <span>
-        <span v-if="event.options.maximumAttendeeCapacity !== 0">
+        <span v-if="event.options.maximumAttendeeCapacity">
           {{
             $t("{approved} / {total} seats", {
               approved: event.participantStats.participant,

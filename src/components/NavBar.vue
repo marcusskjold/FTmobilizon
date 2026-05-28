@@ -145,16 +145,8 @@
               :active="identity.id === currentActor?.id"
               :key="identity.id"
               tabindex="0"
-              @click="
-                setIdentity({
-                  preferredUsername: identity.preferredUsername,
-                })
-              "
-              @keyup.enter="
-                setIdentity({
-                  preferredUsername: identity.preferredUsername,
-                })
-              "
+              @click="changeIdentity(identity)"
+              @keyup.enter="changeIdentity(identity)"
             >
               <div class="flex gap-1 items-center w-full">
                 <div class="flex-none">
@@ -175,7 +167,10 @@
                   class="text-base text-zinc-700 dark:text-zinc-100 flex flex-col flex-auto overflow-hidden items-start w-full"
                 >
                   <p class="truncate w-full">{{ displayName(identity) }}</p>
-                  <p class="truncate text-sm w-full" v-if="identity.name">
+                  <p
+                    class="truncate text-sm w-full"
+                    v-if="identity.preferredUsername"
+                  >
                     @{{ identity.preferredUsername }}
                   </p>
                 </div>
@@ -274,8 +269,7 @@ import {
   useCurrentActorClient,
   useCurrentUserIdentities,
 } from "@/composition/apollo/actor";
-import { useLazyQuery, useMutation } from "@vue/apollo-composable";
-import { UPDATE_DEFAULT_ACTOR } from "@/graphql/actor";
+import { useLazyQuery } from "@vue/apollo-composable";
 import { changeIdentity } from "@/utils/identity";
 import {
   useExternalLinksConfig,
@@ -368,18 +362,6 @@ watch(currentActor, async (currentActorValue, previousActorValue) => {
 });
 
 onMounted(() => {});
-
-const { onDone, mutate: setIdentity } = useMutation<{
-  changeDefaultActor: { id: string; defaultActor: { id: string } };
-}>(UPDATE_DEFAULT_ACTOR);
-
-onDone(({ data }) => {
-  const identity = identities.value?.find(
-    ({ id }) => id === data?.changeDefaultActor?.defaultActor?.id
-  );
-  if (!identity) return;
-  changeIdentity(identity);
-});
 
 const showMobileMenu = ref(false);
 

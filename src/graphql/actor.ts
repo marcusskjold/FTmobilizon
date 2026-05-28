@@ -197,6 +197,8 @@ export const UPDATE_DEFAULT_ACTOR = gql`
   }
 `;
 
+// This GraphQL request is never sent to the server
+// @client means only in the Apollo local cache
 export const CURRENT_ACTOR_CLIENT = gql`
   query currentActor {
     currentActor @client {
@@ -208,6 +210,8 @@ export const CURRENT_ACTOR_CLIENT = gql`
   }
 `;
 
+// This GraphQL request is never sent to the server
+// @client means only in the Apollo local cache
 export const UPDATE_CURRENT_ACTOR_CLIENT = gql`
   mutation UpdateCurrentActor(
     $id: String
@@ -252,6 +256,7 @@ export const LOGGED_USER_DRAFTS = gql`
           participantStats {
             going
             notApproved
+            participant
           }
           options {
             maximumAttendeeCapacity

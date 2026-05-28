@@ -11,9 +11,7 @@ export const dateFnsPlugin = {
     }
 
     import(
-      `../../node_modules/date-fns/locale/${dateFnsfileForLanguage(
-        options.locale
-      )}/cdn.js`
+      `../../node_modules/date-fns/locale/${dateFnsfileForLanguage(options.locale)}.js`
     ).then((localeEntity: { default: Locale }) => {
       app.provide("dateFnsLocale", localeEntity.default);
       app.config.globalProperties.$dateFnsLocale = localeEntity.default;

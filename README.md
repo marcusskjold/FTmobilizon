@@ -58,7 +58,6 @@ We appreciate any contribution to Mobilizon. Check [our contributing page](https
 
 ### Follow
   * 🐘 Mastodon: [https://framapiaf.org/@mobilizon](https://framapiaf.org/@mobilizon)
-  * 🐦 Twitter [https://twitter.com/@joinmobilizon](https://twitter.com/@joinmobilizon)
   
 Note: Most federation code comes from [Pleroma](https://pleroma.social), which is `Copyright © 2017-2018 Pleroma Authors - AGPL-3.0`.
 

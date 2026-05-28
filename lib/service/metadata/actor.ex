@@ -1,8 +1,8 @@
 defimpl Mobilizon.Service.Metadata, for: Mobilizon.Actors.Actor do
-  alias Phoenix.HTML
-  alias PhoenixHTMLHelpers.Tag
   alias Mobilizon.Actors.Actor
   alias Mobilizon.Web.JsonLD.ObjectView
+  alias Phoenix.HTML
+  alias PhoenixHTMLHelpers.Tag
   use Mobilizon.Web, :verified_routes
 
   import Mobilizon.Service.Metadata.Utils,
@@ -31,9 +31,7 @@ defimpl Mobilizon.Service.Metadata, for: Mobilizon.Actors.Actor do
       Tag.tag(:meta,
         property: "profile:username",
         content: group |> Actor.preferred_username_and_domain() |> escape_text()
-      ),
-      Tag.tag(:meta, property: "twitter:card", content: "summary"),
-      Tag.tag(:meta, property: "twitter:site", content: "@joinmobilizon")
+      )
     ]
     |> maybe_add_avatar(group)
     |> add_group_schema(group)

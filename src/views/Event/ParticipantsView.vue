@@ -1,4 +1,12 @@
 <template>
+  <div v-if="participantsError">
+    <o-notification variant="danger">
+      {{ participantsError }}
+    </o-notification>
+  </div>
+  <div v-if="!event && participantsLoading">
+    <o-loading v-model:active="participantsLoading" />
+  </div>
   <section class="container mx-auto" v-if="event">
     <breadcrumbs-nav
       :links="[
@@ -274,7 +282,7 @@ import {
   enumTransformer,
   useRouteQuery,
 } from "vue-use-route-query";
-import { computed, inject, ref } from "vue";
+import { computed, inject, ref, watch } from "vue";
 import { formatDateString, formatTimeString } from "@/filters/datetime";
 import { useI18n } from "vue-i18n";
 import AccountCircle from "vue-material-design-icons/AccountCircle.vue";
@@ -330,6 +338,7 @@ const is_enabled = computed((): boolean => {
 const {
   result: participantsResult,
   loading: participantsLoading,
+  error: participantsError,
   refetch: participantsRefetch,
 } = useQuery<{
   event: IEvent;
@@ -345,6 +354,13 @@ const {
     enabled: is_enabled.value,
   })
 );
+
+// In case the currentActor is not an actor allowed to
+// see the participants and the user changes actor,
+// we update participants
+watch(currentActor, () => {
+  participantsRefetch();
+});
 
 const onPageChange = (p: number): void => {
   // Change is not instantaneous since page is created with useRouteQuery linked to the URL state

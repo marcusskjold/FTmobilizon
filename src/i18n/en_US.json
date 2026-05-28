@@ -1713,7 +1713,6 @@
   "{number} organized events": "No organized events|One organized event|{number} organized events",
   "{number} participations": "No participations|One participation|{number} participations",
   "{number} posts": "No posts|One post|{number} posts",
-  "{number} seats left": "No seat left|One seat left|{number} seats left",
   "{old_group_name} was renamed to {group}.": "{old_group_name} was renamed to {group}.",
   "{profileName} (suspended)": "{profileName} (suspended)",
   "{profile} (by default)": "{profile} (by default)",

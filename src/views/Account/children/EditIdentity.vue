@@ -728,20 +728,8 @@ const maybeUpdateCurrentActorCache = async (newIdentity: IPerson) => {
     ) {
       await changeIdentity(newIdentity);
     }
-    // currentActor.value = newIdentity;
   }
 };
-
-// const loadLoggedPersonIfNeeded = async (bypassCache = false) => {
-//   if (currentActor.value) return;
-
-//   const result = await this.$apollo.query({
-//     query: CURRENT_ACTOR_CLIENT,
-//     fetchPolicy: bypassCache ? "network-only" : undefined,
-//   });
-
-//   currentActor.value = result.data.currentActor;
-// };
 
 const resetFields = () => {
   // identity.value = new Person();

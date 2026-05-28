@@ -1,7 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ParticipantsView > Show event's group / user admin 1`] = `
-"<section data-v-6bee7c76="" class="container mx-auto">
+"<!--v-if-->
+<!--v-if-->
+<section data-v-6bee7c76="" class="container mx-auto">
   <breadcrumbs-nav data-v-6bee7c76="" links="[object Object],[object Object],[object Object]"></breadcrumbs-nav>
   <h1 data-v-6bee7c76="">Participants</h1>
   <div data-v-6bee7c76="" class="">
@@ -115,7 +117,9 @@ exports[`ParticipantsView > Show event's group / user admin 1`] = `
 `;
 
 exports[`ParticipantsView > Show event's group / user member 1`] = `
-"<section data-v-6bee7c76="" class="container mx-auto">
+"<!--v-if-->
+<!--v-if-->
+<section data-v-6bee7c76="" class="container mx-auto">
   <breadcrumbs-nav data-v-6bee7c76="" links="[object Object],[object Object],[object Object]"></breadcrumbs-nav>
   <h1 data-v-6bee7c76="">Participants</h1>
   <div data-v-6bee7c76="" class="">
@@ -217,7 +221,9 @@ exports[`ParticipantsView > Show event's group / user member 1`] = `
 `;
 
 exports[`ParticipantsView > Show simple 1`] = `
-"<section data-v-6bee7c76="" class="container mx-auto">
+"<!--v-if-->
+<!--v-if-->
+<section data-v-6bee7c76="" class="container mx-auto">
   <breadcrumbs-nav data-v-6bee7c76="" links="[object Object],[object Object],[object Object]"></breadcrumbs-nav>
   <h1 data-v-6bee7c76="">Participants</h1>
   <div data-v-6bee7c76="" class="">

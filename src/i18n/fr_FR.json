@@ -1710,7 +1710,6 @@
   "{number} organized events": "Aucun \u00e9v\u00e9nement organis\u00e9|Un \u00e9v\u00e9nement organis\u00e9|{number} \u00e9v\u00e9nements organis\u00e9s",
   "{number} participations": "Aucune participation|Une participation|{number} participations",
   "{number} posts": "Aucun billet|Un billet|{number} billets",
-  "{number} seats left": "Aucune place restante|Une place restante|{number} places restantes",
   "{old_group_name} was renamed to {group}.": "{old_group_name} a \u00e9t\u00e9 renomm\u00e9 en {group}.",
   "{profileName} (suspended)": "{profileName} (suspendu\u00b7e)",
   "{profile} (by default)": "{profile} (par d\u00e9fault)",

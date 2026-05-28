@@ -116,28 +116,12 @@
             </span>
           </div>
           <div class="flex">
-            <AccountGroup :class="{ 'has-text-danger': lastSeatsLeft }" />
+            <AccountGroup />
             <span
               class="flex items-center py-0 px-2"
               v-if="participation.role !== ParticipantRole.NOT_APPROVED"
             >
-              <!-- Less than 10 seats left -->
-              <span class="has-text-danger" v-if="lastSeatsLeft">
-                {{
-                  t(
-                    "{number} seats left",
-                    {
-                      number: seatsLeft,
-                    },
-                    seatsLeft ?? 0
-                  )
-                }}
-              </span>
-              <span
-                v-else-if="
-                  participation.event.options.maximumAttendeeCapacity !== 0
-                "
-              >
+              <span v-if="participation.event.options.maximumAttendeeCapacity">
                 {{
                   t(
                     "{available}/{capacity} available places",
@@ -471,33 +455,6 @@ const gotToWithCheck = async (
   }
   return router.push(route);
 };
-
-// const organizerActor = computed<IActor | undefined>(() => {
-//   if (
-//     props.participation.event.attributedTo &&
-//     props.participation.event.attributedTo.id
-//   ) {
-//     return props.participation.event.attributedTo;
-//   }
-//   return props.participation.event.organizerActor;
-// });
-
-const seatsLeft = computed<number | null>(() => {
-  if (props.participation.event.options.maximumAttendeeCapacity > 0) {
-    return (
-      props.participation.event.options.maximumAttendeeCapacity -
-      props.participation.event.participantStats.participant
-    );
-  }
-  return null;
-});
-
-const lastSeatsLeft = computed<boolean>(() => {
-  if (seatsLeft.value) {
-    return seatsLeft.value < 10;
-  }
-  return false;
-});
 
 const actorAvatarURL = computed<string | null>(() =>
   organizerAvatarUrl(props.participation.event)

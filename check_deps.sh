@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ELIXIR_LIB_EXCLUDE="ueberauth_cas"
-VUEJS_LIB_EXCLUDE="@apollo/client mock-apollo-client @vueuse/core tailwindcss @oruga-ui/oruga-next @oruga-ui/theme-oruga"
+VUEJS_LIB_EXCLUDE="@apollo/client mock-apollo-client @vueuse/core tailwindcss @oruga-ui/oruga-next @oruga-ui/theme-oruga @types/leaflet.locatecontrol @eslint/js eslint vite vue-router @vitest/coverage-v8 @vitest/ui vitest"
 
 let EXITVALUE=0
 mix hex.outdated | grep -v "Up-to-date"

@@ -7,17 +7,24 @@ defmodule Mobilizon.Service.Activity.Event do
   alias Mobilizon.Service.Activity
   alias Mobilizon.Service.Workers.ActivityBuilder
 
+  require Logger
+
   @behaviour Activity
 
   @impl Activity
   def insert_activity(event, options \\ [])
 
   def insert_activity(
-        %Event{attributed_to_id: attributed_to_id, organizer_actor_id: organizer_actor_id} =
+        %Event{
+          attributed_to_id: attributed_to_id,
+          organizer_actor_id: organizer_actor_id,
+          draft: draft,
+          visibility: visibility
+        } =
           event,
         options
       )
-      when not is_nil(attributed_to_id) do
+      when not is_nil(attributed_to_id) and draft == false and visibility == :public do
     actor = Actors.get_actor(organizer_actor_id)
     group = Actors.get_actor(attributed_to_id)
     subject = Keyword.fetch!(options, :subject)

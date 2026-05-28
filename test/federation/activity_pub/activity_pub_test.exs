@@ -10,12 +10,12 @@ defmodule Mobilizon.Federation.ActivityPubTest do
   import Mox
   import Mobilizon.Factory
 
-  alias Mobilizon.{Discussions, Events}
+  alias Mobilizon.{Config, Discussions, Events}
   alias Mobilizon.Resources.Resource
   alias Mobilizon.Todos.{Todo, TodoList}
 
   alias Mobilizon.Federation.ActivityPub
-  alias Mobilizon.Federation.ActivityPub.{Actions, Utils}
+  alias Mobilizon.Federation.ActivityPub.{Actions, Federator, Utils}
   alias Mobilizon.Federation.HTTPSignatures.Signature
   alias Mobilizon.Service.HTTP.ActivityPub.Mock
 
@@ -270,6 +270,186 @@ defmodule Mobilizon.Federation.ActivityPubTest do
         assert create_data.data["actor"] == actor.url
 
         assert_called(Utils.maybe_federate(create_data))
+      end
+    end
+  end
+
+  describe "enqueue Event message" do
+    @event_title "My Event"
+
+    test "create Event" do
+      Mobilizon.Config.put([:instance, :federating], true)
+
+      with_mock Federator, enqueue: fn _, _, _ -> :ok end do
+        actor = insert(:actor)
+        group = insert(:group)
+
+        {:ok, create_data, %Events.Event{url: event_url}} =
+          Actions.Create.create(
+            :event,
+            %{
+              title: @event_title,
+              actor_id: actor.id,
+              begins_on: ~U[2021-06-26 12:00:00Z],
+              ends_on: ~U[2021-06-26 18:00:00Z],
+              organizer_actor_id: group.id
+            },
+            true
+          )
+
+        assert create_data.local
+        assert create_data.data["object"]["id"] == event_url
+        assert create_data.data["object"]["type"] == "Event"
+        assert create_data.data["object"]["name"] == @event_title
+        assert create_data.data["object"]["draft"] == false
+        assert create_data.data["to"] == ["https://www.w3.org/ns/activitystreams#Public"]
+        assert create_data.data["attributedTo"] == group.url
+        assert create_data.data["actor"] == group.url
+        assert create_data.data["cc"] == [group.members_url, group.followers_url]
+
+        assert_called(Federator.enqueue(:publish, create_data, 1))
+      end
+    end
+
+    test "create Event draft" do
+      Mobilizon.Config.put([:instance, :federating], true)
+
+      with_mock Federator, enqueue: fn _, _, _ -> :ok end do
+        actor = insert(:actor)
+        group = insert(:group)
+
+        {:ok, create_data, %Events.Event{url: event_url}} =
+          Actions.Create.create(
+            :event,
+            %{
+              title: @event_title,
+              actor_id: actor.id,
+              begins_on: ~U[2021-06-26 12:00:00Z],
+              ends_on: ~U[2021-06-26 18:00:00Z],
+              organizer_actor_id: group.id,
+              draft: true
+            },
+            true
+          )
+
+        assert create_data.local
+        assert create_data.data["object"]["id"] == event_url
+        assert create_data.data["object"]["type"] == "Event"
+        assert create_data.data["object"]["name"] == @event_title
+        assert create_data.data["object"]["draft"] == true
+        assert create_data.data["to"] == ["https://www.w3.org/ns/activitystreams#Public"]
+        assert create_data.data["attributedTo"] == group.url
+        assert create_data.data["actor"] == group.url
+        assert create_data.data["cc"] == [group.members_url, group.followers_url]
+
+        assert_not_called(Federator.enqueue(:publish, create_data, 1))
+      end
+    end
+
+    test "create Event visibility" do
+      Mobilizon.Config.put([:instance, :federating], true)
+
+      with_mock Federator, enqueue: fn _, _, _ -> :ok end do
+        actor = insert(:actor)
+        group = insert(:group)
+
+        {:ok, create_data, %Events.Event{url: event_url}} =
+          Actions.Create.create(
+            :event,
+            %{
+              title: @event_title,
+              actor_id: actor.id,
+              begins_on: ~U[2021-06-26 12:00:00Z],
+              ends_on: ~U[2021-06-26 18:00:00Z],
+              organizer_actor_id: group.id,
+              visibility: :unlisted
+            },
+            true
+          )
+
+        assert create_data.local
+        assert create_data.data["object"]["id"] == event_url
+        assert create_data.data["object"]["type"] == "Event"
+        assert create_data.data["object"]["name"] == @event_title
+        assert create_data.data["object"]["draft"] == false
+        assert create_data.data["cc"] == ["https://www.w3.org/ns/activitystreams#Public"]
+        assert create_data.data["attributedTo"] == group.url
+        assert create_data.data["actor"] == group.url
+        assert create_data.data["to"] == [group.members_url, group.followers_url]
+
+        assert_not_called(Federator.enqueue(:publish, create_data, 1))
+      end
+    end
+
+    test "update Event" do
+      Mobilizon.Config.put([:instance, :federating], true)
+
+      with_mock Federator, enqueue: fn _, _, _ -> :ok end do
+        actor = insert(:actor)
+        event = insert(:event, organizer_actor: actor)
+        event_data = %{title: @event_title}
+
+        {:ok, update_data, _} = Actions.Update.update(event, event_data, true)
+
+        assert update_data.local
+        assert update_data.data["object"]["id"] == event.url
+        assert update_data.data["object"]["type"] == "Event"
+        assert update_data.data["object"]["name"] == @event_title
+        assert update_data.data["object"]["draft"] == false
+        assert update_data.data["to"] == ["https://www.w3.org/ns/activitystreams#Public"]
+        assert update_data.data["attributedTo"] == actor.url
+        assert update_data.data["actor"] == actor.url
+        assert update_data.data["cc"] == [actor.followers_url]
+
+        assert_called(Federator.enqueue(:publish, update_data, 5))
+      end
+    end
+
+    test "update Event draft" do
+      Mobilizon.Config.put([:instance, :federating], true)
+
+      with_mock Federator, enqueue: fn _, _, _ -> :ok end do
+        actor = insert(:actor)
+        event = insert(:event, organizer_actor: actor, draft: true)
+        event_data = %{title: @event_title}
+
+        {:ok, update_data, _} = Actions.Update.update(event, event_data, true)
+
+        assert update_data.local
+        assert update_data.data["object"]["id"] == event.url
+        assert update_data.data["object"]["type"] == "Event"
+        assert update_data.data["object"]["name"] == @event_title
+        assert update_data.data["object"]["draft"] == true
+        assert update_data.data["to"] == ["https://www.w3.org/ns/activitystreams#Public"]
+        assert update_data.data["attributedTo"] == actor.url
+        assert update_data.data["actor"] == actor.url
+        assert update_data.data["cc"] == [actor.followers_url]
+
+        assert_not_called(Federator.enqueue(:publish, update_data, 5))
+      end
+    end
+
+    test "update Event visibility" do
+      Mobilizon.Config.put([:instance, :federating], true)
+
+      with_mock Federator, enqueue: fn _, _, _ -> :ok end do
+        actor = insert(:actor)
+        event = insert(:event, organizer_actor: actor, visibility: :unlisted)
+        event_data = %{title: @event_title}
+
+        {:ok, update_data, _} = Actions.Update.update(event, event_data, true)
+
+        assert update_data.local
+        assert update_data.data["object"]["id"] == event.url
+        assert update_data.data["object"]["type"] == "Event"
+        assert update_data.data["object"]["name"] == @event_title
+        assert update_data.data["object"]["draft"] == false
+        assert update_data.data["cc"] == ["https://www.w3.org/ns/activitystreams#Public"]
+        assert update_data.data["attributedTo"] == actor.url
+        assert update_data.data["actor"] == actor.url
+        assert update_data.data["to"] == [actor.followers_url]
+
+        assert_not_called(Federator.enqueue(:publish, update_data, 5))
       end
     end
   end

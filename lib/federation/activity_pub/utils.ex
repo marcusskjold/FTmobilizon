@@ -184,6 +184,23 @@ defmodule Mobilizon.Federation.ActivityPub.Utils do
   Enqueues an activity for federation if it's local
   """
   @spec maybe_federate(activity :: Activity.t()) :: :ok
+  def maybe_federate(
+        %Activity{data: %{"object" => %{"type" => "Event", "draft" => true}}} = _activity
+      ) do
+    Logger.debug("No federate a draft event")
+
+    :ok
+  end
+
+  def maybe_federate(
+        %Activity{data: %{"object" => %{"type" => "Event", "cc" => [@ap_public_audience]}}} =
+          _activity
+      ) do
+    Logger.debug("No federate a no public event")
+
+    :ok
+  end
+
   def maybe_federate(%Activity{local: true} = activity) do
     Logger.debug("Maybe federate an activity")
 
@@ -310,7 +327,7 @@ defmodule Mobilizon.Federation.ActivityPub.Utils do
   end
 
   def get_actor(%{"actor" => [actor | tail] = actor_list} = object)
-      when is_list(actor_list) and length(actor_list) > 0 do
+      when is_list(actor_list) and actor_list != [] do
     res =
       try do
         object
@@ -375,7 +392,7 @@ defmodule Mobilizon.Federation.ActivityPub.Utils do
   end
 
   def origin_check?(id, %{"actor" => actor} = params)
-      when not is_nil(actor) and is_list(actor) and length(actor) > 0 do
+      when not is_nil(actor) and is_list(actor) and actor != [] do
     origin_check?(id, Map.put(params, "actor", hd(actor)))
   end
 
@@ -685,7 +702,7 @@ defmodule Mobilizon.Federation.ActivityPub.Utils do
     case :public_key.pem_decode(pem) do
       [key_code] ->
         public_key = pem_to_public_key(key_code)
-        public_key = :public_key.pem_entry_encode(:RSAPublicKey, public_key)
+        public_key = :public_key.pem_entry_encode(:SubjectPublicKeyInfo, public_key)
         :public_key.pem_encode([public_key])
 
       _ ->

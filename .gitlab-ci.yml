@@ -46,6 +46,7 @@ install:
   stage: install
   script:
     - rm -rf ~/.hex/cache.ets
+    - ulimit -n 16384
     - npm ci
     - mix deps.clean --all
     - mix deps.get
@@ -77,8 +78,9 @@ lint-elixir:
     - TARGET_SHA1=$(git show-ref -s ${CI_DEFAULT_BRANCH})
     - echo "$TARGET_SHA1"
     - mix format --check-formatted --dry-run || export EXITVALUE=1
-    - mix credo diff --from-git-merge-base $TARGET_SHA1 --strict -a || export EXITVALUE=1
-    - mix sobelow --config || export EXITVALUE=1
+    - mix credo diff --from-git-merge-base $TARGET_SHA1 --strict -a || export EXITVALUE=2
+    - mix sobelow --config || export EXITVALUE=3
+    - echo "EXITVALUE:$EXITVALUE"
     - exit $EXITVALUE
   artifacts:
     reports:

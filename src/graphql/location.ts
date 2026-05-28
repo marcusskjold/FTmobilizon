@@ -1,5 +1,7 @@
 import gql from "graphql-tag";
 
+// This GraphQL request is never sent to the server
+// @client means only in the Apollo local cache
 export const CURRENT_USER_LOCATION_CLIENT = gql`
   query currentUserLocation {
     currentUserLocation @client {
@@ -13,6 +15,8 @@ export const CURRENT_USER_LOCATION_CLIENT = gql`
   }
 `;
 
+// This GraphQL request is never sent to the server
+// @client means only in the Apollo local cache
 export const UPDATE_CURRENT_USER_LOCATION_CLIENT = gql`
   mutation UpdateCurrentUserLocation(
     $lat: Float

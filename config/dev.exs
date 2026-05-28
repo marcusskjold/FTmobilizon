@@ -2,7 +2,7 @@ import Config
 
 config :mobilizon, Mobilizon.Web.Endpoint,
   http: [
-    port: String.to_integer(System.get_env("MOBILIZON_INSTANCE_HOST_PORT", "4000"))
+    port: String.to_integer(System.get_env("MOBILIZON_INSTANCE_HOST_PORT_BASE", "4000"))
   ],
   url: [
     host: System.get_env("MOBILIZON_INSTANCE_HOST", "localhost"),

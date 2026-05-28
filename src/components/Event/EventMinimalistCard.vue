@@ -86,7 +86,7 @@
       </div>
       <p class="flex gap-1" v-if="!event.options.hideNumberOfParticipants">
         <AccountMultiple />
-        <span v-if="event.options.maximumAttendeeCapacity !== 0">
+        <span v-if="event.options.maximumAttendeeCapacity">
           {{
             $t(
               "{available}/{capacity} available places",

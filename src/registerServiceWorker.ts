@@ -18,9 +18,21 @@ if ("serviceWorker" in navigator && import.meta.env.PROD) {
       console.debug("New content is downloading.");
     },
     updated(registration: ServiceWorkerRegistration) {
-      const event = new CustomEvent("refreshApp", { detail: registration });
-      document.dispatchEvent(event);
-      console.debug("New content is available; please refresh.");
+      const installingWorker = registration.installing;
+      if (installingWorker) {
+        installingWorker.onstatechange = () => {
+          if (installingWorker.state === "installed") {
+            if (navigator.serviceWorker.controller) {
+              console.debug(
+                "New content is available, and the new service worker is now active."
+              );
+              installingWorker.postMessage({ type: "skip-waiting" });
+            } else {
+              console.debug("Content is cached for offline use.");
+            }
+          }
+        };
+      }
     },
     offline() {
       console.debug(
