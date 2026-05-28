@@ -12,9 +12,19 @@ cd "$BUILD_DIR"
 echo "==> Running act build..."
 ./actscript.sh
 
-echo "==> Copying release artifact..."
+echo "==> Extracting artifact..."
 mkdir -p "${DEPLOY_DIR}/releases"
-cp .artifacts/mobilizon-*.tar.gz "${DEPLOY_DIR}/releases/"
+
+# act stores uploaded artifacts under .artifacts/{run}/{name}/{name}.zip
+ZIP=$(find .artifacts -name 'mobilizon-release.zip' -type f | sort | tail -1)
+if [ -z "$ZIP" ]; then
+  echo "ERROR: no mobilizon-release.zip found in .artifacts/"
+  exit 1
+fi
+
+# The zip contains the .tar.gz release — extract it directly
+unzip -j -o "$ZIP" -d "${DEPLOY_DIR}/releases/"
+echo "==> Extracted $(ls "${DEPLOY_DIR}/releases/"/*.tar.gz)"
 
 echo "==> Deploying to staging..."
 cd "$DEPLOY_DIR"
