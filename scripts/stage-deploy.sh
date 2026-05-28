@@ -26,6 +26,9 @@ fi
 unzip -j -o "$ZIP" -d "${DEPLOY_DIR}/releases/"
 echo "==> Extracted $(ls "${DEPLOY_DIR}/releases/"/*.tar.gz)"
 
+# Copy the zip itself — the Ansible playbook stats this file for updates
+cp "$ZIP" "${DEPLOY_DIR}/releases/mobilizon-release.zip"
+
 echo "==> Deploying to staging..."
 cd "$DEPLOY_DIR"
 ansible-playbook -i inv/staging.yml upgrade.yml

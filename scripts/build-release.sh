@@ -30,5 +30,6 @@ if [ -z "$ZIP" ]; then
 fi
 
 unzip -j -o "$ZIP" -d "${DEPLOY_DIR}/releases/"
+cp "$ZIP" "${DEPLOY_DIR}/releases/mobilizon-release.zip"
 echo "==> Release built and saved:"
 ls -la "${DEPLOY_DIR}/releases/"/*.tar.gz

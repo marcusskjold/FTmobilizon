@@ -38,7 +38,6 @@ jobs:
         with:
           path: |
             deps
-            _build
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: |
             ${{ runner.os }}-mix-
@@ -60,7 +59,7 @@ jobs:
         run: mix deps.get
 
       - name: Compile
-        run: mix compile
+        run: mix compile --force
 
       - name: Build assets
         run: |
@@ -69,6 +68,9 @@ jobs:
 
       - name: Create a digest of the static assets
         run: mix phx.digest
+
+      - name: Clean previous release
+        run: rm -rf _build/prod/rel/mobilizon
 
       - name: Build release
         run: mix release
