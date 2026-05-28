@@ -98,6 +98,11 @@ jobs:
           name: mobilizon-release
           path: _build/prod/rel/${{ steps.vars.outputs.filename }}
 
+      - name: Save artifact for host
+        run: |
+          mkdir -p .artifacts
+          cp _build/prod/rel/${{ steps.vars.outputs.filename }} .artifacts/
+
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
