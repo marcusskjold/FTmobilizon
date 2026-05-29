@@ -31,14 +31,13 @@ log() {
 while read OLDREV NEWREV REFNAME; do
   log "Received $REFNAME ($OLDREV → $NEWREV)"
 
-  # Branch push: ftdev → reset worktree to new commit and deploy
+  # Branch push: ftdev → reset worktree to new commit (manual deploy required)
   if [ "$REFNAME" = "refs/heads/ftdev" ]; then
     log "Updating ${BUILD_DIR} to ${NEWREV}"
     cd "$BUILD_DIR"
     git reset --hard "$NEWREV"
 
-    log "Running staging deploy..."
-    ./scripts/stage-deploy.sh
+    log "ftdev updated. Run ./scripts/stage-deploy.sh manually to deploy."
     continue
   fi
 

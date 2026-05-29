@@ -16,6 +16,9 @@ DEPLOY_DIR="/develop/FTdeploy"
 
 cd "$BUILD_DIR"
 
+echo "==> Checking out tag ${TAG}..."
+git checkout -f "$TAG"
+
 echo "==> Running act build for ${TAG}..."
 ./actscript.sh
 

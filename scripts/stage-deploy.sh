@@ -9,6 +9,9 @@ DEPLOY_DIR="/develop/FTdeploy"
 
 cd "$BUILD_DIR"
 
+echo "==> Syncing worktree to ftdev..."
+git reset --hard ftdev
+
 echo "==> Running act build..."
 ./actscript.sh
 
