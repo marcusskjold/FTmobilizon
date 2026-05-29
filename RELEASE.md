@@ -1,82 +1,91 @@
 # Custom releases
 
 - `ftdev` — your changes (CI workflow, templates, CSS, etc.). Commit and push here.
-- `build` — bare repo on the deploy server (`server:/git/floortips.git`). Pushing to it triggers builds.
-- Machine 1 and Machine 2 both push to `build`. The server handles the rest.
+- Machine 1 (Mac) pushes to GitHub (`origin`).
+- The build server pulls from GitHub and runs builds manually.
 
 ## Pushing to staging
 
 ```bash
-git push build ftdev
+# On your Mac
+git push origin ftdev
+
+# On the build server
+ssh server
+cd /develop/FTrepo
+git fetch origin
+git reset --hard origin/ftdev
+./scripts/stage-deploy.sh
 ```
 
-The server hook:
-1. Updates `/git/floortips_build` to the new `ftdev` commit
-2. Runs `./scripts/stage-deploy.sh` (act build → copy artifact → `ansible-playbook -i inv/staging upgrade.yml`)
+`stage-deploy.sh`:
+1. Freezes the version string (`git describe --tags --dirty > .build_version`)
+2. Runs `act` to compile the release inside Docker
+3. Extracts the tarball to `/develop/FTdeploy/releases/`
+4. Archives it in `/freezer/2/FT/builds/`
+5. Runs `ansible-playbook -i inv/staging.yml upgrade.yml`
 
 ## Tagging a release for production
 
 ```bash
+# On your Mac
 UPSTREAM=5.2.3
 git fetch upstream --tags
 
 git checkout ftdev
 git merge --no-edit "$UPSTREAM"
 git tag -a "${UPSTREAM}-ft.1" -m "custom release ${UPSTREAM}-ft.1"
-git push build ftdev "${UPSTREAM}-ft.1"
+git push origin ftdev "${UPSTREAM}-ft.1"
 ```
 
-The hook deploys `ftdev` to staging **and** builds a release artifact.
+Then on the build server:
+
+```bash
+ssh server
+cd /develop/FTrepo
+./scripts/build-release.sh "${UPSTREAM}-ft.1"
+```
+
+That checks out the tag, freezes the version, runs `act`, and archives the artifact in the freezer.
+
+### Deploy to production
+
+```bash
+# On Machine 2 or the build server
+cd /develop/FTdeploy
+ansible-playbook -i inv/production.yml site.yml
+```
 
 ## Server architecture
 
 ```
-┌──────────────┐     git push     ┌──────────────────┐
-│  Machine 1   │ ───────────────→ │ /git/floortips.git │  bare repo (no files)
-│  Machine 2   │                  │  hook: post-receive│
-└──────────────┘                  └────────┬─────────┘
-                                          │
-                              checkout files here
-                                          │
+┌──────────────┐      git push      ┌────────────────────┐
+│  Machine 1   │ ────────────────→ │  GitHub (origin)   │
+│  Machine 2   │                  └─────────┬──────────┘
+└──────────────┘                            │
+                                          │  git pull / fetch
                                           ▼
-                                ┌──────────────────┐
-                                │ /git/floortips_build│  builds happen here
-                                │  never touched   │  (machine only)
-                                └──────────────────┘
-```
-
-If you need to edit on the server, use `/develop/FTrepo`, commit there, and push to the bare repo. The hook then updates the build directory.
-
-## If a merge conflicts
-
-```bash
-git checkout ftdev
-git merge "$UPSTREAM"
-# resolve files...
-git add -A
-git merge --continue
-git tag -a "${UPSTREAM}-ft.1" -m "custom release ${UPSTREAM}-ft.1"
-git push build ftdev "${UPSTREAM}-ft.1"
+                                ┌────────────────────┐
+                                │  /develop/FTrepo   │  manual checkout
+                                │  (builds here)     │  on build server
+                                └─────────┬──────────┘
+                                          │
+                        act build → ┌─────┴───────┐
+                                    │  /freezer/…  │  rollback archive
+                                    │  /FTdeploy/  │  ansible deploy
+                                    └──────────────┘
 ```
 
 ## Server setup (run once on server)
 
 ```bash
-# 1. Create bare repo
-git init --bare /git/floortips.git
+# 1. Clone the repo
+git clone git@github.com:marcusskjold/FTmobilizon.git /develop/FTrepo
+cd /develop/FTrepo
+git checkout ftdev
 
-# 2. Add linked worktree for ftdev branch (this is a proper checkout, not a dump)
-cd /git/floortips.git
-git worktree add /git/floortips_build ftdev
-
-# 3. Install hook
-cp /wherever/server/post-receive /git/floortips.git/hooks/post-receive
-chmod +x /git/floortips.git/hooks/post-receive
+# 2. Ensure act is available
+# (already installed via linuxbrew)
 ```
 
-Now `/git/floortips_build` is a normal git checkout with a `.git` file.
-`act`, `git status`, etc. all work inside it. The hook updates it automatically.
-
-```bash
-git remote add build server:/git/floortips.git
-```
+No hook, no bare repo, no worktree. Everything is manual.

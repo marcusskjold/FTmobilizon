@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # build-release.sh — build a tagged release via act and save the artifact.
-# Runs on the server inside /git/floortips_build.
+# Runs on the server inside /develop/FTrepo.
 
 TAG="${1:-}"
 
@@ -11,10 +11,13 @@ if [ -z "$TAG" ]; then
   exit 1
 fi
 
-BUILD_DIR="/git/floortips_build"
+BUILD_DIR="/develop/FTrepo"
 DEPLOY_DIR="/develop/FTdeploy"
 
 cd "$BUILD_DIR"
+
+echo "==> Fetching tag ${TAG}..."
+git fetch origin tag "${TAG}"
 
 echo "==> Checking out tag ${TAG}..."
 git checkout -f "$TAG"

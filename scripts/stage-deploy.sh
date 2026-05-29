@@ -2,15 +2,16 @@
 set -euo pipefail
 
 # stage-deploy.sh — build ftdev via act, archive to freezer, and deploy to staging.
-# Runs on the server inside /git/floortips_build.
+# Runs on the server inside /develop/FTrepo.
 
-BUILD_DIR="/git/floortips_build"
+BUILD_DIR="/develop/FTrepo"
 DEPLOY_DIR="/develop/FTdeploy"
 
 cd "$BUILD_DIR"
 
-echo "==> Syncing worktree to ftdev..."
-git reset --hard ftdev
+echo "==> Syncing checkout to ftdev..."
+git fetch origin
+git reset --hard origin/ftdev
 
 echo "==> Running act build..."
 ./actscript.sh
