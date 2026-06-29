@@ -77,7 +77,7 @@ export const configMock = {
         tiles: {
           __typename: "Tiles",
           attribution: "© The OpenStreetMap Contributors",
-          endpoint: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          endpoint: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         },
         routing: {
           __typename: "Routing",

@@ -271,7 +271,7 @@ config :mobilizon, Mobilizon.Service.Geospatial.Pelias, endpoint: nil
 
 config :mobilizon, :maps,
   tiles: [
-    endpoint: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    endpoint: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
     attribution: "© The OpenStreetMap Contributors"
   ],
   routing: [
@@ -287,7 +287,7 @@ config :mobilizon, :http_security,
     style_src: [],
     connect_src: [],
     font_src: [],
-    img_src: ["*.tile.openstreetmap.org"],
+    img_src: ["tile.openstreetmap.org"],
     manifest_src: [],
     media_src: [],
     object_src: [],

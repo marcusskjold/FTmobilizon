@@ -163,7 +163,7 @@ onMounted(async () => {
   mapElement.value.on("zoom", debounce(update, 1000));
   mapElement.value.on("moveend", debounce(update, 1000));
 
-  tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution:
       '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
     className: "map-tiles",

@@ -74,7 +74,7 @@ defmodule Mobilizon.Web.Plugs.HTTPSecurityPlugTest do
 
       [csp] = Conn.get_resp_header(conn, "content-security-policy")
       assert csp =~ "media-src 'self'"
-      assert csp =~ "img-src 'self' data: blob: *.tile.openstreetmap.org"
+      assert csp =~ "img-src 'self' data: blob: tile.openstreetmap.org"
       assert csp =~ "frame-src 'none'"
       assert csp =~ "frame-ancestors 'none'"
       assert csp =~ "font-src 'self'"
