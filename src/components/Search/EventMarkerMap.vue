@@ -166,6 +166,7 @@ onMounted(async () => {
   tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution:
       '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
+    options: { referrerPolicy: "strict-origin-when-cross-origin" },
     className: "map-tiles",
   }).addTo(mapElement.value);
 });
