@@ -176,8 +176,7 @@ const PAGINATION_LIMIT = 25;
 const SKELETON_DAY_ITEMS = 2;
 const SKELETON_ITEMS_PER_DAY = 5;
 type IActivitySkeleton =
-  | IActivity
-  | { skeleton: string; id: string; type: "skeleton" };
+  IActivity | { skeleton: string; id: string; type: "skeleton" };
 
 enum ActivityAuthorFilter {
   SELF = "SELF",

@@ -30,13 +30,11 @@ const CustomImage = Image.extend({
           handleDOMEvents: {
             drop(view: EditorView, event: Event) {
               const realEvent = event as DragEvent;
-              if (
-                !(
-                  realEvent.dataTransfer &&
-                  realEvent.dataTransfer.files &&
-                  realEvent.dataTransfer.files.length
-                )
-              ) {
+              if (!(
+                realEvent.dataTransfer &&
+                realEvent.dataTransfer.files &&
+                realEvent.dataTransfer.files.length
+              )) {
                 return false;
               }
 

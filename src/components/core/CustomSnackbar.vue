@@ -35,12 +35,7 @@ import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 type positionValues =
-  | "top-right"
-  | "top"
-  | "top-left"
-  | "bottom-right"
-  | "bottom"
-  | "bottom-left";
+  "top-right" | "top" | "top-left" | "bottom-right" | "bottom" | "bottom-left";
 
 const props = withDefaults(
   defineProps<{

@@ -47,10 +47,7 @@ exports[`CreateView > Show simple 1`] = `
             <div id="v-0-0-4" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--auto" style="max-height: 200px; overflow: auto; display: none;" role="listbox" aria-labelledby="v-0-0-0" aria-multiselectable="false">
               <!---->
               <!---->
-              <div id="v-0-0-4-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false">
-                <p class="flex gap-1"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-home mdi-24px"></i></span><b></b></p>
-                <p class="text-small"></p>
-              </div>
+              <div id="v-0-0-4-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false"><span></span></div>
               <!---->
               <!---->
             </div>
@@ -173,10 +170,7 @@ exports[`CreateView > Show simple 2`] = `
             <div id="v-0-0-4" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--auto" style="max-height: 200px; overflow: auto; display: none;" role="listbox" aria-labelledby="v-0-0-0" aria-multiselectable="false">
               <!---->
               <!---->
-              <div id="v-0-0-4-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false">
-                <p class="flex gap-1"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-home mdi-24px"></i></span><b></b></p>
-                <p class="text-small"></p>
-              </div>
+              <div id="v-0-0-4-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false"><span></span></div>
               <!---->
               <!---->
             </div>
