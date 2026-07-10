@@ -10,7 +10,7 @@ defmodule Mobilizon.Federation.ActivityPubTest do
   import Mox
   import Mobilizon.Factory
 
-  alias Mobilizon.{Config, Discussions, Events}
+  alias Mobilizon.{Discussions, Events, Posts}
   alias Mobilizon.Resources.Resource
   alias Mobilizon.Todos.{Todo, TodoList}
 
@@ -448,6 +448,194 @@ defmodule Mobilizon.Federation.ActivityPubTest do
         assert update_data.data["attributedTo"] == actor.url
         assert update_data.data["actor"] == actor.url
         assert update_data.data["to"] == [actor.followers_url]
+
+        assert_not_called(Federator.enqueue(:publish, update_data, 5))
+      end
+    end
+  end
+
+  describe "enqueue Post message" do
+    @post_title "My Post"
+    @post_description "Description of post"
+
+    test "create Post" do
+      Mobilizon.Config.put([:instance, :federating], true)
+
+      with_mock Federator, enqueue: fn _, _, _ -> :ok end do
+        actor = insert(:actor)
+        group = insert(:group)
+
+        {:ok, create_data, %Posts.Post{url: post_url}} =
+          Actions.Create.create(
+            :post,
+            %{
+              title: @post_title,
+              body: @post_description,
+              author_id: actor.id,
+              attributed_to_id: group.id,
+              visibility: :public
+            },
+            true
+          )
+
+        assert create_data.local
+        assert create_data.data["object"]["id"] == post_url
+        assert create_data.data["object"]["type"] == "Article"
+        assert create_data.data["object"]["name"] == @post_title
+        assert create_data.data["object"]["content"] == @post_description
+        assert create_data.data["object"]["draft"] == false
+        assert create_data.data["to"] == ["https://www.w3.org/ns/activitystreams#Public"]
+        assert create_data.data["attributedTo"] == group.url
+        assert create_data.data["actor"] == actor.url
+        assert create_data.data["cc"] == [group.members_url, group.followers_url]
+
+        assert_called(Federator.enqueue(:publish, create_data, 1))
+      end
+    end
+
+    test "create Post for link" do
+      Mobilizon.Config.put([:instance, :federating], true)
+
+      with_mock Federator, enqueue: fn _, _, _ -> :ok end do
+        actor = insert(:actor)
+        group = insert(:group)
+
+        {:ok, create_data, %Posts.Post{url: post_url}} =
+          Actions.Create.create(
+            :post,
+            %{
+              title: @post_title,
+              body: @post_description,
+              author_id: actor.id,
+              attributed_to_id: group.id,
+              visibility: :unlisted
+            },
+            true
+          )
+
+        assert create_data.local
+        assert create_data.data["object"]["id"] == post_url
+        assert create_data.data["object"]["type"] == "Article"
+        assert create_data.data["object"]["name"] == @post_title
+        assert create_data.data["object"]["content"] == @post_description
+        assert create_data.data["object"]["draft"] == false
+        assert create_data.data["to"] == [group.members_url, group.followers_url]
+        assert create_data.data["attributedTo"] == group.url
+        assert create_data.data["actor"] == actor.url
+        assert create_data.data["cc"] == ["https://www.w3.org/ns/activitystreams#Public"]
+
+        assert_not_called(Federator.enqueue(:publish, create_data, 1))
+      end
+    end
+
+    test "create Post for members" do
+      Mobilizon.Config.put([:instance, :federating], true)
+
+      with_mock Federator, enqueue: fn _, _, _ -> :ok end do
+        actor = insert(:actor)
+        group = insert(:group)
+
+        {:ok, create_data, %Posts.Post{url: post_url}} =
+          Actions.Create.create(
+            :post,
+            %{
+              title: @post_title,
+              body: @post_description,
+              author_id: actor.id,
+              attributed_to_id: group.id,
+              visibility: :private
+            },
+            true
+          )
+
+        assert create_data.local
+        assert create_data.data["object"]["id"] == post_url
+        assert create_data.data["object"]["type"] == "Article"
+        assert create_data.data["object"]["name"] == @post_title
+        assert create_data.data["object"]["content"] == @post_description
+        assert create_data.data["object"]["draft"] == false
+        assert create_data.data["to"] == [group.members_url]
+        assert create_data.data["attributedTo"] == group.url
+        assert create_data.data["actor"] == actor.url
+        assert create_data.data["cc"] == []
+
+        assert_not_called(Federator.enqueue(:publish, create_data, 1))
+      end
+    end
+
+    test "update Post" do
+      Mobilizon.Config.put([:instance, :federating], true)
+
+      with_mock Federator, enqueue: fn _, _, _ -> :ok end do
+        actor = insert(:actor)
+        group = insert(:group)
+        post = insert(:post, author: actor, attributed_to: group)
+        post_data = %{title: @post_title, body: @post_description}
+
+        {:ok, update_data, _} = Actions.Update.update(post, post_data, true)
+
+        assert update_data.local
+        assert update_data.data["object"]["id"] == post.url
+        assert update_data.data["object"]["type"] == "Article"
+        assert update_data.data["object"]["name"] == @post_title
+        assert update_data.data["object"]["content"] == @post_description
+        assert update_data.data["object"]["draft"] == false
+        assert update_data.data["to"] == ["https://www.w3.org/ns/activitystreams#Public"]
+        assert update_data.data["attributedTo"] == group.url
+        assert update_data.data["actor"] == actor.url
+        assert update_data.data["cc"] == [group.members_url, group.followers_url]
+
+        assert_called(Federator.enqueue(:publish, update_data, 5))
+      end
+    end
+
+    test "update Post for link" do
+      Mobilizon.Config.put([:instance, :federating], true)
+
+      with_mock Federator, enqueue: fn _, _, _ -> :ok end do
+        actor = insert(:actor)
+        group = insert(:group)
+        post = insert(:post, author: actor, attributed_to: group, visibility: :unlisted)
+        post_data = %{title: @post_title, body: @post_description}
+
+        {:ok, update_data, _} = Actions.Update.update(post, post_data, true)
+
+        assert update_data.local
+        assert update_data.data["object"]["id"] == post.url
+        assert update_data.data["object"]["type"] == "Article"
+        assert update_data.data["object"]["name"] == @post_title
+        assert update_data.data["object"]["content"] == @post_description
+        assert update_data.data["object"]["draft"] == false
+        assert update_data.data["to"] == [group.members_url, group.followers_url]
+        assert update_data.data["attributedTo"] == group.url
+        assert update_data.data["actor"] == actor.url
+        assert update_data.data["cc"] == ["https://www.w3.org/ns/activitystreams#Public"]
+
+        assert_not_called(Federator.enqueue(:publish, update_data, 5))
+      end
+    end
+
+    test "update Post for members" do
+      Mobilizon.Config.put([:instance, :federating], true)
+
+      with_mock Federator, enqueue: fn _, _, _ -> :ok end do
+        actor = insert(:actor)
+        group = insert(:group)
+        post = insert(:post, author: actor, attributed_to: group, visibility: :private)
+        post_data = %{title: @post_title, body: @post_description}
+
+        {:ok, update_data, _} = Actions.Update.update(post, post_data, true)
+
+        assert update_data.local
+        assert update_data.data["object"]["id"] == post.url
+        assert update_data.data["object"]["type"] == "Article"
+        assert update_data.data["object"]["name"] == @post_title
+        assert update_data.data["object"]["content"] == @post_description
+        assert update_data.data["object"]["draft"] == false
+        assert update_data.data["to"] == [group.members_url]
+        assert update_data.data["attributedTo"] == group.url
+        assert update_data.data["actor"] == actor.url
+        assert update_data.data["cc"] == []
 
         assert_not_called(Federator.enqueue(:publish, update_data, 5))
       end
