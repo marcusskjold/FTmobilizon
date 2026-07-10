@@ -205,6 +205,32 @@ defmodule Mobilizon.Federation.ActivityPub.Utils do
     :ok
   end
 
+  def maybe_federate(
+        %Activity{data: %{"object" => %{"type" => "Article", "draft" => true}}} = _activity
+      ) do
+    Logger.debug("No federate a draft post")
+
+    :ok
+  end
+
+  def maybe_federate(
+        %Activity{data: %{"object" => %{"type" => "Article", "cc" => [@ap_public_audience]}}} =
+          _activity
+      ) do
+    Logger.debug("No federate a no public post")
+
+    :ok
+  end
+
+  def maybe_federate(
+        %Activity{data: %{"object" => %{"type" => "Article", "cc" => []}}} =
+          _activity
+      ) do
+    Logger.debug("No federate a no public post")
+
+    :ok
+  end
+
   def maybe_federate(%Activity{local: true} = activity) do
     Logger.debug("Maybe federate an activity")
 

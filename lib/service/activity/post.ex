@@ -13,10 +13,15 @@ defmodule Mobilizon.Service.Activity.Post do
   def insert_activity(post, options \\ [])
 
   def insert_activity(
-        %Post{attributed_to_id: attributed_to_id, author_id: author_id} = post,
+        %Post{
+          attributed_to_id: attributed_to_id,
+          author_id: author_id,
+          draft: draft,
+          visibility: visibility
+        } = post,
         options
       )
-      when not is_nil(attributed_to_id) do
+      when not is_nil(attributed_to_id) and draft == false and visibility == :public do
     author = Actors.get_actor(author_id)
     group = Actors.get_actor(attributed_to_id)
     subject = Keyword.fetch!(options, :subject)
