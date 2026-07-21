@@ -20,7 +20,6 @@ defmodule Mobilizon.Federation.ActivityPub.Actions.Create do
           | :conversation
           | :actor
           | :todo_list
-          | :todo
           | :resource
           | :post
 
@@ -68,7 +67,6 @@ defmodule Mobilizon.Federation.ActivityPub.Actions.Create do
     :conversation => Types.Conversations,
     :actor => Types.Actors,
     :todo_list => Types.TodoLists,
-    :todo => Types.Todos,
     :resource => Types.Resources,
     :post => Types.Posts
   }

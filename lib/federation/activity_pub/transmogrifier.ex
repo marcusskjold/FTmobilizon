@@ -8,12 +8,11 @@ defmodule Mobilizon.Federation.ActivityPub.Transmogrifier do
   A module to handle coding from internal to wire ActivityPub and back.
   """
 
-  alias Mobilizon.{Actors, Discussions, Events, Posts, Todos}
+  alias Mobilizon.{Actors, Discussions, Events, Posts}
   alias Mobilizon.Actors.{Actor, Follower, Member}
   alias Mobilizon.Discussions.Comment
   alias Mobilizon.Events.{Event, Participant}
   alias Mobilizon.Posts.Post
-  alias Mobilizon.Todos.{Todo, TodoList}
 
   alias Mobilizon.Federation.ActivityPub
   alias Mobilizon.Federation.ActivityPub.{Actions, Activity, Permission, Relay, Utils}
@@ -236,47 +235,6 @@ defmodule Mobilizon.Federation.ActivityPub.Transmogrifier do
       {:error, e} ->
         Logger.warning("Unable to handle Follow activity #{inspect(e)}")
         :error
-    end
-  end
-
-  def handle_incoming(%{
-        "type" => "Create",
-        "object" => %{"type" => "TodoList", "id" => object_url} = object,
-        "actor" => actor_url
-      }) do
-    Logger.info("Handle incoming to create a todo list")
-
-    with {:existing_todo_list, nil} <-
-           {:existing_todo_list, Todos.get_todo_list_by_url(object_url)},
-         {:ok, %Actor{url: actor_url}} <- ActivityPubActor.get_or_fetch_actor_by_url(actor_url),
-         object_data when is_map(object_data) <-
-           object |> Converter.TodoList.as_to_model_data(),
-         {:ok, %Activity{} = activity, %TodoList{} = todo_list} <-
-           Actions.Create.create(:todo_list, object_data, false, %{
-             "actor" => actor_url
-           }) do
-      {:ok, activity, todo_list}
-    else
-      {:error, :group_not_found} -> :error
-      {:existing_todo_list, %TodoList{} = todo_list} -> {:ok, nil, todo_list}
-    end
-  end
-
-  def handle_incoming(%{
-        "type" => "Create",
-        "object" => %{"type" => "Todo", "id" => object_url} = object
-      }) do
-    Logger.info("Handle incoming to create a todo")
-
-    with {:existing_todo, nil} <-
-           {:existing_todo, Todos.get_todo_by_url(object_url)},
-         object_data <-
-           object |> Converter.Todo.as_to_model_data(),
-         {:ok, %Activity{} = activity, %Todo{} = todo} <-
-           Actions.Create.create(:todo, object_data, false) do
-      {:ok, activity, todo}
-    else
-      {:existing_todo, %Todo{} = todo} -> {:ok, nil, todo}
     end
   end
 

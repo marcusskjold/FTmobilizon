@@ -3,7 +3,7 @@ defmodule Mobilizon.Web.Cache.ActivityPub do
   ActivityPub related cache.
   """
 
-  alias Mobilizon.{Actors, Conversations, Discussions, Events, Posts, Resources, Todos, Tombstone}
+  alias Mobilizon.{Actors, Conversations, Discussions, Events, Posts, Resources, Tombstone}
   alias Mobilizon.Actors.Actor, as: ActorModel
   alias Mobilizon.Actors.Member
   alias Mobilizon.Conversations.Conversation
@@ -12,7 +12,6 @@ defmodule Mobilizon.Web.Cache.ActivityPub do
   alias Mobilizon.Federation.ActivityPub.{Actor, Relay}
   alias Mobilizon.Posts.Post
   alias Mobilizon.Resources.Resource
-  alias Mobilizon.Todos.{Todo, TodoList}
   use Mobilizon.Web, :verified_routes
 
   @cache :activity_pub
@@ -151,44 +150,10 @@ defmodule Mobilizon.Web.Cache.ActivityPub do
   end
 
   @doc """
-  Gets a todo list by its UUID, with all associations loaded.
-  """
-  @spec get_todo_list_by_uuid_with_preload(String.t()) ::
-          {:commit, TodoList.t()} | {:ignore, nil}
-  def get_todo_list_by_uuid_with_preload(uuid) do
-    Cachex.fetch(@cache, "todo_list_" <> uuid, fn "todo_list_" <> uuid ->
-      case Todos.get_todo_list(uuid) do
-        %TodoList{} = todo_list ->
-          {:commit, todo_list}
-
-        nil ->
-          {:ignore, nil}
-      end
-    end)
-  end
-
-  @doc """
-  Gets a todo by its UUID, with all associations loaded.
-  """
-  @spec get_todo_by_uuid_with_preload(String.t()) ::
-          {:commit, Todo.t()} | {:ignore, nil}
-  def get_todo_by_uuid_with_preload(uuid) do
-    Cachex.fetch(@cache, "todo_" <> uuid, fn "todo_" <> uuid ->
-      case Todos.get_todo(uuid) do
-        %Todo{} = todo ->
-          {:commit, todo}
-
-        nil ->
-          {:ignore, nil}
-      end
-    end)
-  end
-
-  @doc """
   Gets a conversation participant by it's ID, with all associations loaded.
   """
   @spec get_conversation_by_id_with_preload(String.t()) ::
-          {:commit, Todo.t()} | {:ignore, nil}
+          {:commit, Conversation.t()} | {:ignore, nil}
   def get_conversation_by_id_with_preload(id) do
     Cachex.fetch(@cache, "conversation_participant_" <> id, fn "conversation_participant_" <> id ->
       case Conversations.get_conversation_participant(id) do

@@ -9,19 +9,16 @@ alias Mobilizon.Federation.ActivityPub.Types.{
   Ownable,
   Posts,
   Resources,
-  Todos,
-  TodoLists,
   Tombstones
 }
 
 alias Mobilizon.Actors.{Actor, Member}
-alias Mobilizon.Events.Event
 alias Mobilizon.Discussions.{Comment, Discussion}
+alias Mobilizon.Events.Event
 alias Mobilizon.Federation.ActivityPub.Permission
+alias Mobilizon.Federation.ActivityStream
 alias Mobilizon.Posts.Post
 alias Mobilizon.Resources.Resource
-alias Mobilizon.Todos.{Todo, TodoList}
-alias Mobilizon.Federation.ActivityStream
 alias Mobilizon.Tombstone
 
 defmodule Mobilizon.Federation.ActivityPub.Types.Entity do
@@ -129,28 +126,6 @@ defimpl Ownable, for: Actor do
   defdelegate group_actor(entity), to: Actors
   defdelegate actor(entity), to: Actors
   defdelegate permissions(entity), to: Actors
-end
-
-defimpl Managable, for: TodoList do
-  defdelegate update(entity, attrs, additionnal), to: TodoLists
-  defdelegate delete(entity, actor, local, additionnal), to: TodoLists
-end
-
-defimpl Ownable, for: TodoList do
-  defdelegate group_actor(entity), to: TodoLists
-  defdelegate actor(entity), to: TodoLists
-  defdelegate permissions(entity), to: TodoLists
-end
-
-defimpl Managable, for: Todo do
-  defdelegate update(entity, attrs, additionnal), to: Todos
-  defdelegate delete(entity, actor, local, additionnal), to: Todos
-end
-
-defimpl Ownable, for: Todo do
-  defdelegate group_actor(entity), to: Todos
-  defdelegate actor(entity), to: Todos
-  defdelegate permissions(entity), to: Todos
 end
 
 defimpl Managable, for: Resource do

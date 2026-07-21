@@ -337,36 +337,6 @@ defmodule Mobilizon.Factory do
     }
   end
 
-  @spec todo_list_factory :: Mobilizon.Todos.TodoList.t()
-  def todo_list_factory do
-    uuid = Ecto.UUID.generate()
-
-    %Mobilizon.Todos.TodoList{
-      title: sequence("todo list"),
-      actor: build(:group),
-      id: uuid,
-      url: url(~p"/todo-list/#{uuid}"),
-      published_at: DateTime.utc_now()
-    }
-  end
-
-  @spec todo_factory :: Mobilizon.Todos.Todo.t()
-  def todo_factory do
-    uuid = Ecto.UUID.generate()
-
-    %Mobilizon.Todos.Todo{
-      id: uuid,
-      title: sequence("my todo"),
-      todo_list: build(:todo_list),
-      status: false,
-      due_date: Timex.shift(DateTime.utc_now(), hours: 2),
-      assigned_to: build(:actor),
-      url: url(~p"/todo/#{uuid}"),
-      creator: build(:actor),
-      published_at: DateTime.utc_now()
-    }
-  end
-
   @spec resource_factory :: Mobilizon.Resources.Resource.t()
   def resource_factory do
     uuid = Ecto.UUID.generate()

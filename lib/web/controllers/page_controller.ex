@@ -36,7 +36,7 @@ defmodule Mobilizon.Web.PageController do
   defdelegate my_groups(conn, params), to: PageController, as: :index
 
   @typep object_type ::
-           :actor | :event | :comment | :resource | :post | :discussion | :todo_list | :todo
+           :actor | :event | :comment | :resource | :post | :discussion
 
   @spec index(Plug.Conn.t(), any) :: Plug.Conn.t()
   def index(conn, _params), do: render(conn, :index)
@@ -77,25 +77,13 @@ defmodule Mobilizon.Web.PageController do
     render_or_error(conn, &checks?/3, status, :discussion, discussion)
   end
 
-  @spec todo_list(Plug.Conn.t(), map) :: Plug.Conn.t() | {:error, :not_found}
-  def todo_list(conn, %{"uuid" => uuid}) do
-    {status, todo_list} = Cache.get_todo_list_by_uuid_with_preload(uuid)
-    render_or_error(conn, &checks?/3, status, :todo_list, todo_list)
-  end
-
-  @spec todo(Plug.Conn.t(), map) :: Plug.Conn.t() | {:error, :not_found}
-  def todo(conn, %{"uuid" => uuid}) do
-    {status, todo} = Cache.get_todo_by_uuid_with_preload(uuid)
-    render_or_error(conn, &checks?/3, status, :todo, todo)
-  end
-
   @spec conversation(Plug.Conn.t(), map()) :: Plug.Conn.t() | {:error, :not_found}
   def conversation(conn, %{"id" => slug}) do
     {status, conversation} = Cache.get_conversation_by_id_with_preload(slug)
     render_or_error(conn, &checks?/3, status, :conversation, conversation)
   end
 
-  @typep collections :: :resources | :posts | :discussions | :events | :todos
+  @typep collections :: :resources | :posts | :discussions | :events
 
   @spec resources(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def resources(conn, %{"name" => _name}) do
@@ -115,11 +103,6 @@ defmodule Mobilizon.Web.PageController do
   @spec events(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def events(conn, %{"name" => _name}) do
     handle_collection_route(conn, :events)
-  end
-
-  @spec todos(Plug.Conn.t(), map()) :: Plug.Conn.t()
-  def todos(conn, %{"name" => _name}) do
-    handle_collection_route(conn, :todos)
   end
 
   @spec interact(Plug.Conn.t(), map()) :: Plug.Conn.t() | {:error, :not_found}

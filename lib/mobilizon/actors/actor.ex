@@ -76,7 +76,6 @@ defmodule Mobilizon.Actors.Actor do
     :followers_url,
     :posts_url,
     :events_url,
-    :todos_url,
     :discussions_url,
     :type,
     :name,
@@ -124,7 +123,6 @@ defmodule Mobilizon.Actors.Actor do
     :members_url,
     :resources_url,
     :posts_url,
-    :todos_url,
     :events_url,
     :discussions_url,
     :name,
@@ -170,7 +168,6 @@ defmodule Mobilizon.Actors.Actor do
     field(:resources_url, :string)
     field(:posts_url, :string)
     field(:events_url, :string)
-    field(:todos_url, :string)
     field(:discussions_url, :string)
 
     field(:type, ActorType, default: :Person)
@@ -430,7 +427,6 @@ defmodule Mobilizon.Actors.Actor do
       :resources_url,
       if(type == :Group, do: build_url(username, :resources), else: nil)
     )
-    |> put_change(:todos_url, if(type == :Group, do: build_url(username, :todos), else: nil))
     |> put_change(:posts_url, if(type == :Group, do: build_url(username, :posts), else: nil))
     |> put_change(:events_url, if(type == :Group, do: build_url(username, :events), else: nil))
     |> put_change(
@@ -455,7 +451,7 @@ defmodule Mobilizon.Actors.Actor do
     do: ~p"/relay" |> url() |> URI.decode()
 
   def build_url(preferred_username, endpoint, args)
-      when endpoint in [:page, :resources, :posts, :discussions, :events, :todos] do
+      when endpoint in [:page, :resources, :posts, :discussions, :events] do
     endpoint = if endpoint == :page, do: :actor, else: endpoint
 
     Endpoint

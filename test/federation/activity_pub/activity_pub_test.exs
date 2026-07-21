@@ -12,7 +12,6 @@ defmodule Mobilizon.Federation.ActivityPubTest do
 
   alias Mobilizon.{Discussions, Events, Posts}
   alias Mobilizon.Resources.Resource
-  alias Mobilizon.Todos.{Todo, TodoList}
 
   alias Mobilizon.Federation.ActivityPub
   alias Mobilizon.Federation.ActivityPub.{Actions, Federator, Utils}
@@ -241,36 +240,6 @@ defmodule Mobilizon.Federation.ActivityPubTest do
       assert activity.data["actor"] == moderator.url
       assert activity.data["to"] == [member.actor.url, group.members_url]
       assert activity.data["object"] == member.url
-    end
-  end
-
-  describe "create a todo list" do
-    @todo_list_title "My TODO-list"
-
-    test "it creates a todo list" do
-      with_mock Utils, [:passthrough], maybe_federate: fn _ -> :ok end do
-        actor = insert(:actor)
-        group = insert(:group)
-
-        {:ok, create_data, %TodoList{url: todo_list_url}} =
-          Actions.Create.create(
-            :todo_list,
-            %{title: @todo_list_title, actor_id: group.id},
-            true,
-            %{
-              "actor" => actor.url
-            }
-          )
-
-        assert create_data.local
-        assert create_data.data["object"]["id"] == todo_list_url
-        assert create_data.data["object"]["type"] == "TodoList"
-        assert create_data.data["object"]["name"] == @todo_list_title
-        assert create_data.data["to"] == [group.members_url]
-        assert create_data.data["actor"] == actor.url
-
-        assert_called(Utils.maybe_federate(create_data))
-      end
     end
   end
 
@@ -638,34 +607,6 @@ defmodule Mobilizon.Federation.ActivityPubTest do
         assert update_data.data["cc"] == []
 
         assert_not_called(Federator.enqueue(:publish, update_data, 5))
-      end
-    end
-  end
-
-  describe "create a todo" do
-    @todo_title "Finish this thing"
-
-    test "it creates a todo" do
-      with_mock Utils, [:passthrough], maybe_federate: fn _ -> :ok end do
-        actor = insert(:actor)
-        todo_list = insert(:todo_list)
-
-        {:ok, create_data, %Todo{url: todo_url}} =
-          Actions.Create.create(
-            :todo,
-            %{title: @todo_title, todo_list_id: todo_list.id, creator_id: actor.id},
-            true,
-            %{"actor" => actor.url}
-          )
-
-        assert create_data.local
-        assert create_data.data["object"]["id"] == todo_url
-        assert create_data.data["object"]["type"] == "Todo"
-        assert create_data.data["object"]["name"] == @todo_title
-        assert create_data.data["to"] == [todo_list.actor.members_url]
-        assert create_data.data["actor"] == actor.url
-
-        assert_called(Utils.maybe_federate(create_data))
       end
     end
   end

@@ -70,7 +70,6 @@ defmodule Mobilizon.Federation.ActivityPub.Refresher do
          resources_url: resources_url,
          members_url: members_url,
          posts_url: posts_url,
-         todos_url: todos_url,
          discussions_url: discussions_url,
          events_url: events_url
        }} ->
@@ -80,7 +79,6 @@ defmodule Mobilizon.Federation.ActivityPub.Refresher do
              :ok <- fetch_collection(members_url, on_behalf_of),
              :ok <- fetch_collection(resources_url, on_behalf_of),
              :ok <- fetch_collection(posts_url, on_behalf_of),
-             :ok <- fetch_collection(todos_url, on_behalf_of),
              :ok <- fetch_collection(discussions_url, on_behalf_of),
              :ok <- fetch_collection(events_url, on_behalf_of) do
           :ok

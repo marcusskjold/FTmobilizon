@@ -247,7 +247,8 @@ defmodule Mobilizon.Mixfile do
       {:ecto_dev_logger, "~> 0.7"},
       {:castore, "~> 1.0"},
       {:credo_code_climate, "~> 0.1.0", only: [:dev, :test]},
-      {:json_polyfill, "~> 0.2"}
+      {:json_polyfill, "~> 0.2"},
+      {:meandro, "~> 0.1.0", only: [:dev, :test]}
     ] ++ oauth_deps()
   end
 
@@ -308,7 +309,6 @@ defmodule Mobilizon.Mixfile do
         Mobilizon.Posts,
         Mobilizon.Reports,
         Mobilizon.Resources,
-        Mobilizon.Todos,
         Mobilizon.Users,
         Mobilizon.Federation,
         Mobilizon.Federation.ActivityPub,

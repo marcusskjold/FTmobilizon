@@ -13,7 +13,6 @@ defmodule Mobilizon.GraphQL.Schema do
     Media,
     Reports,
     Resources,
-    Todos,
     Users
   }
 
@@ -45,8 +44,6 @@ defmodule Mobilizon.GraphQL.Schema do
   import_types(Schema.SearchType)
   import_types(Schema.ResourceType)
   import_types(Schema.PostType)
-  import_types(Schema.Todos.TodoListType)
-  import_types(Schema.Todos.TodoType)
   import_types(Schema.ConfigType)
   import_types(Schema.ReportType)
   import_types(Schema.AdminType)
@@ -143,7 +140,6 @@ defmodule Mobilizon.GraphQL.Schema do
       |> Dataloader.add_source(Media, default_source)
       |> Dataloader.add_source(Reports, default_source)
       |> Dataloader.add_source(Resources, default_source)
-      |> Dataloader.add_source(Todos, default_source)
 
     ctx
     |> Map.put(:loader, loader)
@@ -170,8 +166,6 @@ defmodule Mobilizon.GraphQL.Schema do
     import_fields(:media_queries)
     import_fields(:report_queries)
     import_fields(:admin_queries)
-    import_fields(:todo_list_queries)
-    import_fields(:todo_queries)
     import_fields(:discussion_queries)
     import_fields(:conversation_queries)
     import_fields(:resource_queries)
@@ -196,8 +190,6 @@ defmodule Mobilizon.GraphQL.Schema do
     import_fields(:media_mutations)
     import_fields(:report_mutations)
     import_fields(:admin_mutations)
-    import_fields(:todo_list_mutations)
-    import_fields(:todo_mutations)
     import_fields(:discussion_mutations)
     import_fields(:conversation_mutations)
     import_fields(:resource_mutations)

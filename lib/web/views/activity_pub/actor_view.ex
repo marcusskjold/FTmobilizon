@@ -1,7 +1,7 @@
 defmodule Mobilizon.Web.ActivityPub.ActorView do
   use Mobilizon.Web, :view
 
-  alias Mobilizon.{Actors, Discussions, Events, Posts, Resources, Todos}
+  alias Mobilizon.{Actors, Discussions, Events, Posts, Resources}
   alias Mobilizon.Actors.{Actor, Member}
   alias Mobilizon.Discussions.Discussion
   alias Mobilizon.Events.Event
@@ -11,7 +11,6 @@ defmodule Mobilizon.Web.ActivityPub.ActorView do
   alias Mobilizon.Posts.Post
   alias Mobilizon.Resources.Resource
   alias Mobilizon.Storage.Page
-  alias Mobilizon.Todos.TodoList
   require Logger
 
   @private_visibility_empty_collection %{elements: [], total: 0}
@@ -87,7 +86,6 @@ defmodule Mobilizon.Web.ActivityPub.ActorView do
           | :discussions
           | :posts
           | :events
-          | :todos
           | :outbox
 
   @spec fetch_collection(collection(), Actor.t(), integer()) :: Page.t(Follower.t())
@@ -117,10 +115,6 @@ defmodule Mobilizon.Web.ActivityPub.ActorView do
 
   defp fetch_collection(:events, actor, page) do
     Events.list_simple_organized_events_for_group(actor, page)
-  end
-
-  defp fetch_collection(:todos, actor, page) do
-    Todos.get_todo_lists_for_group(actor, page)
   end
 
   defp fetch_collection(:outbox, actor, page) do
@@ -176,7 +170,6 @@ defmodule Mobilizon.Web.ActivityPub.ActorView do
               :outbox,
               :members,
               :resources,
-              :todos,
               :posts,
               :events,
               :discussions
@@ -215,7 +208,6 @@ defmodule Mobilizon.Web.ActivityPub.ActorView do
   def item(%Discussion{} = discussion), do: Convertible.model_to_as(discussion)
   def item(%Post{} = post), do: Convertible.model_to_as(post)
   def item(%Event{} = event), do: Convertible.model_to_as(event)
-  def item(%TodoList{} = todo_list), do: Convertible.model_to_as(todo_list)
   def item(item), do: item
 
   @spec actor_applicant_group_member?(Actor.t(), Actor.t()) :: boolean()

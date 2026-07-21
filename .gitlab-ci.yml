@@ -152,10 +152,12 @@ exunit:
     - mix ecto.create
     - mix ecto.migrate
   script:
-    - mix coveralls
+    - mix coveralls.html
   coverage: '/\[TOTAL\]\s+([0-9\.]{1,5}%)/'
   artifacts:
     when: always
+    paths:
+      - cover
     reports:
       junit:
         - test-junit-report.xml

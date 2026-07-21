@@ -79,7 +79,6 @@ defmodule Mobilizon.Federation.ActivityStream.Converter.Actor do
     endpoints = %{
       members_url: get_in(data, ["endpoints", "members"]),
       resources_url: get_in(data, ["endpoints", "resources"]),
-      todos_url: get_in(data, ["endpoints", "todos"]),
       events_url: get_in(data, ["endpoints", "events"]),
       posts_url: get_in(data, ["endpoints", "posts"]),
       discussions_url: get_in(data, ["endpoints", "discussions"]),
@@ -149,7 +148,6 @@ defmodule Mobilizon.Federation.ActivityStream.Converter.Actor do
     new_endpoints = %{
       "members" => actor.members_url,
       "resources" => actor.resources_url,
-      "todos" => actor.todos_url,
       "posts" => actor.posts_url,
       "events" => actor.events_url,
       "discussions" => actor.discussions_url

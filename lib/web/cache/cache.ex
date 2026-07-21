@@ -9,7 +9,6 @@ defmodule Mobilizon.Web.Cache do
   alias Mobilizon.Events.Event
   alias Mobilizon.Posts.Post
   alias Mobilizon.Resources.Resource
-  alias Mobilizon.Todos.{Todo, TodoList}
   alias Mobilizon.Web.Cache.ActivityPub
 
   @type local_actor :: %Actor{domain: nil}
@@ -24,10 +23,6 @@ defmodule Mobilizon.Web.Cache do
   defdelegate get_comment_by_uuid_with_preload(uuid), to: ActivityPub
   @spec get_resource_by_uuid_with_preload(binary) :: {:commit, Resource.t()} | {:ignore, nil}
   defdelegate get_resource_by_uuid_with_preload(uuid), to: ActivityPub
-  @spec get_todo_list_by_uuid_with_preload(binary) :: {:commit, TodoList.t()} | {:ignore, nil}
-  defdelegate get_todo_list_by_uuid_with_preload(uuid), to: ActivityPub
-  @spec get_todo_by_uuid_with_preload(binary) :: {:commit, Todo.t()} | {:ignore, nil}
-  defdelegate get_todo_by_uuid_with_preload(uuid), to: ActivityPub
 
   @spec get_conversation_by_id_with_preload(binary) ::
           {:commit, Conversation.t()} | {:ignore, nil}

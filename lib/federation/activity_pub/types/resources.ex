@@ -118,14 +118,14 @@ defmodule Mobilizon.Federation.ActivityPub.Types.Resources do
     end
   end
 
-  @spec actor(Todo.t()) :: Actor.t() | nil
+  @spec actor(Resource.t()) :: Actor.t() | nil
   def actor(%Resource{creator_id: creator_id}),
     do: Actors.get_actor(creator_id)
 
-  @spec group_actor(Todo.t()) :: Actor.t() | nil
+  @spec group_actor(Resource.t()) :: Actor.t() | nil
   def group_actor(%Resource{actor_id: actor_id}), do: Actors.get_actor(actor_id)
 
-  @spec permissions(TodoList.t()) :: Permission.t()
+  @spec permissions(Resource.t()) :: Permission.t()
   def permissions(%Resource{}) do
     %Permission{access: :member, create: :member, update: :member, delete: :member}
   end
