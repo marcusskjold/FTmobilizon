@@ -164,5 +164,30 @@ defmodule Mobilizon.GraphQL.Resolvers.ConfigTest do
       assert res["data"]["config"]["description"] == "My description"
       assert res["data"]["config"]["federating"] == false
     end
+
+    test "get_config/3 returns restriction settings", context do
+      Cachex.clear("full_config")
+      Mobilizon.Config.clear_config_cache()
+      Config.put([:restrictions, :only_admin_can_create_groups], true)
+      Config.put([:restrictions, :only_groups_can_create_events], true)
+
+      query = """
+      {
+        config {
+            restrictions {
+              only_admin_can_create_groups
+              only_groups_can_create_events
+            }
+        }
+      }
+      """
+
+      res =
+        context.conn
+        |> AbsintheHelpers.graphql_query(query: query)
+
+      assert res["data"]["config"]["restrictions"]["only_admin_can_create_groups"] == true
+      assert res["data"]["config"]["restrictions"]["only_groups_can_create_events"] == true
+    end
   end
 end
