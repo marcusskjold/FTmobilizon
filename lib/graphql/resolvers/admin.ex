@@ -30,9 +30,8 @@ defmodule Mobilizon.GraphQL.Resolvers.Admin do
   def list_action_logs(
         _parent,
         %{page: page, limit: limit},
-        %{context: %{current_user: %User{role: role}}}
-      )
-      when is_moderator(role) do
+        _context
+      ) do
     with %Page{elements: action_logs, total: total} <-
            Mobilizon.Admin.list_action_logs(page, limit) do
       action_logs =
@@ -53,10 +52,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Admin do
 
       {:ok, %Page{elements: action_logs, total: total}}
     end
-  end
-
-  def list_action_logs(_parent, _args, _resolution) do
-    {:error, dgettext("errors", "You need to be logged-in and a moderator to list action logs")}
   end
 
   defp add_extra_data(nil, _actor, _id, _inserted_at), do: nil
@@ -216,8 +211,7 @@ defmodule Mobilizon.GraphQL.Resolvers.Admin do
 
   @spec get_dashboard(any(), any(), Absinthe.Resolution.t()) ::
           {:ok, map()} | {:error, String.t()}
-  def get_dashboard(_parent, _args, %{context: %{current_user: %User{role: role}}})
-      when is_admin(role) do
+  def get_dashboard(_parent, _args, _context) do
     last_public_event_published =
       case Events.list_events(1, 1, :inserted_at, :desc) do
         %Page{elements: [event | _]} -> event
@@ -240,33 +234,14 @@ defmodule Mobilizon.GraphQL.Resolvers.Admin do
      }}
   end
 
-  def get_dashboard(_parent, _args, _resolution) do
-    {:error,
-     dgettext(
-       "errors",
-       "You need to be logged-in and an administrator to access dashboard statistics"
-     )}
-  end
-
   @spec get_settings(any(), any(), Absinthe.Resolution.t()) :: {:ok, map()} | {:error, String.t()}
-  def get_settings(_parent, _args, %{
-        context: %{current_user: %User{role: role}}
-      })
-      when is_admin(role) do
+  def get_settings(_parent, _args, _context) do
     {:ok, Config.admin_settings()}
-  end
-
-  def get_settings(_parent, _args, _resolution) do
-    {:error,
-     dgettext("errors", "You need to be logged-in and an administrator to access admin settings")}
   end
 
   @spec save_settings(any(), map(), Absinthe.Resolution.t()) ::
           {:ok, map()} | {:error, String.t()}
-  def save_settings(_parent, args, %{
-        context: %{current_user: %User{role: role}}
-      })
-      when is_admin(role) do
+  def save_settings(_parent, args, _context) do
     with {:ok, res} <- Admin.save_settings("instance", args),
          res <-
            res
@@ -286,23 +261,10 @@ defmodule Mobilizon.GraphQL.Resolvers.Admin do
     end
   end
 
-  def save_settings(_parent, _args, _resolution) do
-    {:error,
-     dgettext("errors", "You need to be logged-in and an administrator to save admin settings")}
-  end
-
   @spec get_media_setting(any(), any(), Absinthe.Resolution.t()) ::
           {:ok, Media.t()} | {:error, String.t()}
-  def get_media_setting(_parent, %{group: group, name: name}, %{
-        context: %{current_user: %User{role: role}}
-      })
-      when is_admin(role) do
+  def get_media_setting(_parent, %{group: group, name: name}, _context) do
     {:ok, MediaResolver.transform_media(Admin.get_admin_setting_media(group, name, nil))}
-  end
-
-  def get_media_setting(_parent, _args, _resolution) do
-    {:error,
-     dgettext("errors", "You need to be logged-in and an administrator to access admin settings")}
   end
 
   @spec get_instance_logo(any(), any(), Absinthe.Resolution.t()) ::
@@ -326,10 +288,7 @@ defmodule Mobilizon.GraphQL.Resolvers.Admin do
   @spec update_user(any, map(), Absinthe.Resolution.t()) ::
           {:error, :invalid_argument | :user_not_found | binary | Ecto.Changeset.t()}
           | {:ok, Mobilizon.Users.User.t()}
-  def update_user(_parent, %{id: id, notify: notify} = args, %{
-        context: %{current_user: %User{role: role}}
-      })
-      when is_admin(role) do
+  def update_user(_parent, %{id: id, notify: notify} = args, _context) do
     case Users.get_user(id) do
       nil ->
         {:error, :user_not_found}
@@ -347,11 +306,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Admin do
             end
         end
     end
-  end
-
-  def update_user(_parent, _args, _resolution) do
-    {:error,
-     dgettext("errors", "You need to be logged-in and an administrator to edit an user's details")}
   end
 
   @spec change_email(User.t(), String.t(), boolean()) :: {:ok, User.t()} | {:error, String.t()}
@@ -448,9 +402,8 @@ defmodule Mobilizon.GraphQL.Resolvers.Admin do
   def list_relay_followers(
         _parent,
         %{page: page, limit: limit},
-        %{context: %{current_user: %User{role: role}}}
-      )
-      when is_admin(role) do
+        _context
+      ) do
     with %Actor{} = relay_actor <- Relay.get_actor() do
       %Page{} =
         page = Actors.list_external_followers_for_actor_paginated(relay_actor, page, limit)
@@ -459,36 +412,19 @@ defmodule Mobilizon.GraphQL.Resolvers.Admin do
     end
   end
 
-  def list_relay_followers(_parent, _args, %{context: %{current_user: %User{}}}) do
-    {:error, :unauthorized}
-  end
-
-  def list_relay_followers(_parent, _args, _resolution) do
-    {:error, :unauthenticated}
-  end
-
   @spec list_relay_followings(any(), map(), Absinthe.Resolution.t()) ::
           {:ok, Page.t(Follower.t())} | {:error, :unauthorized | :unauthenticated}
   def list_relay_followings(
         _parent,
         %{page: page, limit: limit},
-        %{context: %{current_user: %User{role: role}}}
-      )
-      when is_admin(role) do
+        _context
+      ) do
     with %Actor{} = relay_actor <- Relay.get_actor() do
       %Page{} =
         page = Actors.list_external_followings_for_actor_paginated(relay_actor, page, limit)
 
       {:ok, page}
     end
-  end
-
-  def list_relay_followings(_parent, _args, %{context: %{current_user: %User{}}}) do
-    {:error, :unauthorized}
-  end
-
-  def list_relay_followings(_parent, _args, _resolution) do
-    {:error, :unauthenticated}
   end
 
   def get_instances(

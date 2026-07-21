@@ -15,8 +15,7 @@ defmodule Mobilizon.GraphQL.Resolvers.Actor do
 
   @spec refresh_profile(any(), map(), Absinthe.Resolution.t()) ::
           {:ok, Actor.t()} | {:error, String.t()}
-  def refresh_profile(_parent, %{id: id}, %{context: %{current_user: %User{role: role}}})
-      when is_admin(role) do
+  def refresh_profile(_parent, %{id: id}, _context) do
     case Actors.get_actor(id) do
       %Actor{domain: domain, id: actor_id} = actor when not is_nil(domain) ->
         Background.enqueue("refresh_profile", %{
@@ -37,12 +36,10 @@ defmodule Mobilizon.GraphQL.Resolvers.Actor do
           {:ok, Actor.t()} | {:error, String.t()}
   def suspend_profile(_parent, %{id: id}, %{
         context: %{
-          current_user: %User{role: role},
           current_actor: %Actor{} = moderator_actor
         }
-      })
-      when is_moderator(role) do
-    case Actors.get_actor_with_preload(id) do
+      }) do
+    case Actors.get_actor_with_preload(id, true) do
       # Suspend a group on this instance
       %Actor{suspended: false, type: :Group, domain: nil} = actor ->
         Logger.debug("We're suspending a group on this very instance")
@@ -68,19 +65,13 @@ defmodule Mobilizon.GraphQL.Resolvers.Actor do
     end
   end
 
-  def suspend_profile(_parent, _args, _resolution) do
-    {:error, dgettext("errors", "Only moderators and administrators can suspend a profile")}
-  end
-
   @spec unsuspend_profile(any(), map(), Absinthe.Resolution.t()) ::
           {:ok, Actor.t()} | {:error, String.t()}
   def unsuspend_profile(_parent, %{id: id}, %{
         context: %{
-          current_user: %User{role: role},
           current_actor: %Actor{} = moderator_actor
         }
-      })
-      when is_moderator(role) do
+      }) do
     with %Actor{suspended: true} = actor <-
            Actors.get_actor_with_preload(id, true),
          {:delete_tombstones, {_, nil}} <-
@@ -99,10 +90,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Actor do
       {:error, _} ->
         {:error, dgettext("errors", "Error while performing background task")}
     end
-  end
-
-  def unsuspend_profile(_parent, _args, _resolution) do
-    {:error, dgettext("errors", "Only moderators and administrators can unsuspend a profile")}
   end
 
   @spec refresh_if_remote(Actor.t()) :: :ok
