@@ -66,7 +66,6 @@ defmodule Mobilizon.Federation.ActivityPub.Actions.Create do
     :discussion => Types.Discussions,
     :conversation => Types.Conversations,
     :actor => Types.Actors,
-    :todo_list => Types.TodoLists,
     :resource => Types.Resources,
     :post => Types.Posts
   }

@@ -103,11 +103,6 @@ const group_mock = {
       },
       summary: null,
       suspended: false,
-      todoLists: {
-        __typename: "PaginatedTodoListList",
-        elements: [],
-        total: 0,
-      },
       type: "GROUP",
       url: "https://mobilizon.test/@group_name",
       visibility: "PUBLIC",

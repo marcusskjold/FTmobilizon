@@ -4,7 +4,7 @@ defmodule Mobilizon.Web.Resolvers.GroupTest do
 
   import Mobilizon.Factory
 
-  alias Mobilizon.Actors.{Actor, Follower}
+  alias Mobilizon.Actors.{Actor, Follower, Member}
   alias Mobilizon.GraphQL.AbsintheHelpers
 
   @non_existent_username "nonexistent"
@@ -128,6 +128,21 @@ defmodule Mobilizon.Web.Resolvers.GroupTest do
                "Username must only contain alphanumeric lowercased characters and underscores."
              ]
     end
+
+    test "bad connected", %{conn: conn} do
+      user_without_actor = insert(:user, role: :administrator)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @create_group_mutation,
+          variables: @new_group_params
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You need to be logged-in to create a group"
+    end
   end
 
   describe "list groups" do
@@ -183,6 +198,79 @@ defmodule Mobilizon.Web.Resolvers.GroupTest do
              |> Enum.map(& &1["preferredUsername"])
              |> MapSet.new() ==
                [group_1, group_2, group_3] |> Enum.map(& &1.preferred_username) |> MapSet.new()
+    end
+  end
+
+  describe "get groups" do
+    @get_group_query """
+      query GetGroup(
+        $id: ID!
+      ) {
+        getGroup(id: $id) {
+          mediaSize
+          id
+          preferredUsername
+        }
+      }
+    """
+
+    test "error not authenticated", %{conn: conn} do
+      group = insert(:group, visibility: :public)
+
+      res =
+        AbsintheHelpers.graphql_query(conn,
+          query: @get_group_query,
+          variables: %{"id" => group.id}
+        )
+
+      assert hd(res["errors"])["message"] == "You need to be logged in"
+    end
+
+    test "error if not a moderator", %{conn: conn} do
+      group = insert(:group, visibility: :public)
+      user = insert(:user)
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(query: @get_group_query, variables: %{"id" => group.id})
+
+      assert hd(res["errors"])["message"] == "You don't have permission to do this"
+    end
+
+    test "error if group not exist", %{conn: conn} do
+      user = insert(:user, role: :moderator)
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(query: @get_group_query, variables: %{"id" => 123})
+
+      assert hd(res["errors"])["message"] == "Group with ID 123 not found"
+    end
+
+    test "can see group suspended", %{conn: conn} do
+      group = insert(:group, visibility: :public, suspended: true)
+      user_moderate = insert(:user, role: :moderator)
+
+      res =
+        conn
+        |> auth_conn(user_moderate)
+        |> AbsintheHelpers.graphql_query(query: @get_group_query, variables: %{"id" => group.id})
+
+      assert res["data"]["getGroup"]["preferredUsername"] == group.preferred_username
+    end
+
+    test "get group if a moderator", %{conn: conn} do
+      group = insert(:group, visibility: :public)
+      user = insert(:user, role: :moderator)
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(query: @get_group_query, variables: %{"id" => group.id})
+
+      assert res["data"]["getGroup"]["preferredUsername"] == group.preferred_username
     end
   end
 
@@ -532,6 +620,22 @@ defmodule Mobilizon.Web.Resolvers.GroupTest do
 
       assert hd(res["errors"])["message"] =~ "not an administrator"
     end
+
+    test "bad connected", %{conn: conn} do
+      group = insert(:group)
+      user_without_actor = insert(:user, role: :administrator)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @delete_group_mutation,
+          variables: %{groupId: group.id}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You need to be logged-in to delete a group"
+    end
   end
 
   describe "follow a group" do
@@ -580,6 +684,22 @@ defmodule Mobilizon.Web.Resolvers.GroupTest do
         )
 
       assert res["errors"] == nil
+    end
+
+    test "bad connected", %{conn: conn} do
+      group = insert(:group)
+      user_without_actor = insert(:user, role: :administrator)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @follow_group_mutation,
+          variables: %{groupId: group.id}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You need to be logged-in to follow a group"
     end
   end
 
@@ -646,6 +766,22 @@ defmodule Mobilizon.Web.Resolvers.GroupTest do
 
       assert res["errors"] == nil
       assert Mobilizon.Actors.get_follower_by_followed_and_following(group, actor) == nil
+    end
+
+    test "bad connected", %{conn: conn} do
+      group = insert(:group)
+      user_without_actor = insert(:user, role: :administrator)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @unfollow_group_mutation,
+          variables: %{groupId: group.id}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You need to be logged-in to unfollow a group"
     end
   end
 
@@ -719,6 +855,198 @@ defmodule Mobilizon.Web.Resolvers.GroupTest do
 
       assert %Follower{notify: false} =
                Mobilizon.Actors.get_follower_by_followed_and_following(group, actor)
+    end
+  end
+
+  describe "Member Resolver to join a group" do
+    @join_group_mutation """
+    mutation JoinGroup($groupId: ID!) {
+      joinGroup(groupId: $groupId) {
+        id
+        role,
+        actor {
+          id
+        },
+        parent {
+          id
+        }
+      }
+    }
+    """
+
+    test "join_group/3 should create a member", %{conn: conn, user: user, actor: actor} do
+      group = insert(:group)
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @join_group_mutation,
+          variables: %{groupId: group.id}
+        )
+
+      assert res["errors"] == nil
+      assert res["data"]["joinGroup"]["role"] == "NOT_APPROVED"
+      assert res["data"]["joinGroup"]["parent"]["id"] == to_string(group.id)
+      assert res["data"]["joinGroup"]["actor"]["id"] == to_string(actor.id)
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @join_group_mutation,
+          variables: %{groupId: group.id}
+        )
+
+      assert hd(res["errors"])["message"] =~ "already a member"
+    end
+
+    test "join_group/3 should check the group is not invite only", %{
+      conn: conn,
+      user: user
+    } do
+      group = insert(:group, %{openness: :invite_only})
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @join_group_mutation,
+          variables: %{groupId: group.id}
+        )
+
+      assert hd(res["errors"])["message"] =~ "cannot join this group"
+    end
+
+    test "join_group/3 should check the group exists", %{
+      conn: conn,
+      user: user
+    } do
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @join_group_mutation,
+          variables: %{groupId: 1042}
+        )
+
+      assert hd(res["errors"])["message"] =~ "Group not found"
+    end
+
+    test "bad connected", %{conn: conn} do
+      group = insert(:group)
+      user_without_actor = insert(:user, role: :administrator)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @join_group_mutation,
+          variables: %{groupId: group.id}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You need to be logged-in to join a group"
+    end
+  end
+
+  describe "Member Resolver to leave from a group" do
+    @leave_group_mutation """
+    mutation LeaveGroup($groupId: ID!) {
+      leaveGroup(groupId: $groupId) {
+        id
+      }
+    }
+    """
+
+    test "leave_group/3 should delete a member from a group", %{
+      conn: conn,
+      user: user,
+      actor: actor
+    } do
+      group = insert(:group)
+      insert(:member, role: :administrator, parent: group)
+      %Member{id: member_id} = insert(:member, %{actor: actor, parent: group})
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @leave_group_mutation,
+          variables: %{groupId: group.id}
+        )
+
+      assert res["errors"] == nil
+      assert res["data"]["leaveGroup"]["id"] == to_string(member_id)
+    end
+
+    test "leave_group/3 should check if the member is the only administrator", %{
+      conn: conn,
+      actor: actor,
+      user: user
+    } do
+      group = insert(:group)
+      insert(:member, %{actor: actor, role: :creator, parent: group})
+      insert(:member, %{parent: group})
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @leave_group_mutation,
+          variables: %{groupId: group.id}
+        )
+
+      assert hd(res["errors"])["message"] =~ "only administrator"
+    end
+
+    test "leave_group/3 should check the user is logged in", %{conn: conn, actor: actor} do
+      group = insert(:group)
+      insert(:member, %{actor: actor, parent: group})
+
+      res =
+        conn
+        |> AbsintheHelpers.graphql_query(
+          query: @leave_group_mutation,
+          variables: %{groupId: group.id}
+        )
+
+      assert hd(res["errors"])["message"] == "You need to be logged in"
+    end
+
+    test "leave_group/3 should check the group exists", %{
+      conn: conn,
+      user: user,
+      actor: actor
+    } do
+      group = insert(:group)
+      insert(:member, %{actor: actor, parent: group})
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @leave_group_mutation,
+          variables: %{groupId: 1042}
+        )
+
+      assert hd(res["errors"])["message"] =~ "Group not found"
+    end
+
+    test "bad connected", %{conn: conn} do
+      group = insert(:group)
+      user_without_actor = insert(:user, role: :administrator)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @leave_group_mutation,
+          variables: %{groupId: group.id}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You need to be logged-in to leave a group"
     end
   end
 end

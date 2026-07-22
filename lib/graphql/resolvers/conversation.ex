@@ -181,6 +181,10 @@ defmodule Mobilizon.GraphQL.Resolvers.Conversation do
     end
   end
 
+  def create_conversation(_parent, _arg, _context) do
+    {:error, dgettext("errors", "You are not allowed to create a conversation if not connected")}
+  end
+
   def update_conversation(_parent, %{conversation_id: conversation_participant_id, read: read}, %{
         context: %{
           current_actor: %Actor{id: current_actor_id}

@@ -181,6 +181,29 @@ defmodule Mobilizon.GraphQL.Resolvers.ActorTest do
 
       assert res == %{"data" => %{"suspend_profile" => %{"id" => to_string(actor.id)}}}
     end
+
+    test "bad connected", %{conn: conn} do
+      user_without_actor = insert(:user, role: :administrator)
+
+      actor_user = insert(:user)
+
+      %Actor{} =
+        actor =
+        insert(:actor,
+          domain: "https://kaihuri.fr",
+          suspended: false,
+          type: :Person,
+          user: actor_user
+        )
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(query: @suspend_profile, variables: %{"id" => actor.id})
+
+      assert hd(res["errors"])["message"] ==
+               "Only moderators and administrators can suspend a profile"
+    end
   end
 
   describe "Resolver: unsuspend_profile" do
@@ -241,6 +264,32 @@ defmodule Mobilizon.GraphQL.Resolvers.ActorTest do
         )
 
       assert res == %{"data" => %{"unsuspend_profile" => %{"id" => to_string(actor.id)}}}
+    end
+
+    test "bad connected", %{conn: conn} do
+      user_without_actor = insert(:user, role: :administrator)
+
+      actor_user = insert(:user)
+
+      %Actor{} =
+        actor =
+        insert(:actor,
+          domain: "https://kaihuri.fr",
+          suspended: true,
+          type: :Person,
+          user: actor_user
+        )
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @unsuspend_profile,
+          variables: %{"id" => actor.id}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "Only moderators and administrators can unsuspend a profile"
     end
   end
 end

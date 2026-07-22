@@ -71,6 +71,12 @@ defmodule Mobilizon.GraphQL.Resolvers.PersonTest do
 
       assert hd(res["errors"])["message"] ==
                "Person with ID 6895567 not found"
+
+      res =
+        conn
+        |> AbsintheHelpers.graphql_query(query: @get_person_query, variables: %{id: actor.id})
+
+      assert hd(res["errors"])["message"] == "You need to be logged in"
     end
 
     test "find_person/3 returns a person by its username", context do
@@ -110,6 +116,15 @@ defmodule Mobilizon.GraphQL.Resolvers.PersonTest do
 
       assert hd(res["errors"])["message"] ==
                "Person with username #{@non_existent_username} not found"
+
+      res =
+        context.conn
+        |> AbsintheHelpers.graphql_query(
+          query: @fetch_person_query,
+          variables: %{preferredUsername: actor.preferred_username}
+        )
+
+      assert hd(res["errors"])["message"] == "You need to be logged in"
     end
 
     test "get_current_person/3 returns the current logged-in actor", context do
@@ -135,6 +150,16 @@ defmodule Mobilizon.GraphQL.Resolvers.PersonTest do
 
       assert hd(json_response(res, 200)["errors"])["message"] ==
                "You need to be logged in"
+
+      other_user = insert(:user)
+
+      res =
+        context.conn
+        |> auth_conn(other_user)
+        |> get("/api", AbsintheHelpers.query_skeleton(query, "logged_person"))
+
+      assert hd(json_response(res, 200)["errors"])["message"] ==
+               "no_current_person"
 
       res =
         context.conn

@@ -260,26 +260,6 @@ export const GROUP_FIELDS_FRAGMENTS = gql`
       }
       total
     }
-    todoLists {
-      elements {
-        id
-        title
-        todos {
-          elements {
-            id
-            title
-            status
-            dueDate
-            assignedTo {
-              id
-              preferredUsername
-            }
-          }
-          total
-        }
-      }
-      total
-    }
   }
   ${GROUP_BASIC_FIELDS_FRAGMENTS}
   ${RESOURCE_METADATA_BASIC_FIELDS_FRAGMENT}

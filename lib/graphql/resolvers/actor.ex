@@ -3,12 +3,10 @@ defmodule Mobilizon.GraphQL.Resolvers.Actor do
   Handles the group-related GraphQL calls.
   """
 
-  import Mobilizon.Users.Guards
   alias Mobilizon.{Actors, Admin}
   alias Mobilizon.Actors.Actor
   alias Mobilizon.Federation.ActivityPub.Actions
   alias Mobilizon.Service.Workers.Background
-  alias Mobilizon.Users.User
   import Mobilizon.Web.Gettext, only: [dgettext: 2]
 
   require Logger
@@ -65,6 +63,10 @@ defmodule Mobilizon.GraphQL.Resolvers.Actor do
     end
   end
 
+  def suspend_profile(_parent, _args, _resolution) do
+    {:error, dgettext("errors", "Only moderators and administrators can suspend a profile")}
+  end
+
   @spec unsuspend_profile(any(), map(), Absinthe.Resolution.t()) ::
           {:ok, Actor.t()} | {:error, String.t()}
   def unsuspend_profile(_parent, %{id: id}, %{
@@ -90,6 +92,10 @@ defmodule Mobilizon.GraphQL.Resolvers.Actor do
       {:error, _} ->
         {:error, dgettext("errors", "Error while performing background task")}
     end
+  end
+
+  def unsuspend_profile(_parent, _args, _resolution) do
+    {:error, dgettext("errors", "Only moderators and administrators can unsuspend a profile")}
   end
 
   @spec refresh_if_remote(Actor.t()) :: :ok
