@@ -116,6 +116,7 @@ lint-front:
 deps:
   stage: check
   script:
+    - apt update
     - apt install -y gawk
     - rm -rf ~/.hex/cache.ets
     - mix deps.get
@@ -127,6 +128,8 @@ deps:
 i18n-frontend:
   image: python:alpine
   stage: check
+  before_script:
+    - python3 --version
   script:
     - python3 check_i18n.py
   allow_failure: true
@@ -159,7 +162,6 @@ exunit:
   script:
     - rm -rf ~/.hex/cache.ets
     - mix deps.get
-    - patch -p1 < patches/elixir1-16_1-18.patch
     - mix compile
     - mix tz_world.update
     - mix ecto.create
@@ -209,7 +211,6 @@ e2e:
   script:
     - rm -rf ~/.hex/cache.ets
     - mix deps.get
-    - patch -p1 < patches/elixir1-16_1-18.patch
     - mix ecto.create
     - mix ecto.migrate
     - mix run priv/repo/e2e.seed.exs

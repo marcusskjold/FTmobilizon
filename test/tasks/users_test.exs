@@ -110,7 +110,13 @@ defmodule Mix.Tasks.Mobilizon.UsersTest do
     @converted_username "leo_pandai"
 
     test "create a profile with the user" do
-      New.run([@email, "--profile-username", @preferred_username, "--profile-display-name", @name])
+      New.run([
+        @email,
+        "--profile-username",
+        @preferred_username,
+        "--profile-display-name",
+        @name
+      ])
 
       assert {:ok,
               %User{

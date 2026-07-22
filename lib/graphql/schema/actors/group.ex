@@ -31,7 +31,13 @@ defmodule Mobilizon.GraphQL.Schema.Actors.GroupType do
     meta(:authorize, :all)
     meta(:scope_field?, true)
 
-    interfaces([:actor, :interactable, :activity_object, :action_log_object, :group_search_result])
+    interfaces([
+      :actor,
+      :interactable,
+      :activity_object,
+      :action_log_object,
+      :group_search_result
+    ])
 
     field(:id, :id, description: "Internal ID for this group")
     field(:url, :string, description: "The ActivityPub actor's URL")
