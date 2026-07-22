@@ -1,5 +1,5 @@
 # First build the application assets
-FROM node:22-alpine as assets
+FROM node:24-alpine as assets
 
 RUN apk add --no-cache python3 build-base libwebp-tools bash imagemagick ncurses
 WORKDIR /build
@@ -9,7 +9,7 @@ COPY . .
 RUN npm install && npm run build
 
 # Then, build the application binary
-FROM elixir:1.16-alpine AS builder
+FROM elixir:1.18-alpine AS builder
 
 # Fix qemu segfault on arm64
 # See https://github.com/plausible/analytics/pull/2879 and https://github.com/erlang/otp/pull/6340

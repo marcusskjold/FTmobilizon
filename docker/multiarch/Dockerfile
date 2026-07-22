@@ -1,4 +1,4 @@
-ARG IMAGE="elixir:1.16"
+ARG IMAGE="elixir:1.18"
 
 FROM ${IMAGE} as build
 SHELL ["/bin/bash", "-c"]
@@ -14,7 +14,7 @@ ENV ERL_FLAGS=$ERL_FLAGS
 # Set the right versions
 ENV ELIXIR_VERSION latest
 ENV ERLANG_VERSION latest
-ENV NODE_VERSION 22
+ENV NODE_VERSION 24
 
 # Install system dependencies
 RUN apt-get update -yq && apt-get install -yq build-essential cmake postgresql-client git curl gnupg unzip exiftool webp imagemagick gifsicle

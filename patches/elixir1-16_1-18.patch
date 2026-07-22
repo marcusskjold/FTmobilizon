@@ -1,0 +1,23 @@
+--- a/deps/codepagex/mix.exs
++++ b/deps/codepagex/mix.exs
+@@ -5,7 +5,7 @@
+     [
+       app: :codepagex,
+       version: "0.1.13",
+-      elixir: "~> 1.16",
++      elixir: "~> 1.18",
+       name: "Codepagex",
+       description: description(),
+       package: package(),
+ 
+--- a/deps/json_polyfill/rebar.config.script
++++ b/deps/json_polyfill/rebar.config.script
+@@ -7,7 +7,7 @@
+ 
+ NewHooks = case OtpVersion >= 27 of
+     true ->
+-        [{erlc_compile, "rm \"$REBAR_DEPS_DIR/json_polyfill/ebin/json.beam\""}];
++        [{erlc_compile, "rm -f \"$REBAR_DEPS_DIR/json_polyfill/ebin/json.beam\""}];
+     false ->
+         []
+ end,

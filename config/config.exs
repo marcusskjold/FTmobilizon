@@ -204,7 +204,21 @@ config :absinthe, Absinthe.Logger, filter_variables: ["token", "password", "secr
 
 config :codepagex, :encodings, [
   :ascii,
-  ~r[iso8859]i,
+  :"ISO8859/8859-1",
+  :"ISO8859/8859-10",
+  :"ISO8859/8859-11",
+  :"ISO8859/8859-13",
+  :"ISO8859/8859-14",
+  :"ISO8859/8859-15",
+  :"ISO8859/8859-16",
+  :"ISO8859/8859-2",
+  :"ISO8859/8859-3",
+  :"ISO8859/8859-4",
+  :"ISO8859/8859-5",
+  :"ISO8859/8859-6",
+  :"ISO8859/8859-7",
+  :"ISO8859/8859-8",
+  :"ISO8859/8859-9",
   :"VENDORS/MICSFT/WINDOWS/CP1252"
 ]
 
