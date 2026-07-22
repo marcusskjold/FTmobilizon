@@ -67,28 +67,14 @@ defmodule Mobilizon.GraphQL.Resolvers.Group do
     end
   end
 
-  def find_group_by_id(_parent, %{id: id}, %{
-        context: %{
-          current_actor: %Actor{id: actor_id}
-        }
-      }) do
-    with %Actor{suspended: false, id: group_id} = group <- Actors.get_actor_with_preload(id),
-         true <- Actors.member?(actor_id, group_id) do
-      {:ok, group}
-    else
-      _ ->
-        {:error, :group_not_found}
-    end
-  end
-
   @doc """
   Get a group
   """
   @spec get_group(any(), map(), Absinthe.Resolution.t()) ::
           {:ok, Actor.t()} | {:error, String.t()}
-  def get_group(_parent, %{id: id}, %{context: %{current_user: %User{role: role}}}) do
+  def get_group(_parent, %{id: id}, _context) do
     case Actors.get_actor_with_preload(id, true) do
-      %Actor{type: :Group, suspended: suspended} = actor ->
+      %Actor{type: :Group} = actor ->
         {:ok, actor}
 
       nil ->

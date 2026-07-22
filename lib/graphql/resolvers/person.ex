@@ -71,24 +71,10 @@ defmodule Mobilizon.GraphQL.Resolvers.Person do
           page: page,
           limit: limit
         },
-        %{
-          context: %{current_user: %User{role: role}}
-        }
-      )
-      when is_moderator(role) do
+        _context
+      ) do
     {:ok,
      Actors.list_actors(:Person, preferred_username, name, domain, local, suspended, page, limit)}
-  end
-
-  def list_persons(_parent, _args, %{
-        context: %{current_user: %User{role: role}}
-      })
-      when not is_moderator(role) do
-    {:error, :unauthorized}
-  end
-
-  def list_persons(_parent, _args, _resolution) do
-    {:error, :unauthenticated}
   end
 
   @doc """
@@ -104,10 +90,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Person do
     {:error, :no_current_person}
   end
 
-  def get_current_person(_parent, _args, _resolution) do
-    {:error, :unauthenticated}
-  end
-
   @doc """
   Returns the list of identities for the logged-in user
   """
@@ -115,10 +97,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Person do
           {:error, :unauthenticated} | {:ok, list(Actor.t())}
   def identities(_parent, _args, %{context: %{current_user: user}}) do
     {:ok, Users.get_actors_for_user(user)}
-  end
-
-  def identities(_parent, _args, _resolution) do
-    {:error, :unauthenticated}
   end
 
   @doc """

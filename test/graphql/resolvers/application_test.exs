@@ -165,6 +165,9 @@ defmodule Mobilizon.GraphQL.Resolvers.ApplicationTest do
     test "with valid token", %{conn: conn} do
       user = insert(:user)
 
+      res = AbsintheHelpers.graphql_query(conn, query: @identities_query)
+      assert hd(res["errors"])["message"] == "You need to be logged in"
+
       app_token = insert(:auth_application_token, user: user)
       app_token_id = to_string(app_token.id)
 

@@ -496,6 +496,25 @@ defmodule Mobilizon.Web.Resolvers.GroupTest do
 
       assert hd(res["errors"])["message"] == "Profile is not administrator for the group"
     end
+
+    test "bad connected", %{conn: conn} do
+      group = insert(:group)
+      user_without_actor = insert(:user, role: :administrator)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @update_group_mutation,
+          variables: %{
+            id: group.id,
+            name: @new_group_name
+          }
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You need to be logged-in to update a group"
+    end
   end
 
   describe "delete a group" do
