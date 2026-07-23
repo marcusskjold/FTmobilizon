@@ -146,8 +146,6 @@ defmodule Mobilizon.Mixfile do
       {:phoenix_html_helpers, "~> 1.0"},
       {:phoenix_live_view, "~> 1.0"},
       {:phoenix_view, "~> 2.0"},
-      # block by timex
-      {:gettext, "~> 0.24"},
       {:guardian, "~> 2.0"},
       {:guardian_db, "~> 3.0.0"},
       {:guardian_phoenix, "~> 2.0"},
@@ -159,7 +157,6 @@ defmodule Mobilizon.Mixfile do
       {:timex, "~> 3.0"},
       {:icalendar, github: "mobilizon-tools/icalendar"},
       {:exgravatar, "~> 2.0.1"},
-      # {:json_ld, "~> 0.3"},
       {:jason, "~> 1.2"},
       {:ecto_enum, "~> 1.4"},
       {:ex_ical, "~> 0.2"},
@@ -167,13 +164,13 @@ defmodule Mobilizon.Mixfile do
       {:gen_smtp, "~> 1.1"},
       {:phoenix_swoosh, "~> 1.0"},
       {:geolix, "~> 2.0"},
-      {:geolix_adapter_mmdb2, "~> 0.6.0"},
+      {:geolix_adapter_mmdb2, "~> 0.7.0"},
       {:absinthe, "~> 1.6"},
       {:absinthe_phoenix, "~> 2.0.1"},
       {:absinthe_plug, "~> 1.5.0"},
       {:dataloader, "~> 2.0"},
       {:atomex, "~> 0.4"},
-      # error in "fallback_options" (lib/mobilizon.ex)
+      # v4.1 error in "fallback_options" (lib/mobilizon.ex - line 131)
       {:cachex, "~> 3.1"},
       {:geohax, "~> 1.0.0"},
       {:mogrify, "~> 0.9"},
@@ -190,15 +187,15 @@ defmodule Mobilizon.Mixfile do
       {:fast_sanitize, "~> 0.1"},
       {:ueberauth, "0.10.8", override: true},
       {:ueberauth_oidcc, "~> 0.4.2"},
-      {:ueberauth_twitter, "~> 0.4"},
+      # dependancy to httpoison 1.8 -> 2.1
+      {:ueberauth_twitter, github: "mobilizon-tools/ueberauth_twitter"},
       {:ueberauth_discord, "~> 0.7"},
       {:ueberauth_github, "~> 0.8.1"},
       {:ueberauth_facebook, "~> 0.9"},
       {:ueberauth_google, "~> 0.12.1"},
       {:ueberauth_keycloak_strategy, "~> 0.4.0"},
       {:ueberauth_gitlab_strategy, "~> 0.4.0"},
-      # depend to httpoison
-      {:ueberauth_cas, "~> 2.0"},
+      {:ueberauth_cas, "~> 2.4"},
       {:ecto_shortuuid, "~> 0.1"},
       {:tesla, "~> 1.8"},
       {:sitemapper, "~> 0.6"},
@@ -206,26 +203,29 @@ defmodule Mobilizon.Mixfile do
       {:remote_ip, "~> 1.1"},
       {:ex_cldr_languages, "~> 0.3.0"},
       {:slugger, "~> 0.3"},
-      {:sentry, "~> 11.0"},
+      {:sentry, "~> 13.3"},
+      {:finch, "~> 0.23"},
       {:html_entities, "~> 0.5"},
       {:sweet_xml, "~> 0.7"},
-      {:web_push_encryption, github: "danhper/elixir-web-push-encryption"},
+      # dependancy to httpoison 1.8 -> 2.1
+      {:web_push_encryption, github: "mobilizon-tools/elixir-web-push-encryption"},
       {:eblurhash, "~> 1.2.0"},
       {:struct_access, "~> 1.1.2"},
       {:paasaa, "~> 1.0.0"},
       {:nimble_csv, "~> 1.1"},
       {:export, "~> 0.1.0"},
       {:erlport, "~> 0.11.0"},
-      {:tz_world, "~> 1.4"},
+      {:tz_world, "~> 2.3"},
       {:tzdata, "~> 1.1"},
       {:codepagex, "~> 0.1.6"},
       {:vite_phx, "~> 0.2"},
       {:unplug, "~> 1.1.0"},
       {:replug, "~> 0.1.0"},
-      {:exkismet, github: "tcitworld/exkismet"},
-      {:rajska, github: "tcitworld/rajska", branch: "mobilizon"},
-      # block by tcitworld/rajska fork
-      {:hammer, "~> 6.1"},
+      # dependancy to httpoison 1.8 -> 2.1
+      {:exkismet, github: "mobilizon-tools/exkismet"},
+      # clone from "tcitworld/rajska" + dependancy to hammer 6.0 -> 7.4
+      {:rajska, github: "mobilizon-tools/rajska"},
+      {:hammer, "~> 7.4"},
       {:tls_certificate_check, "~> 1.20"},
       {:bandit, "~> 1.0"},
       # Dev and test dependencies
@@ -247,8 +247,7 @@ defmodule Mobilizon.Mixfile do
       {:ecto_dev_logger, "~> 0.7"},
       {:castore, "~> 1.0"},
       {:credo_code_climate, "~> 0.1.0", only: [:dev, :test]},
-      {:json_polyfill, "~> 0.2"},
-      {:meandro, "~> 0.1.0", only: [:dev, :test]}
+      {:json_polyfill, "~> 0.2"}
     ] ++ oauth_deps()
   end
 

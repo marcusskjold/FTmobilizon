@@ -376,8 +376,9 @@ package-app:
     - 'echo "Artifact: ${APP_ASSET}"'
     - tar czf ${APP_ASSET} -C release mobilizon
     - du -sh ${APP_ASSET}
-  only:
-    - tags@kaihuri/mobilizon
+  rules:
+    - if: $CI_PROJECT_NAMESPACE == "kaihuri" && $CI_COMMIT_TAG != null
+    - when: manual
   artifacts:
     expire_in: 2 days
     paths:
@@ -463,6 +464,7 @@ package-multi-arch-release:
         #   ]
   rules:
     - if: '$CI_COMMIT_TAG != null || $CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_TRIGGERED == "true"'
+    - when: manual
   timeout: 3h
   allow_failure: true
 
