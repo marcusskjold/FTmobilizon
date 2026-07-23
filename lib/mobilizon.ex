@@ -44,6 +44,7 @@ defmodule Mobilizon do
         Web.Endpoint,
         {Absinthe.Subscription, Web.Endpoint},
         {Oban, Application.get_env(:mobilizon, Oban)},
+        {Rajska.RateLimit, [clean_period: 60_000]},
         # workers
         Guardian.DB.Sweeper,
         ActivityPub.Federator,

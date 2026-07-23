@@ -17,7 +17,7 @@ defmodule Mobilizon.Web.ApplicationController do
       ) do
     ip = conn.remote_ip |> :inet.ntoa() |> to_string()
 
-    case Hammer.hit(
+    case Rajska.RateLimit.hit(
            "create_application:#{ip}",
            60_000,
            10
@@ -250,7 +250,7 @@ defmodule Mobilizon.Web.ApplicationController do
         })
 
       {:error, :pending, interval} ->
-        case Hammer.hit(
+        case Rajska.RateLimit.hit(
                "generate_device_access_token:#{client_id}:#{device_code}",
                interval * 1_000,
                1

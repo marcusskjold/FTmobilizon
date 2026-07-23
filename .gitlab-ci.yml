@@ -163,7 +163,7 @@ exunit:
     - rm -rf ~/.hex/cache.ets
     - mix deps.get
     - mix compile
-    - mix tz_world.update
+    - mix tz_world.update --force
     - mix ecto.create
     - mix ecto.migrate
     - mix coveralls.html
