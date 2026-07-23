@@ -223,7 +223,7 @@ defmodule Mobilizon.Mixfile do
       {:unplug, "~> 1.1.0"},
       {:replug, "~> 0.1.0"},
       {:exkismet, github: "tcitworld/exkismet"},
-      {:rajska, github: "jungsoft/rajska"},
+      {:rajska, github: "tcitworld/rajska", branch: "mobilizon"},
       # block by tcitworld/rajska fork
       {:hammer, "~> 6.1"},
       {:tls_certificate_check, "~> 1.20"},
