@@ -208,7 +208,7 @@ defmodule Mobilizon.Web.FeedController do
   @spec return_data(Plug.Conn.t(), String.t(), String.t(), String.t()) ::
           Plug.Conn.t() | {:error, :not_found}
   defp return_data(conn, "atom", key, filename) do
-    case Cachex.fetch(:feed, key) do
+    case Cachex.fetch(:feed, key, fn key -> Feed.create_cache(key) end) do
       {status, data} when status in [:commit, :ok] ->
         conn
         |> put_resp_content_type("application/atom+xml")
@@ -232,7 +232,7 @@ defmodule Mobilizon.Web.FeedController do
   end
 
   defp return_data(conn, "ics", key, filename) do
-    case Cachex.fetch(:ics, key) do
+    case Cachex.fetch(:ics, key, fn key -> ICalendar.create_cache(key) end) do
       {status, data} when status in [:commit, :ok] ->
         conn
         |> put_resp_content_type("text/calendar")

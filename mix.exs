@@ -171,7 +171,7 @@ defmodule Mobilizon.Mixfile do
       {:dataloader, "~> 2.0"},
       {:atomex, "~> 0.4"},
       # v4.1 error in "fallback_options" (lib/mobilizon.ex - line 131)
-      {:cachex, "~> 3.1"},
+      {:cachex, "~> 4.1"},
       {:geohax, "~> 1.0.0"},
       {:mogrify, "~> 0.9"},
       {:linkify, "~> 0.3"},

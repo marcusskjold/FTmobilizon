@@ -49,8 +49,8 @@ defmodule Mobilizon do
         Guardian.DB.Sweeper,
         ActivityPub.Federator,
         TzWorld.Backend.DetsWithIndexCache,
-        cachex_spec(:feed, 2500, 60, 60, &Feed.create_cache/1),
-        cachex_spec(:ics, 2500, 60, 60, &ICalendar.create_cache/1),
+        cachex_spec(:feed, 2500, 60, 60),
+        cachex_spec(:ics, 2500, 60, 60),
         cachex_spec(
           :actor_key_rotation,
           2500,
@@ -99,18 +99,15 @@ defmodule Mobilizon do
   end
 
   # sobelow_skip ["DOS.StringToAtom"]
-  @spec cachex_spec(atom, integer, integer, integer, function | nil) :: Supervisor.child_spec()
-  defp cachex_spec(name, limit, default, interval, fallback \\ nil) do
+  @spec cachex_spec(atom, integer, integer, integer) :: Supervisor.child_spec()
+  defp cachex_spec(name, limit, default, interval) do
     %{
       id: String.to_atom("cache_#{to_string(name)}"),
       start:
         {Cachex, :start_link,
          [
            name,
-           Keyword.merge(
-             cachex_options(limit, default, interval),
-             fallback_options(fallback)
-           )
+           cachex_options(limit, default, interval)
          ]}
     }
   end
@@ -126,10 +123,6 @@ defmodule Mobilizon do
         )
     ]
   end
-
-  @spec fallback_options(function | nil) :: keyword
-  defp fallback_options(nil), do: []
-  defp fallback_options(fallback), do: [fallback: fallback(default: fallback)]
 
   defp task_children(:test), do: []
   defp task_children(_), do: [relay_actor(), anonymous_actor(), render_error_page()]
