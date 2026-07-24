@@ -64,7 +64,6 @@ install:
     - npm ci
     - mix deps.clean --all
     - mix deps.get
-    - patch -p1 < patches/elixir1-16_1-18.patch
     - mix compile
 
 security-frontend:
@@ -288,8 +287,14 @@ build-docker-main:
     - if: '$CI_PROJECT_NAMESPACE != "kaihuri"'
       when: never
     - if: '$CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_TRIGGERED == "true"'
+    - when: manual
   script:
-    - docker buildx build --platform linux/amd64 -t kaihuri/mobilizon:main -f docker/production/Dockerfile .
+    - |
+      if [ "${CI_JOB_MANUAL}" == "true" ]
+      then
+        rm -f ~/.docker/config.json
+      fi
+    - docker buildx build --platform linux/amd64 -t kaihuri/mobilizon:${CI_COMMIT_BRANCH} -f docker/production/Dockerfile .
 
 build-docker-tag:
   <<: *docker
@@ -367,7 +372,6 @@ package-app:
     - mix local.rebar --force
     - mix deps.clean --all # To avoid reusing native deps, such as lexbor being already built against another environment
     - mix deps.get --only-prod
-    - patch -p1 < patches/elixir1-16_1-18.patch
     - mix compile
     - mix phx.digest.clean --all && mix phx.digest
     - mix release --path release/mobilizon
