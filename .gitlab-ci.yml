@@ -359,7 +359,7 @@ docker-latest:
 
 # Packaging app for amd64
 package-app:
-  image: elixir:1.18-${SYSTEM}
+  image: kaihuri/buildpack:1.18.4-erlang-27.3.4.15-${SYSTEM}
   stage: build
   variables: &release-variables
     MIX_ENV: "prod"
@@ -391,13 +391,15 @@ package-app:
     matrix:
       - SYSTEM:
           [
+            "debian-trixie",
             "debian-bookworm",
             "debian-bullseye",
-            "debian-buster",
-            "ubuntu-jammy",
-            "ubuntu-focal",
-            "fedora-38",
-            "fedora-39",
+            "ubuntu-resolute",
+            "ubuntu-noble",
+            "fedora-44",
+            "fedora-43",
+            "alpine-3.22.5",
+            "alpine-3.24.1",
           ]
 
 package-app-dev:
