@@ -108,11 +108,12 @@ describe("EventActionSection", () => {
     );
     expect(
       wrapper
-        .find("o-modal > .modal-card > .modal-card-head > .modal-card-title")
+        .find("o-modal > .modal-card")
+        .find(".modal-card-head > .modal-card-title")
         .text()
     ).toBe("Participation confirmation");
     expect(
-      wrapper.find("o-modal > .modal-card > .modal-card-body > p").text()
+      wrapper.find("o-modal > .modal-card").find(".modal-card-body > p").text()
     ).toBe(
       "The event organiser has chosen to validate manually participations. Do you want to add a little note to explain why you want to participate to this event?"
     );
@@ -147,11 +148,12 @@ describe("EventActionSection", () => {
     ).toBe("Add to my calendar");
     expect(
       wrapper
-        .find("o-modal > .modal-card > .modal-card-head > .modal-card-title")
+        .find("o-modal > .modal-card")
+        .find(".modal-card-head > .modal-card-title")
         .text()
     ).toBe("Participation confirmation");
     expect(
-      wrapper.find("o-modal > .modal-card > .modal-card-body > p").text()
+      wrapper.find("o-modal > .modal-card").find(".modal-card-body > p").text()
     ).toBe(
       "The event organiser has chosen to validate manually participations. Do you want to add a little note to explain why you want to participate to this event?"
     );
@@ -196,11 +198,12 @@ describe("EventActionSection", () => {
     ).toBe("Add to my calendar");
     expect(
       wrapper
-        .find("o-modal > .modal-card > .modal-card-head > .modal-card-title")
+        .find("o-modal > .modal-card")
+        .find(".modal-card-head > .modal-card-title")
         .text()
     ).toBe("Participation confirmation");
     expect(
-      wrapper.find("o-modal > .modal-card > .modal-card-body > p").text()
+      wrapper.find("o-modal > .modal-card").find(".modal-card-body > p").text()
     ).toBe(
       "The event organiser has chosen to validate manually participations. Do you want to add a little note to explain why you want to participate to this event?"
     );

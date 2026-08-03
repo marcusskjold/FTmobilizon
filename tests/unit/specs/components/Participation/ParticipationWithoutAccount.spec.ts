@@ -204,12 +204,10 @@ describe("ParticipationWithoutAccount", () => {
     //   EventJoinOptions.RESTRICTED
     // );
 
-    expect(wrapper.findAll("section.container form > p")[1].text()).toContain(
+    expect(wrapper.findAll("section.container p")[1].text()).toContain(
       "The event organizer manually approves participations. Since you've chosen to participate without an account, please explain why you want to participate to this event."
     );
-    expect(
-      wrapper.findAll("section.container form > p")[1].text()
-    ).not.toContain(
+    expect(wrapper.findAll("section.container p")[1].text()).not.toContain(
       "If you want, you may send a message to the event organizer here."
     );
 
