@@ -7,7 +7,7 @@ defmodule Mobilizon.Mixfile do
     [
       app: :mobilizon,
       version: @version,
-      elixir: "~> 1.15",
+      elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
       xref: [exclude: [:eldap]],
@@ -198,6 +198,13 @@ defmodule Mobilizon.Mixfile do
       {:ueberauth_cas, "~> 2.4"},
       {:ecto_shortuuid, "~> 0.1"},
       {:tesla, "~> 1.8"},
+      # hackney < 4.0.1 is affected by EEF-CVE-2026-47069, EEF-CVE-2026-47071,
+      # EEF-CVE-2026-47075 and EEF-CVE-2026-47076, with no fix backported to 1.x.
+      # Only httpoison 3.x allows hackney 4.x, and some transitive deps still
+      # pin httpoison 2.x / hackney 1.x, hence the overrides. hackney >= 4.4
+      # also avoids 4.0.0/4.0.1 which don't export :hackney.body/stream_body.
+      {:httpoison, "~> 3.0", override: true},
+      {:hackney, "~> 4.4", override: true},
       {:sitemapper, "~> 0.6"},
       {:xml_builder, "~> 2.2"},
       {:remote_ip, "~> 1.1"},
