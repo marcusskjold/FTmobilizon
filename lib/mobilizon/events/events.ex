@@ -477,7 +477,7 @@ defmodule Mobilizon.Events do
   def list_public_upcoming_events_for_actor(%Actor{id: actor_id}, page, limit) do
     actor_id
     |> do_list_public_events_for_actor()
-    |> event_filter_begins_on(DateTime.utc_now(), nil)
+    |> event_filter_begins_on(DateTime.utc_now())
     |> Page.build_page(page, limit)
     |> with_virtual_fields()
   end
@@ -2003,24 +2003,8 @@ defmodule Mobilizon.Events do
     where(query, visibility: ^:public, draft: false)
   end
 
-  defp event_filter_begins_on(query, nil, nil), do: query
-
-  defp event_filter_begins_on(query, %DateTime{} = after_datetime, nil) do
+  defp event_filter_begins_on(query, %DateTime{} = after_datetime) do
     where(query, [e], e.begins_on > ^after_datetime)
-  end
-
-  defp event_filter_begins_on(query, nil, %DateTime{} = before_datetime) do
-    where(query, [e], e.begins_on < ^before_datetime)
-  end
-
-  defp event_filter_begins_on(
-         query,
-         %DateTime{} = after_datetime,
-         %DateTime{} = before_datetime
-       ) do
-    query
-    |> where([e], e.begins_on < ^before_datetime)
-    |> where([e], e.begins_on > ^after_datetime)
   end
 
   defp event_filter_ends_on(query, nil, nil), do: query

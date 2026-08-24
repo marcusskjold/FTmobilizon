@@ -17,7 +17,6 @@ defmodule Mobilizon do
   alias Mobilizon.{Config, Storage, Web}
   alias Mobilizon.Federation.ActivityPub
   alias Mobilizon.Service.{ErrorPage, ErrorReporting}
-  alias Mobilizon.Service.Export.{Feed, ICalendar}
 
   @name Mix.Project.config()[:name]
   @version Mix.Project.config()[:version]

@@ -955,6 +955,7 @@ defmodule Mobilizon.Web.Resolvers.EventTest do
       }
       picture {
         name
+        uuid
       }
     }
   }
@@ -1205,6 +1206,172 @@ defmodule Mobilizon.Web.Resolvers.EventTest do
 
       assert res["data"]["updateEvent"]["picture"]["name"] ==
                "picture for my event"
+    end
+
+    test "update_event/3 updates an event with a picture UUID", %{
+      conn: conn,
+      actor: actor,
+      user: user
+    } do
+      media = %{name: "my pic", alt: "represents something", file: "picture.png"}
+
+      event = insert(:event, organizer_actor: actor)
+
+      map = %{
+        "query" => @upload_media_mutation,
+        "variables" => media,
+        media.file => %Plug.Upload{
+          path: "test/fixtures/picture.png",
+          filename: media.file
+        }
+      }
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> put_req_header("content-type", "multipart/form-data")
+        |> post(
+          "/api",
+          map
+        )
+        |> json_response(200)
+
+      assert res["errors"] == nil
+      assert res["data"]["uploadMedia"]["name"] == media.name
+      media_uuid = res["data"]["uploadMedia"]["uuid"]
+      assert media_uuid !== "" and not is_nil(media_uuid)
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @update_event_mutation,
+          variables: %{
+            eventId: event.id,
+            title: "come to my event",
+            description: "it will be fine",
+            begins_on:
+              "#{DateTime.utc_now() |> DateTime.truncate(:second) |> DateTime.to_iso8601()}",
+            organizer_actor_id: "#{actor.id}",
+            category: "PARTY",
+            picture: %{
+              media_uuid: "#{media_uuid}"
+            }
+          }
+        )
+
+      assert res["errors"] == nil
+      assert res["data"]["updateEvent"]["title"] == "come to my event"
+
+      assert res["data"]["updateEvent"]["picture"]["name"] == media.name
+      assert res["data"]["updateEvent"]["picture"]["uuid"] == media_uuid
+    end
+
+    test "update_event/3 updates an event with a picture UUID no owned", %{
+      conn: conn,
+      actor: actor,
+      user: user
+    } do
+      other_actor = insert(:actor)
+      media = insert(:media, file: build(:file, name: "new picture"), actor: other_actor)
+      event = insert(:event, organizer_actor: actor)
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @update_event_mutation,
+          variables: %{
+            eventId: event.id,
+            title: "come to my event",
+            description: "it will be fine",
+            begins_on:
+              "#{DateTime.utc_now() |> DateTime.truncate(:second) |> DateTime.to_iso8601()}",
+            organizer_actor_id: "#{actor.id}",
+            category: "PARTY",
+            picture: %{
+              media_uuid: "#{media.uuid}"
+            }
+          }
+        )
+
+      assert res["errors"] |> hd |> Map.get("message") == [
+               "Media with UUID #{media.uuid} not found or not owned by you"
+             ]
+    end
+
+    test "update_event/3 preserves existing picture when picture is not provided", %{
+      conn: conn,
+      actor: actor,
+      user: user
+    } do
+      media = insert(:media, file: build(:file, name: "original picture"), actor: actor)
+      event = insert(:event, organizer_actor: actor, picture: media)
+
+      begins_on =
+        event.begins_on
+        |> DateTime.add(3 * 3600)
+        |> DateTime.truncate(:second)
+        |> DateTime.to_iso8601()
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @update_event_mutation,
+          variables: %{
+            eventId: event.id,
+            title: "my event updated",
+            description: "description updated",
+            beginsOn: "#{begins_on}",
+            category: "PARTY"
+          }
+        )
+
+      assert res["errors"] == nil
+      assert res["data"]["updateEvent"]["title"] == "my event updated"
+      assert res["data"]["updateEvent"]["uuid"] == event.uuid
+      assert res["data"]["updateEvent"]["url"] == event.url
+
+      assert res["data"]["updateEvent"]["picture"]["name"] == "original picture"
+      assert res["data"]["updateEvent"]["picture"]["uuid"] == media.uuid
+    end
+
+    test "update_event/3 clears picture when picture is explicitly set to null", %{
+      conn: conn,
+      actor: actor,
+      user: user
+    } do
+      media = insert(:media, file: build(:file, name: "original picture"), actor: actor)
+      event = insert(:event, organizer_actor: actor, picture: media)
+
+      begins_on =
+        event.begins_on
+        |> DateTime.add(3 * 3600)
+        |> DateTime.truncate(:second)
+        |> DateTime.to_iso8601()
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @update_event_mutation,
+          variables: %{
+            eventId: event.id,
+            title: "my event updated",
+            description: "description updated",
+            beginsOn: "#{begins_on}",
+            category: "PARTY",
+            picture: nil
+          }
+        )
+
+      assert res["errors"] == nil
+      assert res["data"]["updateEvent"]["title"] == "my event updated"
+      assert res["data"]["updateEvent"]["uuid"] == event.uuid
+      assert res["data"]["updateEvent"]["url"] == event.url
+
+      assert res["data"]["updateEvent"]["picture"] == nil
     end
 
     @person_participations_query """

@@ -166,8 +166,8 @@ defmodule Mobilizon.Events.Event do
     changeset
     |> cast_embed(:options)
     |> cast_embed(:metadata)
-    |> put_assoc(:contacts, Map.get(attrs, :contacts, []))
-    |> put_assoc(:media, Map.get(attrs, :media, []))
+    |> put_contacts(attrs)
+    |> put_media(attrs)
     |> put_tags(attrs)
     |> put_address(attrs)
     |> put_picture(attrs)
@@ -216,6 +216,16 @@ defmodule Mobilizon.Events.Event do
 
   defp put_tags(%Changeset{} = changeset, _), do: changeset
 
+  defp put_contacts(%Changeset{} = changeset, %{contacts: contacts}),
+    do: put_assoc(changeset, :contacts, contacts)
+
+  defp put_contacts(%Changeset{} = changeset, _), do: changeset
+
+  defp put_media(%Changeset{} = changeset, %{media: media}),
+    do: put_assoc(changeset, :media, media)
+
+  defp put_media(%Changeset{} = changeset, _), do: changeset
+
   @spec process_tag(map() | Tag.t()) :: Tag.t() | Ecto.Changeset.t()
   # We need a changeset instead of a raw struct because of slug which is generated in changeset
   defp process_tag(%{id: id} = _tag) do
@@ -258,13 +268,16 @@ defmodule Mobilizon.Events.Event do
 
   # In case the provided picture is an existing one
   @spec put_picture(Changeset.t(), map) :: Changeset.t()
-  defp put_picture(%Changeset{} = changeset, %{picture: %{media_uuid: uuid} = _picture}) do
-    case Medias.get_media_by_uuid(uuid) do
+  defp put_picture(
+         %Changeset{} = changeset,
+         %{picture: %{media_uuid: uuid}, organizer_actor_id: actor_id}
+       ) do
+    case Medias.get_media_by_uuid_and_actor(uuid, actor_id) do
       %Media{} = picture ->
-        put_assoc(changeset, :picture, picture)
+        put_change(changeset, :picture_id, picture.id)
 
       nil ->
-        add_error(changeset, :picture, "Media with UUID #{uuid} not found")
+        add_error(changeset, :picture, "Media with UUID #{uuid} not found or not owned by you")
     end
   end
 
