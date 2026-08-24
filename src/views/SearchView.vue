@@ -127,6 +127,13 @@
           :title="t('Categories')"
         >
           <template #options>
+            <button
+              type="button"
+              class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 mb-2"
+              @click="toggleAllCategories"
+            >
+              {{ allCategoriesSelected ? t("Deselect all") : t("Select all") }}
+            </button>
             <fieldset class="flex flex-col">
               <legend class="sr-only">{{ t("Categories") }}</legend>
               <div v-for="category in orderedCategories" :key="category.id">
@@ -777,6 +784,20 @@ const orderedCategories = computed(() => {
   if (!eventCategories.value) return [];
   return lodashSortBy(eventCategories.value, ["label"]);
 });
+
+const allCategoriesSelected = computed(
+  () =>
+    orderedCategories.value.length > 0 &&
+    categoryOneOf.value.length === orderedCategories.value.length
+);
+
+const toggleAllCategories = () => {
+  if (allCategoriesSelected.value) {
+    categoryOneOf.value = [];
+  } else {
+    categoryOneOf.value = orderedCategories.value.map((c) => c.id);
+  }
+};
 
 const searchEvents = computed(() => searchElementsResult.value?.searchEvents);
 const searchShortEvents = computed(
