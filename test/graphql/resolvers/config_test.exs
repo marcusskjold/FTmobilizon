@@ -165,9 +165,20 @@ defmodule Mobilizon.GraphQL.Resolvers.ConfigTest do
       assert res["data"]["config"]["federating"] == false
     end
 
+    test "restriction settings defaults", _ do
+      Cachex.clear("full_config")
+      Mobilizon.Config.clear_config_cache()
+      assert false == Config.get([:restrictions, :only_admin_can_create_groups])
+      assert false == Config.get([:restrictions, :only_groups_can_create_events])
+    end
+
     test "get_config/3 returns restriction settings", context do
       Cachex.clear("full_config")
       Mobilizon.Config.clear_config_cache()
+      # configuration is persistent accros tests, remember current values
+      config_old_val1 = Config.get([:restrictions, :only_admin_can_create_groups])
+      config_old_val2 = Config.get([:restrictions, :only_groups_can_create_events])
+      # change config for the test
       Config.put([:restrictions, :only_admin_can_create_groups], true)
       Config.put([:restrictions, :only_groups_can_create_events], true)
 
@@ -188,6 +199,15 @@ defmodule Mobilizon.GraphQL.Resolvers.ConfigTest do
 
       assert res["data"]["config"]["restrictions"]["only_admin_can_create_groups"] == true
       assert res["data"]["config"]["restrictions"]["only_groups_can_create_events"] == true
+      # configuration is persistent accros tests, if not reset ; revert to previous one
+      Config.put([:restrictions, :only_admin_can_create_groups], config_old_val1)
+      Config.put([:restrictions, :only_groups_can_create_events], config_old_val2)
+    end
+
+    test "restriction settings reset", _ do
+      # no inovation of `Cachex.clear("full_config"); Mobilizon.Config.clear_config_cache()`
+      assert false == Config.get([:restrictions, :only_admin_can_create_groups])
+      assert false == Config.get([:restrictions, :only_groups_can_create_events])
     end
   end
 end
