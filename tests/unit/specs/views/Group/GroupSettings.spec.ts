@@ -1,4 +1,4 @@
-import { beforeEach, describe, it, expect, vi } from "vitest";
+import { beforeEach, describe, it, expect, vi, afterEach } from "vitest";
 import { enUS } from "date-fns/locale";
 import { routes } from "@/router";
 import { createRouter, createWebHistory, Router } from "vue-router";
@@ -59,6 +59,10 @@ beforeEach(async () => {
   });
 
   // await router.isReady();
+});
+
+afterEach(async () => {
+  await vi.dynamicImportSettled();
 });
 
 const mock_group = {
