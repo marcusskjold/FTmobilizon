@@ -50,6 +50,7 @@ defmodule Mobilizon.Web.PageController do
   @spec event(Plug.Conn.t(), map) :: {:error, :not_found} | Plug.Conn.t()
   def event(conn, %{"uuid" => uuid}) do
     {status, event} = Cache.get_public_event_by_uuid_with_preload(uuid)
+
     conn
     |> put_resp_header("cache-control", "max-age=300")
     |> render_or_error(&checks?/3, status, :event, event)
