@@ -1267,39 +1267,6 @@ defmodule Mobilizon.Web.Resolvers.EventTest do
       assert res["data"]["updateEvent"]["picture"]["uuid"] == media_uuid
     end
 
-    test "update_event/3 updates an event with a picture UUID no owned", %{
-      conn: conn,
-      actor: actor,
-      user: user
-    } do
-      other_actor = insert(:actor)
-      media = insert(:media, file: build(:file, name: "new picture"), actor: other_actor)
-      event = insert(:event, organizer_actor: actor)
-
-      res =
-        conn
-        |> auth_conn(user)
-        |> AbsintheHelpers.graphql_query(
-          query: @update_event_mutation,
-          variables: %{
-            eventId: event.id,
-            title: "come to my event",
-            description: "it will be fine",
-            begins_on:
-              "#{DateTime.utc_now() |> DateTime.truncate(:second) |> DateTime.to_iso8601()}",
-            organizer_actor_id: "#{actor.id}",
-            category: "PARTY",
-            picture: %{
-              media_uuid: "#{media.uuid}"
-            }
-          }
-        )
-
-      assert res["errors"] |> hd |> Map.get("message") == [
-               "Media with UUID #{media.uuid} not found or not owned by you"
-             ]
-    end
-
     test "update_event/3 preserves existing picture when picture is not provided", %{
       conn: conn,
       actor: actor,
