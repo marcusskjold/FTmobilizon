@@ -37,7 +37,7 @@
     "@oruga-ui/oruga-next": "^0.11.6",
     "@oruga-ui/theme-oruga": "^0.7.1",
     "@sentry/tracing": "^7.120",
-    "@sentry/vue": "^10.63.0",
+    "@sentry/vue": "^11.0.0",
     "@tiptap/core": "^3.27.3",
     "@tiptap/extension-blockquote": "^3.27.3",
     "@tiptap/extension-bold": "^3.27.3",
