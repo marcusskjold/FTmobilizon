@@ -81,11 +81,11 @@
   "icon": {
     "type": "Image",
     "mediaType": "image/png",
-    "url": "https://framapiaf.s3.framasoft.org/framapiaf/accounts/avatars/000/223/824/original/03ed95406a9a3cd0.png"
+    "url": null
   },
   "image": {
     "type": "Image",
     "mediaType": "image/png",
-    "url": "https://framapiaf.s3.framasoft.org/framapiaf/accounts/headers/000/223/824/original/2fbb4d6268c2fb20.png"
+    "url": null
   }
 }
