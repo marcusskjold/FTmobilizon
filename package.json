@@ -1,6 +1,6 @@
 {
   "name": "mobilizon",
-  "version": "5.2.4",
+  "version": "5.2.5-RC1",
   "private": true,
   "scripts": {
     "dev": "vite",
