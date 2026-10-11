@@ -4,8 +4,6 @@ defmodule Mobilizon.Web.NodeInfoControllerTest do
   alias Mobilizon.Config
   alias Mobilizon.Federation.ActivityPub.Relay
 
-  use Mobilizon.Web, :verified_routes
-
   test "Get node info schemas", %{conn: conn} do
     conn = get(conn, url(~p"/.well-known/nodeinfo"))
 

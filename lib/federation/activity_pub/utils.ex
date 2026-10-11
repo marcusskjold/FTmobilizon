@@ -25,7 +25,11 @@ defmodule Mobilizon.Federation.ActivityPub.Utils do
   @ap_public_audience "https://www.w3.org/ns/activitystreams#Public"
 
   # Wraps an object into an activity
-  @spec create_activity(map(), boolean()) :: {:ok, Activity.t()}
+  @spec create_activity(map(), boolean()) :: {:ok, Activity.t() | nil}
+  def create_activity(nil, _local) do
+    {:ok, nil}
+  end
+
   def create_activity(map, local) when is_map(map) do
     with map <- lazy_put_activity_defaults(map) do
       {:ok,
@@ -162,10 +166,6 @@ defmodule Mobilizon.Federation.ActivityPub.Utils do
             "@id" => "mz:resources",
             "@type" => "@id"
           },
-          "todos" => %{
-            "@id" => "mz:todos",
-            "@type" => "@id"
-          },
           "status" => %{
             "@id" => "ical:status",
             "@type" => "ical:status"
@@ -197,6 +197,32 @@ defmodule Mobilizon.Federation.ActivityPub.Utils do
           _activity
       ) do
     Logger.debug("No federate a no public event")
+
+    :ok
+  end
+
+  def maybe_federate(
+        %Activity{data: %{"object" => %{"type" => "Article", "draft" => true}}} = _activity
+      ) do
+    Logger.debug("No federate a draft post")
+
+    :ok
+  end
+
+  def maybe_federate(
+        %Activity{data: %{"object" => %{"type" => "Article", "cc" => [@ap_public_audience]}}} =
+          _activity
+      ) do
+    Logger.debug("No federate a no public post")
+
+    :ok
+  end
+
+  def maybe_federate(
+        %Activity{data: %{"object" => %{"type" => "Article", "cc" => []}}} =
+          _activity
+      ) do
+    Logger.debug("No federate a no public post")
 
     :ok
   end

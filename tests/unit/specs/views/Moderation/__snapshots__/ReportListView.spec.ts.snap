@@ -1,0 +1,38 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ReportListView > Show simple 1`] = `
+"<div data-v-a3c2eb97="">
+  <breadcrumbs-nav data-v-a3c2eb97="" links="[object Object],[object Object]"></breadcrumbs-nav>
+  <section data-v-a3c2eb97="">
+    <div data-v-a3c2eb97="" class="flex flex-wrap gap-2">
+      <div data-v-a3c2eb97="" data-oruga="field" class="o-field"><label id="v-0-0" class="o-field__label" for="v-0-4">Report status</label>
+        <div data-v-a3c2eb97="" data-oruga="radio" class="o-radio o-radio--checked"><input aria-labelledby="v-0-0" id="v-0-2" type="radio" data-oruga-input="radio" class="o-radio__input" autocomplete="off" aria-checked="true" value="OPEN"><label id="v-0-0" for="v-0-2" class="o-radio__label">Open</label></div>
+        <div data-v-a3c2eb97="" data-oruga="radio" class="o-radio"><input aria-labelledby="v-0-0" id="v-0-3" type="radio" data-oruga-input="radio" class="o-radio__input" autocomplete="off" aria-checked="false" value="RESOLVED"><label id="v-0-0" for="v-0-3" class="o-radio__label">Resolved</label></div>
+        <div data-v-a3c2eb97="" data-oruga="radio" class="o-radio"><input aria-labelledby="v-0-0" id="v-0-4" type="radio" data-oruga-input="radio" class="o-radio__input" autocomplete="off" aria-checked="false" value="CLOSED"><label id="v-0-0" for="v-0-4" class="o-radio__label">Closed</label></div>
+        <!---->
+      </div>
+      <div data-v-a3c2eb97="" data-oruga="field" class="o-field flex-auto"><label id="v-0-5" for="domain-filter" class="o-field__label">Domain</label>
+        <div data-v-a3c2eb97="" data-oruga="input" class="o-input">
+          <!----><input aria-labelledby="v-0-5" id="domain-filter" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" autocomplete="off" placeholder="mobilizon-instance.tld" value="">
+          <!---->
+          <!---->
+        </div>
+        <!---->
+      </div>
+    </div>
+    <div data-v-a3c2eb97="" class="no-reports">
+      <div data-v-a3c2eb97="" class="flex flex-col items-center mt-20 mb-10" role="note"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-chat-alert 48"></i></span>
+        <h2 class="mb-3">
+          <!-- @slot Mandatory title -->No open reports yet
+        </h2>
+        <p class="" style="display: none;">
+          <!-- @slot Optional description -->
+        </p>
+      </div>
+      <!--v-if-->
+      <!--v-if-->
+    </div>
+    <nav data-v-a3c2eb97="" data-oruga="pagination" class="o-pagination o-pagination--right o-pagination--right o-pagination--simple"><button type="button" role="button" disabled="" class="o-pagination__button-previous o-pagination__button--disabled o-pagination__button" aria-label="Previous page" aria-current="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><i class="mdi mdi-chevron-left mdi-24px"></i></span></button><button type="button" role="button" disabled="" class="o-pagination__button-next o-pagination__button--disabled o-pagination__button" aria-label="Next page" aria-current="false"><span data-oruga="icon" class="o-icon" aria-hidden="true"><i class="mdi mdi-chevron-right mdi-24px"></i></span></button><small class="o-pagination__info">1-0 / 0</small></nav>
+  </section>
+</div>"
+`;

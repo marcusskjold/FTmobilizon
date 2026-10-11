@@ -176,6 +176,7 @@ export function paginatedLimitPagination<T = Paginate<any>>(
       if (!existing) return incoming; // existing will be empty the first time
 
       return {
+        __typename: incoming.__typename,
         total: incoming.total,
         elements: doMerge(existing.elements, incoming.elements, args),
       };

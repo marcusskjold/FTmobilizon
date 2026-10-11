@@ -28,7 +28,7 @@
 import { IActor, IGroup, IPerson, usernameWithDomain } from "@/types/actor";
 import { computed, defineAsyncComponent, provide, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import ActorAutoComplete from "../../components/Account/ActorAutoComplete.vue";
+import ActorAutoComplete from "@/components/Account/ActorAutoComplete.vue";
 import {
   DefaultApolloClient,
   provideApolloClient,
@@ -91,7 +91,7 @@ const { t } = useI18n({ useScope: "global" });
 const text = ref("");
 
 const Editor = defineAsyncComponent(
-  () => import("../../components/TextEditor.vue")
+  () => import("@/components/TextEditor.vue")
 );
 
 const { currentActor } = provideApolloClient(apolloClient)(() => {

@@ -160,10 +160,10 @@ import { GROUP_TIMELINE } from "@/graphql/group";
 import { IGroup, usernameWithDomain, displayName } from "@/types/actor";
 import { ActivityType } from "@/types/enums";
 import { Paginate } from "@/types/paginate";
-import { IActivity } from "../../types/activity.model";
-import Observer from "../../components/Utils/ObserverElement.vue";
-import SkeletonActivityItem from "../../components/Activity/SkeletonActivityItem.vue";
-import RouteName from "../../router/name";
+import { IActivity } from "@/types/activity.model";
+import Observer from "@/components/Utils/ObserverElement.vue";
+import SkeletonActivityItem from "@/components/Activity/SkeletonActivityItem.vue";
+import RouteName from "@/router/name";
 import TimelineText from "vue-material-design-icons/TimelineText.vue";
 import { useQuery } from "@vue/apollo-composable";
 import { useHead } from "@/utils/head";
@@ -176,8 +176,7 @@ const PAGINATION_LIMIT = 25;
 const SKELETON_DAY_ITEMS = 2;
 const SKELETON_ITEMS_PER_DAY = 5;
 type IActivitySkeleton =
-  | IActivity
-  | { skeleton: string; id: string; type: "skeleton" };
+  IActivity | { skeleton: string; id: string; type: "skeleton" };
 
 enum ActivityAuthorFilter {
   SELF = "SELF",
@@ -191,25 +190,25 @@ const props = defineProps<{ preferredUsername: string }>();
 const { t } = useI18n({ useScope: "global" });
 
 const EventActivityItem = defineAsyncComponent(
-  () => import("../../components/Activity/EventActivityItem.vue")
+  () => import("@/components/Activity/EventActivityItem.vue")
 );
 const PostActivityItem = defineAsyncComponent(
-  () => import("../../components/Activity/PostActivityItem.vue")
+  () => import("@/components/Activity/PostActivityItem.vue")
 );
 const MemberActivityItem = defineAsyncComponent(
-  () => import("../../components/Activity/MemberActivityItem.vue")
+  () => import("@/components/Activity/MemberActivityItem.vue")
 );
 const ResourceActivityItem = defineAsyncComponent(
-  () => import("../../components/Activity/ResourceActivityItem.vue")
+  () => import("@/components/Activity/ResourceActivityItem.vue")
 );
 const DiscussionActivityItem = defineAsyncComponent(
-  () => import("../../components/Activity/DiscussionActivityItem.vue")
+  () => import("@/components/Activity/DiscussionActivityItem.vue")
 );
 const GroupActivityItem = defineAsyncComponent(
-  () => import("../../components/Activity/GroupActivityItem.vue")
+  () => import("@/components/Activity/GroupActivityItem.vue")
 );
 const EmptyContent = defineAsyncComponent(
-  () => import("../../components/Utils/EmptyContent.vue")
+  () => import("@/components/Utils/EmptyContent.vue")
 );
 
 const activityType = useRouteQuery(

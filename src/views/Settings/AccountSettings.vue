@@ -182,9 +182,9 @@ import { GraphQLError } from "graphql/error/GraphQLError";
 import { computed, inject, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { CHANGE_EMAIL, DELETE_ACCOUNT_AS_USER } from "../../graphql/user";
-import RouteName from "../../router/name";
-import { logout, SELECTED_PROVIDERS } from "../../utils/auth";
+import { CHANGE_EMAIL, DELETE_ACCOUNT_AS_USER } from "@/graphql/user";
+import RouteName from "@/router/name";
+import { logout, SELECTED_PROVIDERS } from "@/utils/auth";
 import { useOruga } from "@oruga-ui/oruga-next";
 
 const { t } = useI18n({ useScope: "global" });

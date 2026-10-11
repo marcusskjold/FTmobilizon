@@ -17,47 +17,46 @@ config.global.plugins.push(Oruga);
 let router: Router;
 
 beforeEach(async () => {
+  vi.mock("@/composition/apollo/actor", () => {
+    return {
+      useCurrentActorClient: () => {
+        const error = null;
+        const loading = null;
+        const currentActor = computed(() => {
+          return {
+            id: 123,
+            name: "test",
+            domain: null,
+            preferredUsername: "test",
+          };
+        });
+        return { currentActor, error, loading };
+      },
+      usePersonStatusGroup: () => {
+        const error = null;
+        const loading = null;
+        const person = computed(() => {
+          return {
+            memberships: {
+              total: 1,
+              elements: [
+                {
+                  role: MemberRole.ADMINISTRATOR,
+                },
+              ],
+            },
+          };
+        });
+        return { person, error, loading };
+      },
+    };
+  });
   router = createRouter({
     history: createWebHistory(),
     routes: routes,
   });
 
   // await router.isReady();
-});
-
-vi.mock("@/composition/apollo/actor", () => {
-  return {
-    useCurrentActorClient: () => {
-      const error = null;
-      const loading = null;
-      const currentActor = computed(() => {
-        return {
-          id: 123,
-          name: "test",
-          domain: null,
-          preferredUsername: "test",
-        };
-      });
-      return { currentActor, error, loading };
-    },
-    usePersonStatusGroup: () => {
-      const error = null;
-      const loading = null;
-      const person = computed(() => {
-        return {
-          memberships: {
-            total: 1,
-            elements: [
-              {
-                role: MemberRole.ADMINISTRATOR,
-              },
-            ],
-          },
-        };
-      });
-      return { person, error, loading };
-    },
-  };
 });
 
 const groupFollowersMock = {

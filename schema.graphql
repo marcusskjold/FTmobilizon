@@ -330,27 +330,6 @@ enum AddressSearchType {
   ADMINISTRATIVE
 }
 
-"A todo list"
-type TodoList {
-  "The todo list's ID"
-  id: ID
-
-  "The todo list's title"
-  title: String
-
-  "The actor that owns this todo list"
-  actor: Actor
-
-  "The todo-list's todos"
-  todos(
-    "The page in the paginated todos list"
-    page: Int
-
-    "The limit of todos per page"
-    limit: Int
-  ): PaginatedTodoList
-}
-
 "Represents a participant to an event"
 type Participant {
   "The participation ID"
@@ -656,30 +635,6 @@ type AnonymousParticipationValidationCaptcha {
 type AnonymousEventCreationValidationCaptcha {
   "Whether anonymous event creation with validation by captcha is enabled"
   enabled: Boolean
-}
-
-"A todo"
-type Todo {
-  "The todo's ID"
-  id: ID
-
-  "The todo's title"
-  title: String
-
-  "The todo's status"
-  status: Boolean
-
-  "The todo's due date"
-  dueDate: DateTime
-
-  "The todo's creator"
-  creator: Actor
-
-  "The todo list this todo is attached to"
-  todoList: TodoList
-
-  "The todos's assigned person"
-  assignedTo: Actor
 }
 
 "Root subscription"
@@ -1957,54 +1912,6 @@ type RootMutationType {
     notify: Boolean
   ): User
 
-  "Create a todo list"
-  createTodoList(
-    "The todo list title"
-    title: String!
-
-    "The group ID"
-    groupId: ID!
-  ): TodoList
-
-  "Create a todo"
-  createTodo(
-    "The todo-list ID this todo is in"
-    todoListId: ID!
-
-    "The todo title"
-    title: String!
-
-    "The todo status"
-    status: Boolean
-
-    "The todo due date"
-    dueDate: DateTime
-
-    "The actor this todo is assigned to"
-    assignedToId: ID
-  ): Todo
-
-  "Update a todo"
-  updateTodo(
-    "The todo ID"
-    id: ID!
-
-    "The new todo-list ID"
-    todoListId: ID
-
-    "The new todo title"
-    title: String
-
-    "The new todo status"
-    status: Boolean
-
-    "The new todo due date"
-    dueDate: DateTime
-
-    "The new id of the actor this todo is assigned to"
-    assignedToId: ID
-  ): Todo
-
   "Create a discussion"
   createDiscussion(
     "The discussion's title"
@@ -2540,12 +2447,6 @@ type RootQueryType {
   "Get an instance's details"
   instance("The instance domain" domain: ID!): Instance
 
-  "Get a todo list"
-  todoList("The todo-list ID" id: ID!): TodoList
-
-  "Get a todo"
-  todo("The todo ID" id: ID!): Todo
-
   "Get a discussion"
   discussion(
     "The discussion's ID"
@@ -2829,15 +2730,6 @@ type PaginatedParticipantList {
   elements: [Participant]
 
   "The total number of participants in the list"
-  total: Int
-}
-
-"A paginated list of todo-lists"
-type PaginatedTodoListList {
-  "A list of todo lists"
-  elements: [TodoList]
-
-  "The total number of todo lists in the list"
   total: Int
 }
 
@@ -3562,15 +3454,6 @@ type PaginatedReportList {
   total: Int
 }
 
-"A paginated list of todos"
-type PaginatedTodoList {
-  "A list of todos"
-  elements: [Todo]
-
-  "The total number of todos in the list"
-  total: Int
-}
-
 "A paginated list of groups"
 type PaginatedGroupList {
   "A list of groups"
@@ -4077,15 +3960,6 @@ type Group implements ActionLogObject & ActivityObject & Interactable & Actor {
     "The limit of posts per page"
     limit: Int
   ): PaginatedPostList
-
-  "A paginated list of the todo lists this group has"
-  todoLists(
-    "The page in the paginated todo-lists list"
-    page: Int
-
-    "The limit of todo-lists per page"
-    limit: Int
-  ): PaginatedTodoListList
 
   "A paginated list of the followers this group has"
   followers(

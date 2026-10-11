@@ -90,7 +90,7 @@ import { REPORTS } from "@/graphql/report";
 import ReportCard from "@/components/Report/ReportCard.vue";
 import EmptyContent from "@/components/Utils/EmptyContent.vue";
 import { ReportStatusEnum } from "@/types/enums";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import { Paginate } from "@/types/paginate";
 import debounce from "lodash/debounce";
 import { useQuery } from "@vue/apollo-composable";

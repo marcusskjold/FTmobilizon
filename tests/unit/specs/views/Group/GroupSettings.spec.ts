@@ -1,4 +1,4 @@
-import { beforeEach, describe, it, expect, vi } from "vitest";
+import { beforeEach, describe, it, expect, vi, afterEach } from "vitest";
 import { enUS } from "date-fns/locale";
 import { routes } from "@/router";
 import { createRouter, createWebHistory, Router } from "vue-router";
@@ -13,52 +13,56 @@ import { DELETE_GROUP } from "@/graphql/group";
 import { computed } from "vue";
 import { MemberRole } from "@/types/enums";
 
-vi.mock("@/composition/apollo/actor", () => {
-  return {
-    useCurrentActorClient: () => {
-      const error = null;
-      const loading = null;
-      const currentActor = computed(() => {
-        return {
-          id: 123,
-          name: "test",
-          domain: null,
-          preferredUsername: "test",
-        };
-      });
-      return { currentActor, error, loading };
-    },
-    usePersonStatusGroup: () => {
-      const error = null;
-      const loading = null;
-      const person = computed(() => {
-        return {
-          memberships: {
-            total: 1,
-            elements: [
-              {
-                role: MemberRole.ADMINISTRATOR,
-              },
-            ],
-          },
-        };
-      });
-      return { person, error, loading };
-    },
-  };
-});
-
 config.global.plugins.push(Oruga);
 
 let router: Router;
 
 beforeEach(async () => {
+  vi.mock("@/composition/apollo/actor", () => {
+    return {
+      useCurrentActorClient: () => {
+        const error = null;
+        const loading = null;
+        const currentActor = computed(() => {
+          return {
+            id: 123,
+            name: "test",
+            domain: null,
+            preferredUsername: "test",
+          };
+        });
+        return { currentActor, error, loading };
+      },
+      usePersonStatusGroup: () => {
+        const error = null;
+        const loading = null;
+        const person = computed(() => {
+          return {
+            memberships: {
+              total: 1,
+              elements: [
+                {
+                  role: MemberRole.ADMINISTRATOR,
+                },
+              ],
+            },
+          };
+        });
+        return { person, error, loading };
+      },
+    };
+  });
+
   router = createRouter({
     history: createWebHistory(),
     routes: routes,
   });
 
   // await router.isReady();
+});
+
+afterEach(async () => {
+  await vi.dynamicImportSettled();
 });
 
 const mock_group = {

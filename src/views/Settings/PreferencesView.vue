@@ -141,9 +141,9 @@
 </template>
 <script lang="ts" setup>
 import ngeohash from "ngeohash";
-import { USER_SETTINGS, SET_USER_SETTINGS } from "../../graphql/user";
-import langs from "../../i18n/langs.json";
-import RouteName from "../../router/name";
+import { USER_SETTINGS, SET_USER_SETTINGS } from "@/graphql/user";
+import langs from "@/i18n/langs.json";
+import RouteName from "@/router/name";
 import { AddressSearchType } from "@/types/enums";
 import { Address, IAddress } from "@/types/address.model";
 import { useTimezones } from "@/composition/apollo/config";

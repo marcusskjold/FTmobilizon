@@ -43,6 +43,14 @@ defmodule Mobilizon.Medias do
   def get_media_by_uuid!(uuid), do: Repo.get_by!(Media, uuid: uuid)
 
   @doc """
+  Get a single media by uuid, scoped to a specific actor.
+  Returns nil if the media does not exist or belongs to a different actor.
+  """
+  @spec get_media_by_uuid_and_actor(String.t(), integer | String.t()) :: Media.t() | nil
+  def get_media_by_uuid_and_actor(uuid, actor_id),
+    do: Repo.get_by(Media, uuid: uuid, actor_id: actor_id)
+
+  @doc """
   Get a media by its URL.
   """
   @spec get_media_by_url(String.t()) :: Media.t() | nil

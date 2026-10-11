@@ -39,18 +39,25 @@ defmodule Mobilizon.GraphQL.Resolvers.AdminTest do
 
     @note_content "This a note on a report"
     test "list_action_logs/3 list action logs", %{conn: conn} do
+      %User{} = user_admin = insert(:user, role: :administrator)
       %User{} = user_moderator = insert(:user, role: :moderator)
       %Actor{} = moderator = insert(:actor, user: user_moderator)
 
       %User{} = user_moderator_2 = insert(:user, role: :moderator)
       %Actor{} = moderator_2 = insert(:actor, user: user_moderator_2)
 
-      %Report{} = report = insert(:report)
-      API.Reports.update_report_status(moderator, report, "resolved")
+      %Report{} = report1 = insert(:report)
+      API.Reports.update_report_status(moderator, report1, "resolved")
 
-      {:ok, %Note{} = note} = API.Reports.create_report_note(report, moderator_2, @note_content)
+      {:ok, %Note{} = note} = API.Reports.create_report_note(report1, moderator_2, @note_content)
 
       API.Reports.delete_report_note(note, moderator_2)
+
+      %Report{} = report2 = insert(:report)
+      API.Reports.update_report_status(moderator, report2, "closed")
+      %Report{} = report3 = insert(:report)
+      API.Reports.update_report_status(moderator, report3, "open")
+
       res = AbsintheHelpers.graphql_query(conn, query: @action_logs_query)
 
       assert res["errors"] |> hd |> Map.get("message") ==
@@ -63,10 +70,20 @@ defmodule Mobilizon.GraphQL.Resolvers.AdminTest do
 
       assert is_nil(res["errors"])
 
-      assert res["data"]["actionLogs"]["total"] == 3
-      assert res["data"]["actionLogs"]["elements"] |> length == 3
+      assert res["data"]["actionLogs"]["total"] == 5
+      assert res["data"]["actionLogs"]["elements"] |> length == 5
 
       assert res["data"]["actionLogs"]["elements"] == [
+               %{
+                 "action" => "REPORT_UPDATE_OPENED",
+                 "actor" => %{"preferredUsername" => moderator.preferred_username},
+                 "object" => %{"id" => to_string(report3.id), "status" => "OPEN"}
+               },
+               %{
+                 "action" => "REPORT_UPDATE_CLOSED",
+                 "actor" => %{"preferredUsername" => moderator.preferred_username},
+                 "object" => %{"id" => to_string(report2.id), "status" => "CLOSED"}
+               },
                %{
                  "action" => "NOTE_DELETION",
                  "actor" => %{"preferredUsername" => moderator_2.preferred_username},
@@ -80,9 +97,30 @@ defmodule Mobilizon.GraphQL.Resolvers.AdminTest do
                %{
                  "action" => "REPORT_UPDATE_RESOLVED",
                  "actor" => %{"preferredUsername" => moderator.preferred_username},
-                 "object" => %{"id" => to_string(report.id), "status" => "RESOLVED"}
+                 "object" => %{"id" => to_string(report1.id), "status" => "RESOLVED"}
                }
              ]
+
+      res =
+        conn
+        |> auth_conn(user_admin)
+        |> AbsintheHelpers.graphql_query(query: @action_logs_query)
+
+      assert is_nil(res["errors"])
+      assert res["data"]["actionLogs"]["total"] == 5
+    end
+
+    test "list action logs & role not moderator", %{conn: conn} do
+      %User{} = user_no_moderator = insert(:user, role: :user)
+
+      res =
+        conn
+        |> auth_conn(user_no_moderator)
+        |> AbsintheHelpers.graphql_query(query: @action_logs_query)
+
+      assert res["errors"] |> length == 1
+      assert res["errors"] |> hd |> Map.get("status_code") == 403
+      assert res["errors"] |> hd |> Map.get("message") == "You don't have permission to do this"
     end
   end
 
@@ -118,6 +156,29 @@ defmodule Mobilizon.GraphQL.Resolvers.AdminTest do
       assert is_nil(res["errors"])
 
       assert title == res["data"]["dashboard"]["lastPublicEventPublished"]["title"]
+    end
+
+    test "gets dashboard & role not administrator", %{conn: conn} do
+      %User{} = user_moderator = insert(:user, role: :moderator)
+      %User{} = user_user = insert(:user, role: :user)
+
+      res =
+        conn
+        |> auth_conn(user_moderator)
+        |> AbsintheHelpers.graphql_query(query: @dashbord_information_query)
+
+      assert res["errors"] |> length == 1
+      assert res["errors"] |> hd |> Map.get("status_code") == 403
+      assert res["errors"] |> hd |> Map.get("message") == "You don't have permission to do this"
+
+      res =
+        conn
+        |> auth_conn(user_user)
+        |> AbsintheHelpers.graphql_query(query: @dashbord_information_query)
+
+      assert res["errors"] |> length == 1
+      assert res["errors"] |> hd |> Map.get("status_code") == 403
+      assert res["errors"] |> hd |> Map.get("message") == "You don't have permission to do this"
     end
   end
 
@@ -320,25 +381,25 @@ defmodule Mobilizon.GraphQL.Resolvers.AdminTest do
     end
   end
 
-  @admin_settings_fragment """
-  fragment adminSettingsFragment on AdminSettings {
-    instanceName
-    instanceDescription
-    instanceLongDescription
-    contact
-    instanceTerms
-    instanceTermsType
-    instanceTermsUrl
-    instancePrivacyPolicy
-    instancePrivacyPolicyType
-    instancePrivacyPolicyUrl
-    instanceRules
-    registrationsOpen
-    registrationsModeration
-  }
-  """
-
   describe "Resolver: Get the instance admin settings" do
+    @admin_settings_fragment """
+    fragment adminSettingsFragment on AdminSettings {
+      instanceName
+      instanceDescription
+      instanceLongDescription
+      contact
+      instanceTerms
+      instanceTermsType
+      instanceTermsUrl
+      instancePrivacyPolicy
+      instancePrivacyPolicyType
+      instancePrivacyPolicyUrl
+      instanceRules
+      registrationsOpen
+      registrationsModeration
+    }
+    """
+
     @admin_settings_query """
     query {
       adminSettings {
@@ -428,10 +489,19 @@ defmodule Mobilizon.GraphQL.Resolvers.AdminTest do
 
     test "unless user isn't admin", %{conn: conn} do
       admin = insert(:user)
+      moderator = insert(:user, role: :moderator)
 
       res =
         conn
         |> auth_conn(admin)
+        |> AbsintheHelpers.graphql_query(query: @admin_settings_query)
+
+      assert hd(res["errors"])["message"] ==
+               "You don't have permission to do this"
+
+      res =
+        conn
+        |> auth_conn(moderator)
         |> AbsintheHelpers.graphql_query(query: @admin_settings_query)
 
       assert hd(res["errors"])["message"] ==
@@ -522,6 +592,7 @@ defmodule Mobilizon.GraphQL.Resolvers.AdminTest do
 
     test "unless user isn't admin", %{conn: conn} do
       user = insert(:user)
+      moderator = insert(:user, role: :moderator)
 
       res =
         conn
@@ -537,21 +608,36 @@ defmodule Mobilizon.GraphQL.Resolvers.AdminTest do
 
       assert hd(res["errors"])["message"] ==
                "You don't have permission to do this"
+
+      res =
+        conn
+        |> auth_conn(moderator)
+        |> AbsintheHelpers.graphql_query(
+          query: @update_instance_admin_settings_mutation,
+          variables: %{
+            "instanceName" => @new_instance_name,
+            "registrationsOpen" => false,
+            "registrationsModeration" => false
+          }
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You don't have permission to do this"
     end
   end
 
-  @admin_update_user """
-  mutation AdminUpdateUser($id: ID!, $email: String, $role: UserRole, $confirmed: Boolean, $notify: Boolean) {
-    adminUpdateUser(id: $id, email: $email, role: $role, confirmed: $confirmed, notify: $notify) {
-      id
-      email
-      role
-      confirmedAt
-    }
-  }
-  """
-
   describe "Resolver: Update an user email" do
+    @admin_update_user """
+    mutation AdminUpdateUser($id: ID!, $email: String, $role: UserRole, $confirmed: Boolean, $notify: Boolean) {
+      adminUpdateUser(id: $id, email: $email, role: $role, confirmed: $confirmed, notify: $notify) {
+        id
+        email
+        role
+        confirmedAt
+      }
+    }
+    """
+
     setup do
       admin = insert(:user, role: :administrator)
       user = insert(:user)
@@ -560,10 +646,22 @@ defmodule Mobilizon.GraphQL.Resolvers.AdminTest do
 
     test "when not an admin", %{conn: conn, user: user} do
       admin = insert(:user)
+      moderator = insert(:user, role: :moderator)
 
       res =
         conn
         |> auth_conn(admin)
+        |> AbsintheHelpers.graphql_query(
+          query: @admin_update_user,
+          variables: %{"id" => user.id, "email" => "new@email.com"}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You don't have permission to do this"
+
+      res =
+        conn
+        |> auth_conn(moderator)
         |> AbsintheHelpers.graphql_query(
           query: @admin_update_user,
           variables: %{"id" => user.id, "email" => "new@email.com"}

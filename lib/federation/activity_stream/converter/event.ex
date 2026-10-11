@@ -72,6 +72,17 @@ defmodule Mobilizon.Federation.ActivityStream.Converter.Event do
         metadata = get_metdata(object)
         contacts = get_contacts(object)
 
+        # If ActivityPub.endTime = "23:59:59" of same day of startTime => Mobilizon.ends_on = nil
+        # Inverse process that in "model_to_as"
+        # TODO : review time (begin/end) for event for 1 complet day
+        ends_on =
+          if object["endTime"] ==
+               date_to_string(
+                 default_end_time(object["startTime"], object["timezone"] || "Etc/UTC")
+               ),
+             do: nil,
+             else: object["endTime"]
+
         [description: description, picture_id: picture_id, medias: medias] =
           process_pictures(object, actor_id)
 
@@ -83,7 +94,7 @@ defmodule Mobilizon.Federation.ActivityStream.Converter.Event do
           picture_id: picture_id,
           medias: medias,
           begins_on: object["startTime"],
-          ends_on: object["endTime"],
+          ends_on: ends_on,
           category: Categories.get_category(object["category"]),
           visibility: visibility,
           join_options: Map.get(object, "joinMode", "free"),
@@ -128,6 +139,15 @@ defmodule Mobilizon.Federation.ActivityStream.Converter.Event do
 
     participant_count = Mobilizon.Events.count_participant_participants(event.id)
 
+    start_time = shift_tz(event.begins_on, event.options.timezone)
+
+    # ActivityPub.endTime don't must be nil.
+    # if Mobilizon.ends_on is nil => endTime = "23:59:59" of same day of startTime
+    end_time =
+      if event.ends_on == nil,
+        do: default_end_time(start_time, event.options.timezone),
+        else: shift_tz(event.ends_on, event.options.timezone)
+
     %{
       "type" => "Event",
       "to" => to,
@@ -142,10 +162,10 @@ defmodule Mobilizon.Federation.ActivityStream.Converter.Event do
       "published" => (event.publish_at || event.inserted_at) |> date_to_string(),
       "updated" => event.updated_at |> date_to_string(),
       "mediaType" => "text/html",
-      "startTime" => event.begins_on |> shift_tz(event.options.timezone) |> date_to_string(),
+      "startTime" => start_time |> date_to_string(),
       "joinMode" => to_string(event.join_options),
       "externalParticipationUrl" => event.external_participation_url,
-      "endTime" => event.ends_on |> shift_tz(event.options.timezone) |> date_to_string(),
+      "endTime" => end_time |> date_to_string(),
       "tag" => event.tags |> build_tags(),
       "maximumAttendeeCapacity" => event.options.maximum_attendee_capacity,
       "remainingAttendeeCapacity" =>
@@ -199,6 +219,7 @@ defmodule Mobilizon.Federation.ActivityStream.Converter.Event do
     }
   end
 
+  @spec calculate_timezone(map, Address.t() | nil) :: String.t()
   defp calculate_timezone(%{"timezone" => timezone}, %Address{geom: geom}) do
     TimezoneDetector.detect(
       timezone,
@@ -207,9 +228,9 @@ defmodule Mobilizon.Federation.ActivityStream.Converter.Event do
     )
   end
 
-  defp calculate_timezone(_object, nil), do: nil
+  defp calculate_timezone(_object, nil), do: "Etc/UTC"
 
-  defp calculate_timezone(_object, %Address{geom: nil}), do: nil
+  defp calculate_timezone(_object, %Address{geom: nil}), do: "Etc/UTC"
 
   defp calculate_timezone(_object, %Address{geom: geom}) do
     TimezoneDetector.detect(
@@ -233,6 +254,17 @@ defmodule Mobilizon.Federation.ActivityStream.Converter.Event do
   @spec date_to_string(DateTime.t() | nil) :: String.t()
   defp date_to_string(nil), do: nil
   defp date_to_string(%DateTime{} = date), do: DateTime.to_iso8601(date)
+
+  @spec default_end_time(DateTime.t() | String.t(), String.t()) :: DateTime.t()
+  defp default_end_time(%DateTime{} = start_time, timezone) do
+    DateTime.new!(DateTime.to_date(start_time), ~T[23:59:59], timezone)
+  end
+
+  defp default_end_time(start_time, timezone) when is_binary(start_time) do
+    with {:ok, start_datetime, _} <- DateTime.from_iso8601(start_time) do
+      default_end_time(start_datetime, timezone)
+    end
+  end
 
   @spec shift_tz(DateTime.t(), String.t() | nil) :: DateTime.t()
   defp shift_tz(%DateTime{} = date, timezone) when is_binary(timezone) do

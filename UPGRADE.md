@@ -1,3 +1,13 @@
+# Upgrading to the version with hackney 4 / HTTPoison 3 (security update)
+
+**Erlang/OTP 27 and Elixir 1.17 are now required.** This version upgrades the hackney HTTP client to 4.x to fix four published security advisories (EEF-CVE-2026-47069, EEF-CVE-2026-47071, EEF-CVE-2026-47075, EEF-CVE-2026-47076), and hackney 4 only supports Erlang/OTP 27 and later.
+
+Before upgrading Mobilizon, make sure your runtime is recent enough:
+
+- Debian 13 "trixie" ships Erlang/OTP 27 and works out of the box.
+- Debian 12 "bookworm" ships Erlang/OTP 25, which is **not** sufficient. Install a newer Erlang/Elixir through the [ASDF tool](https://asdf-vm.com/), a container image, or a third-party package repository.
+- If you use the release tarballs or the Docker images, the runtime is bundled and no action is needed.
+
 # Upgrading from 2.0 to 2.1
 
 ## Mailer library change

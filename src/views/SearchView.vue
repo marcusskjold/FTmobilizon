@@ -23,11 +23,7 @@
         <span v-if="!filtersPanelOpened">{{ t("Hide filters") }}</span>
         <span v-else>{{ t("Show filters") }}</span>
       </o-button>
-      <form
-        @submit.prevent="doNewSearch"
-        :class="{ hidden: filtersPanelOpened }"
-        class="lg:block mt-4 px-2"
-      >
+      <form :class="{ hidden: filtersPanelOpened }" class="lg:block mt-4 px-2">
         <div
           class="py-4 border-b border-gray-200 dark:border-gray-500"
           v-show="globalSearchEnabled"
@@ -73,16 +69,16 @@
           class="py-4 border-b border-gray-200 dark:border-gray-500"
           v-show="contentType !== 'GROUPS'"
         >
-          <button
+          <div
             :aria-label="t('Online events')"
             class="text-gray-400 hover:text-gray-500 dark:text-slate-100 hover:dark:text-slate-200"
-            @click="isOnline = !isOnline"
           >
-            <o-switch disabled v-model="isOnline"></o-switch>
-            <span class="px-4 font-medium text-gray-900 dark:text-slate-100">{{
-              t("Online events")
-            }}</span>
-          </button>
+            <o-switch v-model="isOnline"
+              ><span class="font-medium text-gray-900 dark:text-slate-100">{{
+                t("Online events")
+              }}</span></o-switch
+            >
+          </div>
         </div>
 
         <filter-section
@@ -131,6 +127,13 @@
           :title="t('Categories')"
         >
           <template #options>
+            <button
+              type="button"
+              class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 mb-2"
+              @click="toggleAllCategories"
+            >
+              {{ allCategoriesSelected ? t("Deselect all") : t("Select all") }}
+            </button>
             <fieldset class="flex flex-col">
               <legend class="sr-only">{{ t("Categories") }}</legend>
               <div v-for="category in orderedCategories" :key="category.id">
@@ -364,9 +367,57 @@
           </span>
         </p>
         <div class="flex gap-2">
+          <o-tooltip
+            :label="t('URL copied to clipboard')"
+            :active="showCopiedTooltip.atom || showCopiedTooltip.ics"
+            variant="success"
+            position="left"
+          />
+          <o-dropdown v-if="contentType == ContentType.EVENTS" aria-role="list">
+            <template #trigger>
+              <o-button icon-left="rss">{{ t("Subscribe") }}</o-button>
+            </template>
+            <o-dropdown-item has-link aria-role="menuitem">
+              <a
+                :href="search_url_ics"
+                :title="t('Atom feed for events')"
+                @click="(e: Event) => copyURL(e, search_url_ics, 'ics')"
+                class="inline-flex gap-1"
+              >
+                <CalendarSync />
+                {{ t("ICS/WebCal feed for this search") }}
+              </a>
+            </o-dropdown-item>
+            <o-dropdown-item has-link aria-role="menuitem">
+              <a
+                :href="search_url_atom"
+                :title="t('ICS feed for events')"
+                @click="(e: Event) => copyURL(e, search_url_atom, 'ics')"
+                class="inline-flex gap-1"
+              >
+                <RSS />
+                {{ t("RSS/Atom feed for this search") }}
+              </a>
+            </o-dropdown-item>
+          </o-dropdown>
           <label class="sr-only" for="sortOptionSelect">{{
             t("Sort by")
           }}</label>
+          <o-button
+            v-show="!isOnline"
+            @click="
+              () =>
+                (mode = mode === ViewMode.MAP ? ViewMode.LIST : ViewMode.MAP)
+            "
+            :icon-left="mode === ViewMode.MAP ? 'view-list' : 'map'"
+          >
+            <span v-if="mode === ViewMode.LIST">
+              {{ t("Map") }}
+            </span>
+            <span v-else-if="mode === ViewMode.MAP">
+              {{ t("List") }}
+            </span>
+          </o-button>
           <o-select
             v-if="contentType !== ContentType.GROUPS"
             :placeholder="t('Sort by events')"
@@ -395,21 +446,6 @@
               {{ sortOption.label }}
             </option>
           </o-select>
-          <o-button
-            v-show="!isOnline"
-            @click="
-              () =>
-                (mode = mode === ViewMode.MAP ? ViewMode.LIST : ViewMode.MAP)
-            "
-            :icon-left="mode === ViewMode.MAP ? 'view-list' : 'map'"
-          >
-            <span v-if="mode === ViewMode.LIST">
-              {{ t("Map") }}
-            </span>
-            <span v-else-if="mode === ViewMode.MAP">
-              {{ t("List") }}
-            </span>
-          </o-button>
         </div>
       </div>
       <div v-if="mode === ViewMode.LIST">
@@ -550,7 +586,7 @@
         </template>
       </div>
       <event-marker-map
-        v-if="mode === ViewMode.MAP"
+        v-if="mode === ViewMode.MAP && searchEvents && searchGroups"
         :contentType="contentType"
         :latitude="latitude"
         :longitude="longitude"
@@ -620,6 +656,9 @@ import EmptyContent from "@/components/Utils/EmptyContent.vue";
 import SkeletonGroupResultList from "@/components/Group/SkeletonGroupResultList.vue";
 import SkeletonEventResultList from "@/components/Event/SkeletonEventResultList.vue";
 import { arrayTransformer } from "@/utils/route";
+import CalendarSync from "vue-material-design-icons/CalendarSync.vue";
+import RSS from "vue-material-design-icons/Rss.vue";
+import { showCopiedTooltip, tokenToURL, copyURL } from "@/utils/share";
 
 const EventMarkerMap = defineAsyncComponent(
   () => import("@/components/Search/EventMarkerMap.vue")
@@ -705,7 +744,15 @@ const statusOneOf = useRouteQuery(
   [EventStatus.CONFIRMED],
   arrayTransformer
 );
-const languageOneOf = useRouteQuery("languageOneOf", [], arrayTransformer);
+
+const rawLanguageOneOf = useRouteQuery("languageOneOf", [], arrayTransformer);
+
+// filter unknown lang given in the URL
+const languageOneOf = computed(() =>
+  (rawLanguageOneOf.value ?? []).filter(
+    (lang): lang is keyof typeof langs => lang in langs
+  )
+);
 
 const searchTarget = useRouteQuery(
   "target",
@@ -723,8 +770,8 @@ const sortByGroups = useRouteQuery(
   GroupSortValues.LAST_EVENT_ACTIVITY,
   enumTransformer(GroupSortValues)
 );
-const bbox = useRouteQuery("bbox", undefined);
-const zoom = useRouteQuery("zoom", undefined, integerTransformer);
+const bbox = useRouteQuery("bbox", null);
+const zoom = useRouteQuery("zoom", null, integerTransformer);
 
 const EVENT_PAGE_LIMIT = 16;
 
@@ -737,6 +784,20 @@ const orderedCategories = computed(() => {
   if (!eventCategories.value) return [];
   return lodashSortBy(eventCategories.value, ["label"]);
 });
+
+const allCategoriesSelected = computed(
+  () =>
+    orderedCategories.value.length > 0 &&
+    categoryOneOf.value.length === orderedCategories.value.length
+);
+
+const toggleAllCategories = () => {
+  if (allCategoriesSelected.value) {
+    categoryOneOf.value = [];
+  } else {
+    categoryOneOf.value = orderedCategories.value.map((c) => c.id);
+  }
+};
 
 const searchEvents = computed(() => searchElementsResult.value?.searchEvents);
 const searchShortEvents = computed(
@@ -851,7 +912,7 @@ const searchIsUrl = computed((): boolean => {
   if (!searchDebounced.value) return false;
   try {
     url = new URL(searchDebounced.value);
-  } catch (_) {
+  } catch {
     return false;
   }
 
@@ -1035,6 +1096,10 @@ const boostLanguagesQuery = computed((): string[] => {
   return Array.from(languages);
 });
 
+function isEqual(a: unknown, b: unknown): boolean {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
 // When search criteria changes, reset page number to 1
 watch(
   [
@@ -1055,14 +1120,75 @@ watch(
     sortByGroups,
     boostLanguagesQuery,
   ],
-  ([newContentType]) => {
+  (newValues, oldValues) => {
+    const [
+      newContentType,
+      newSearchDebounced,
+      newGeoHashLocation,
+      newStart,
+      newEnd,
+      newRadius,
+      newIsOnline,
+      newCategoryOneOf,
+      newStatusOneOf,
+      newLanguageOneOf,
+      newSearchTarget,
+      newBbox,
+      newZoom,
+      newSortByEvents,
+      newSortByGroups,
+      newBoostLanguagesQuery,
+    ] = newValues;
+
+    const [
+      oldContentType,
+      oldSearchDebounced,
+      oldGeoHashLocation,
+      oldStart,
+      oldEnd,
+      oldRadius,
+      oldIsOnline,
+      oldCategoryOneOf,
+      oldStatusOneOf,
+      oldLanguageOneOf,
+      oldSearchTarget,
+      oldBbox,
+      oldZoom,
+      oldSortByEvents,
+      oldSortByGroups,
+      oldBoostLanguagesQuery,
+    ] = oldValues;
+
+    const filtersChanged =
+      !isEqual(newContentType, oldContentType) ||
+      !isEqual(newSearchDebounced, oldSearchDebounced) ||
+      !isEqual(newGeoHashLocation, oldGeoHashLocation) ||
+      !isEqual(newStart, oldStart) ||
+      !isEqual(newEnd, oldEnd) ||
+      !isEqual(newRadius, oldRadius) ||
+      !isEqual(newIsOnline, oldIsOnline) ||
+      !isEqual(newCategoryOneOf, oldCategoryOneOf) ||
+      !isEqual(newStatusOneOf, oldStatusOneOf) ||
+      !isEqual(newLanguageOneOf, oldLanguageOneOf) ||
+      !isEqual(newSearchTarget, oldSearchTarget) ||
+      !isEqual(newBbox, oldBbox) ||
+      !isEqual(newZoom, oldZoom) ||
+      !isEqual(newSortByEvents, oldSortByEvents) ||
+      !isEqual(newSortByGroups, oldSortByGroups) ||
+      !isEqual(newBoostLanguagesQuery, oldBoostLanguagesQuery);
+
+    // The watch is always triggered because useRouteQuery is linked to the URL.
+    // So when the URL changes, all watched elements (even if they are not really updated) are recreated.
+    // This bug triggers the watch, so we need to check whether our elements have really changed or not.
+    // https://framagit.org/kaihuri/mobilizon/-/work_items/1670
+    if (!filtersChanged) return;
+
     switch (newContentType) {
       case ContentType.EVENTS:
-        eventPage.value = 1;
-        break;
       case ContentType.LONGEVENTS:
         eventPage.value = 1;
         break;
+
       case ContentType.GROUPS:
         groupPage.value = 1;
         break;
@@ -1137,4 +1263,53 @@ const { result: searchLongElementsResult } = useQuery<{
   zoom: zoom.value,
   boostLanguages: boostLanguagesQuery.value,
 }));
+
+const search_url_param = computed(() => {
+  const params = new URLSearchParams({
+    ...(search.value && { term: search.value }),
+    ...(tag.value && { tags: tag.value }),
+    ...(geoHashLocation.value && { location: geoHashLocation.value }),
+    ...(geoHashLocation.value &&
+      radius.value && {
+        radius: String(radius.value),
+      }),
+    // "category" is not implemented
+    ...(categoryOneOf.value?.length && {
+      category_one_of: categoryOneOf.value.join(","),
+    }),
+    ...(statusOneOf.value?.length && {
+      status_one_of: statusOneOf.value.join(","),
+    }),
+    ...(languageOneOf.value?.length && {
+      language_one_of: languageOneOf.value.join(","),
+    }),
+    ...(boostLanguagesQuery.value?.length && {
+      boost_languages: boostLanguagesQuery.value.join(","),
+    }),
+    ...(mode.value === ViewMode.MAP &&
+      bbox.value && {
+        bbox: bbox.value,
+      }),
+    ...(mode.value === ViewMode.MAP &&
+      bbox.value &&
+      zoom.value != null && {
+        zoom: String(zoom.value),
+      }),
+    ...(searchTarget.value && {
+      search_target: searchTarget.value,
+    }),
+    ...(isOnline.value && { type: "ONLINE" }),
+    ...(contentType.value == ContentType.EVENTS && { long_events: "false" }),
+    ...(contentType.value == ContentType.LONGEVENTS && { long_events: "true" }),
+  });
+
+  return params.toString();
+});
+
+const search_url_ics = computed(() => {
+  return tokenToURL("feed/search/ics?") + search_url_param.value;
+});
+const search_url_atom = computed(() => {
+  return tokenToURL("feed/search/atom?") + search_url_param.value;
+});
 </script>

@@ -437,8 +437,8 @@
 import { IActionLog } from "@/types/report.model";
 import { LOGS } from "@/graphql/report";
 import { ActionLogAction } from "@/types/enums";
-import RouteName from "../../router/name";
-import { displayNameAndUsername, displayName } from "../../types/actor";
+import RouteName from "@/router/name";
+import { displayNameAndUsername, displayName } from "@/types/actor";
 import { Paginate } from "@/types/paginate";
 import { useQuery } from "@vue/apollo-composable";
 import { integerTransformer, useRouteQuery } from "vue-use-route-query";

@@ -210,9 +210,9 @@
 import type EditorComponent from "@/components/TextEditor.vue";
 import { formatDistanceToNow } from "date-fns";
 import { CommentModeration } from "@/types/enums";
-import { CommentModel, IComment } from "../../types/comment.model";
-import { IPerson } from "../../types/actor";
-import { IEvent } from "../../types/event.model";
+import { CommentModel, IComment } from "@/types/comment.model";
+import { IPerson } from "@/types/actor";
+import { IEvent } from "@/types/event.model";
 import PopoverActorCard from "../Account/PopoverActorCard.vue";
 import {
   computed,

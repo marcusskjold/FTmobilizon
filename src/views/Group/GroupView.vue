@@ -654,20 +654,20 @@ import { addMinutes } from "date-fns";
 import { JOIN_GROUP } from "@/graphql/member";
 import { MemberRole, Openness } from "@/types/enums";
 import { IMember } from "@/types/actor/member.model";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import ReportModal from "@/components/Report/ReportModal.vue";
 import {
   GROUP_MEMBERSHIP_SUBSCRIPTION_CHANGED,
   PERSON_STATUS_GROUP,
 } from "@/graphql/actor";
-import LazyImageWrapper from "../../components/Image/LazyImageWrapper.vue";
-import EmptyContent from "../../components/Utils/EmptyContent.vue";
+import LazyImageWrapper from "@/components/Image/LazyImageWrapper.vue";
+import EmptyContent from "@/components/Utils/EmptyContent.vue";
 import {
   FOLLOW_GROUP,
   UNFOLLOW_GROUP,
   UPDATE_GROUP_FOLLOW,
 } from "@/graphql/followers";
-import { useAnonymousReportsConfig } from "../../composition/apollo/config";
+import { useAnonymousReportsConfig } from "@/composition/apollo/config";
 import { computed, defineAsyncComponent, inject, ref, watch } from "vue";
 import { useCurrentActorClient } from "@/composition/apollo/actor";
 import { useGroup, useLeaveGroup } from "@/composition/apollo/group";

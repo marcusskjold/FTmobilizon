@@ -80,8 +80,8 @@
 <script lang="ts" setup>
 import { useQuery } from "@vue/apollo-composable";
 import { computed, reactive, ref, watch } from "vue";
-import { GET_RESOURCE } from "../../graphql/resources";
-import { IResource } from "../../types/resource";
+import { GET_RESOURCE } from "@/graphql/resources";
+import { IResource } from "@/types/resource";
 import Folder from "vue-material-design-icons/Folder.vue";
 import Link from "vue-material-design-icons/Link.vue";
 import ChevronUp from "vue-material-design-icons/ChevronUp.vue";

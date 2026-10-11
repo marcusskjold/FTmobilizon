@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AuthorizeView > Show simple 1`] = `
+"<div class="container mx-auto w-96">
+  <div style="display: none;">
+    <div data-oruga="skeleton" class="o-skeleton o-skeleton--left mt-6">
+      <div class="o-skeleton__item o-skeleton__item--rounded o-skeleton__item--animated o-skeleton__item--large"></div>
+    </div>
+    <div data-oruga="skeleton" class="o-skeleton o-skeleton--left">
+      <div class="o-skeleton__item o-skeleton__item--rounded o-skeleton__item--animated" style="width: 80%;"></div>
+    </div>
+    <div class="rounded-lg bg-mbz-warning shadow-xl my-6 p-4 flex items-center gap-2">
+      <div>
+        <div data-oruga="skeleton" class="o-skeleton o-skeleton--left">
+          <div class="o-skeleton__item o-skeleton__item--rounded o-skeleton__item--animated" style="height: 42px; width: 42px; border-radius: 50%;"></div>
+        </div>
+      </div>
+      <div class="w-full">
+        <div data-oruga="skeleton" class="o-skeleton o-skeleton--left">
+          <div class="o-skeleton__item o-skeleton__item--rounded o-skeleton__item--animated"></div>
+        </div>
+        <div data-oruga="skeleton" class="o-skeleton o-skeleton--left">
+          <div class="o-skeleton__item o-skeleton__item--rounded o-skeleton__item--animated"></div>
+        </div>
+        <div data-oruga="skeleton" class="o-skeleton o-skeleton--left">
+          <div class="o-skeleton__item o-skeleton__item--rounded o-skeleton__item--animated"></div>
+        </div>
+      </div>
+    </div>
+    <div class="rounded-lg bg-white shadow-xl my-6">
+      <div class="p-4 pb-0">
+        <p class="text-3xl">
+        <div data-oruga="skeleton" class="o-skeleton o-skeleton--left">
+          <div class="o-skeleton__item o-skeleton__item--rounded o-skeleton__item--animated o-skeleton__item--large"></div>
+        </div>
+        </p>
+        <div data-oruga="skeleton" class="o-skeleton o-skeleton--left">
+          <div class="o-skeleton__item o-skeleton__item--rounded o-skeleton__item--animated" style="width: 40%;"></div>
+        </div>
+      </div>
+      <div class="flex gap-3 p-4">
+        <div data-oruga="skeleton" class="o-skeleton o-skeleton--left">
+          <div class="o-skeleton__item o-skeleton__item--rounded o-skeleton__item--animated"></div>
+        </div>
+        <div data-oruga="skeleton" class="o-skeleton o-skeleton--left">
+          <div class="o-skeleton__item o-skeleton__item--rounded o-skeleton__item--animated"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--v-if-->
+  <div style="display: none;">
+    <!--v-if--><a href="/" class="router-link-active router-link-exact-active o-button o-button--text" data-oruga="button" role="button" tabindex="0" aria-current="page"><span class="o-button__wrapper"><!----><span class="o-button__label">Back to homepage</span>
+      <!----></span>
+    </a>
+  </div>
+  <!--v-if-->
+</div>"
+`;

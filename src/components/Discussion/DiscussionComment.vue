@@ -147,8 +147,8 @@
 </template>
 <script lang="ts" setup>
 import { formatDistanceToNow } from "date-fns";
-import { IComment } from "../../types/comment.model";
-import { IPerson, usernameWithDomain } from "../../types/actor";
+import { IComment } from "@/types/comment.model";
+import { IPerson, usernameWithDomain } from "@/types/actor";
 import { computed, defineAsyncComponent, inject, ref } from "vue";
 import { formatDateTimeString } from "@/filters/datetime";
 import AccountCircle from "vue-material-design-icons/AccountCircle.vue";

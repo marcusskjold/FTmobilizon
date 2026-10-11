@@ -152,10 +152,10 @@
 
 <script lang="ts" setup>
 import { EventJoinOptions, ParticipantRole } from "@/types/enums";
-import { IParticipant } from "../../types/participant.model";
-import { IEvent } from "../../types/event.model";
-import { IPerson, displayName } from "../../types/actor";
-import RouteName from "../../router/name";
+import { IParticipant } from "@/types/participant.model";
+import { IEvent } from "@/types/event.model";
+import { IPerson, displayName } from "@/types/actor";
+import RouteName from "@/router/name";
 import { computed } from "vue";
 import MenuDown from "vue-material-design-icons/MenuDown.vue";
 import { useI18n } from "vue-i18n";

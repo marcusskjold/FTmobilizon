@@ -1,0 +1,57 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AboutInstanceView > Show simple 1`] = `
+"<div data-v-e257a88e="">
+  <section data-v-e257a88e="" class="p-6 bg-primary text-white">
+    <h1 data-v-e257a88e="" dir="auto">Mobilizon</h1>
+    <p data-v-e257a88e="" dir="auto">Mobilizon.fr est l'instance Mobilizon de Framasoft.</p>
+  </section>
+  <section data-v-e257a88e="" class="px-2 flex flex-wrap gap-2 contact-statistics">
+    <div data-v-e257a88e="" class="statistics flex-1 min-w-[20rem]">
+      <p data-v-e257a88e="">Home to <strong data-v-e257a88e="">2</strong> users</p>
+      <p data-v-e257a88e="">and <strong data-v-e257a88e="">3</strong> groups</p>
+      <p data-v-e257a88e="">Who published <strong data-v-e257a88e="">30418</strong> events</p>
+      <p data-v-e257a88e="">And <strong data-v-e257a88e="">84</strong> comments</p>
+    </div>
+    <div data-v-e257a88e="" class="">
+      <p data-v-e257a88e="" class="font-bold">Contact</p>
+      <p data-v-e257a88e="">No information</p>
+    </div>
+  </section>
+  <!--v-if-->
+  <section data-v-e257a88e="" class="long-description content">
+    <div data-v-e257a88e=""></div>
+  </section>
+  <hr data-v-e257a88e="" role="presentation">
+  <section data-v-e257a88e="" class="px-3">
+    <h2 data-v-e257a88e="" class="text-xl">Instance configuration</h2>
+    <table data-v-e257a88e="" class="border-collapse table-auto w-full">
+      <tr data-v-e257a88e="" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <td data-v-e257a88e="">Instance languages</td>
+        <td data-v-e257a88e="" title="fr">French et English</td>
+      </tr>
+      <tr data-v-e257a88e="" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <td data-v-e257a88e="">Mobilizon version</td>
+        <td data-v-e257a88e=""></td>
+      </tr>
+      <tr data-v-e257a88e="" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <td data-v-e257a88e="">Registrations</td>
+        <!--v-if-->
+        <td data-v-e257a88e="">Open</td>
+      </tr>
+      <tr data-v-e257a88e="" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <td data-v-e257a88e="">Federation</td>
+        <td data-v-e257a88e="">Disabled</td>
+      </tr>
+      <tr data-v-e257a88e="" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <td data-v-e257a88e="">Anonymous participations</td>
+        <td data-v-e257a88e="">If allowed by organizer</td>
+      </tr>
+      <tr data-v-e257a88e="" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <td data-v-e257a88e="">Instance feeds</td>
+        <td data-v-e257a88e="">Disabled</td>
+      </tr>
+    </table>
+  </section>
+</div>"
+`;

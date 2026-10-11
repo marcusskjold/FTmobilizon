@@ -40,8 +40,8 @@
 </template>
 
 <script lang="ts" setup>
-import RouteName from "../../router/name";
-import { LEAVE_EVENT } from "../../graphql/event";
+import RouteName from "@/router/name";
+import { LEAVE_EVENT } from "@/graphql/event";
 import { computed, ref, watchEffect } from "vue";
 import { useMutation } from "@vue/apollo-composable";
 import { useI18n } from "vue-i18n";

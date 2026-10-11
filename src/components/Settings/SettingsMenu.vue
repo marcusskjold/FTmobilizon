@@ -94,7 +94,7 @@ import { ICurrentUserRole } from "@/types/enums";
 import SettingMenuSection from "./SettingMenuSection.vue";
 import SettingMenuItem from "./SettingMenuItem.vue";
 
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import { useCurrentUserClient } from "@/composition/apollo/user";
 import { useCurrentUserIdentities } from "@/composition/apollo/actor";
 import { useI18n } from "vue-i18n";

@@ -49,14 +49,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Post do
     {:ok, page}
   end
 
-  def find_posts_for_group(
-        _group,
-        _args,
-        _resolution
-      ) do
-    {:ok, %Page{total: 0, elements: []}}
-  end
-
   @spec get_post(any(), map(), Absinthe.Resolution.t()) ::
           {:ok, Post.t()} | {:error, :post_not_found}
   def get_post(
@@ -94,10 +86,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Post do
       {:post, _} ->
         {:error, :post_not_found}
     end
-  end
-
-  def get_post(_parent, _args, _resolution) do
-    {:error, :post_not_found}
   end
 
   @spec create_post(any(), map(), Absinthe.Resolution.t()) ::

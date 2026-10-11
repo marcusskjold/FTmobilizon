@@ -1,0 +1,60 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MyEventsView > Show simple 1`] = `
+"<div class="container mx-auto px-1 mb-6">
+  <h1>My events</h1>
+  <p>You will find here all the events you have created or of which you are a participant, as well as events organized by groups you follow or are a member of.</p>
+  <div class="my-2"><a href="/events/create" class="o-button o-button--primary" data-oruga="button" role="button" tabindex="0"><span class="o-button__wrapper"><!----><span class="o-button__label">Create event</span>
+      <!----></span>
+    </a></div>
+  <div class="flex flex-wrap gap-4 items-start">
+    <div class="rounded p-3 flex-auto md:flex-none bg-zinc-300 dark:bg-zinc-700">
+      <div data-oruga="field" class="o-field date-filter" expanded=""><label id="v-0-0" for="events-start-datepicker" class="o-field__label">Showing events starting on</label>
+        <!-- 
+   :key is required to force rerender when time change
+   If not used, the input becomes empty
+   See : https://vuejs.org/api/built-in-special-attributes.html#key
+    --><input type="date" class="rounded invalid:border-red-500 dark:bg-zinc-600" id="events-start-datepicker" aria-label="Showing events starting on"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button reset-area !h-auto" title="Clear date filter field"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><i class="mdi mdi-close mdi-24px"></i></span>
+          <!---->
+          <!----></span>
+        </button>
+        <!---->
+      </div>
+      <div data-oruga="field" class="o-field">
+        <!---->
+        <div data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input aria-labelledby="v-0-2" id="drafts-checkbox" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" name="drafts-checkbox" true-value="true" false-value="false" autocomplete="off" aria-checked="true">
+          <!---->
+        </div><label for="drafts-checkbox">Drafts</label>
+        <!---->
+      </div>
+      <div data-oruga="field" class="o-field">
+        <!---->
+        <div data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input aria-labelledby="v-0-4" id="attending-checkbox" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" name="attending-checkbox" true-value="true" false-value="false" autocomplete="off" aria-checked="true">
+          <!---->
+        </div><label for="attending-checkbox">Attending</label>
+        <!---->
+      </div>
+      <div data-oruga="field" class="o-field">
+        <!---->
+        <div data-oruga="checkbox" class="o-checkbox"><input aria-labelledby="v-0-6" id="mygroup-checkbox" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" name="mygroup-checkbox" true-value="true" false-value="false" autocomplete="off" aria-checked="false">
+          <!---->
+        </div><label for="mygroup-checkbox">From my groups</label>
+        <!---->
+      </div>
+      <!--v-if-->
+    </div>
+    <div class="flex-1 min-w-[300px]">
+      <!--v-if-->
+      <!--v-if-->
+      <!--v-if-->
+      <section class="text-center not-found">
+        <div class="text-center prose dark:prose-invert max-w-full">
+          <p>You don't have any upcoming events. Maybe try another filter?</p>
+          <p>Do you wish to <a href="/events/create" class="">create an event</a> or <a href="/search?contentType=EVENTS" class="">explore the events</a>?</p>
+        </div>
+      </section>
+      <!--v-if-->
+    </div>
+  </div>
+</div>"
+`;

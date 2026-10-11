@@ -1,0 +1,110 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`EditView > Show simple 1`] = `
+"<div>
+  <form>
+    <div class="container mx-auto">
+      <!--v-if-->
+      <h1>Add a new post</h1>
+      <h2>General information</h2>
+      <div><label data-oruga="upload" class="o-upload !flex">
+          <div class="o-upload__draggable" role="button" tabindex="0">
+            <div class="w-100 text-center p-4 rounded-xl border-dashed border-2 border-gray-600"><span class="mx-auto flex w-fit"><span aria-hidden="true" class="material-design-icon upload-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"><!--v-if--></path></svg></span><span class="capitalize">Click to upload Headline picture</span></span>
+              <!--v-if-->
+              <!--v-if-->
+            </div>
+          </div><input type="file" data-oruga-input="file" accept="image/gif,image/png,image/jpeg,image/webp">
+        </label></div>
+      <!--v-if-->
+      <div data-oruga="field" class="o-field"><label id="v-0-0" for="post-title" class="o-field__label">Title</label>
+        <div data-oruga="input" class="o-input o-input--large o-input--expanded">
+          <!----><input aria-labelledby="v-0-0" aria-required="true" required="" dir="auto" id="post-title" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" autocomplete="off">
+          <!---->
+          <!---->
+        </div>
+        <!---->
+      </div>
+      <div data-oruga="field" class="o-field taginput-field"><label id="v-0-0-0" for="tag-input-1" class="o-field__label">
+          <p class="inline-flex items-center gap-0.5">Add some tags
+          <div data-oruga="tooltip" class="o-tooltip">
+            <div class="o-tooltip__trigger" aria-haspopup="true" aria-describedby="v-0-0-2"><span aria-hidden="true" class="material-design-icon help-circle-outline-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="16" height="16" viewBox="0 0 24 24"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"><!--v-if--></path></svg></span></div>
+            <!--teleport start-->
+            <transition-stub name="fade" appear="false" persisted="false" css="true">
+              <div id="v-0-0-2" class="o-tooltip__content o-tooltip__content--auto o-tooltip__content--dark" role="tooltip" style="display: none;"><span class="o-tooltip__arrow o-tooltip__arrow--auto o-tooltip__arrow--dark"></span>You can add tags by hitting the Enter key or by adding a comma</div>
+            </transition-stub>
+            <!--teleport end-->
+          </div>
+          </p>
+        </label>
+        <div data-oruga="taginput" class="o-taginput o-taginput--expanded">
+          <div class="o-taginput__container">
+            <div data-oruga="autocomplete" class="o-dropdown o-dropdown--expanded o-dropdown--position-auto o-autocomplete o-taginput__autocomplete">
+              <div class="o-dropdown__trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-disabled="false" aria-controls="v-0-0-3" aria-labelledby="v-0-0-0">
+                <div data-oruga="input" class="o-input o-input--expanded"><span data-oruga="icon" class="o-icon o-input__icon-left"><i class="mdi mdi-label mdi-24px"></i></span><input aria-labelledby="v-0-0-0" dir="auto" has-counter="false" aria-autocomplete="list" aria-controls="v-0-0-3" enterkeyhint="enter" id="tag-input-1" type="text" data-oruga-input="text" class="o-input__input o-taginput__input o-input__input--iconspace-left o-input__input--placeholder" maxlength="20" autocomplete="true" placeholder="Eg: Stockholm, Dance, Chess…">
+                  <!---->
+                  <!---->
+                </div>
+              </div>
+              <!--teleport start-->
+              <!---->
+              <transition-stub name="fade" appear="false" persisted="false" css="true">
+                <div id="v-0-0-3" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--auto" style="max-height: 200px; overflow: auto; display: none;" role="listbox" aria-labelledby="v-0-0-0" aria-multiselectable="false">
+                  <!---->
+                </div>
+              </transition-stub>
+              <!--teleport end-->
+            </div>
+          </div><small class="o-taginput__counter">0 / 10</small>
+        </div>
+        <!---->
+      </div>
+      <div data-oruga="field" class="o-field"><label id="v-0-2" class="o-field__label">Post</label>
+        <!--v-if-->
+        <div class="w-full">
+          <div class="editor" id="tiptab-editor" data-actor-id="123">
+            <div class="mb-2 menubar bar-is-hidden" editor="[object Object]"><button class="menubar__button" type="button" title="Bold"><span aria-hidden="true" class="material-design-icon format-bold-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M13.5,15.5H10V12.5H13.5A1.5,1.5 0 0,1 15,14A1.5,1.5 0 0,1 13.5,15.5M10,6.5H13A1.5,1.5 0 0,1 14.5,8A1.5,1.5 0 0,1 13,9.5H10M15.6,10.79C16.57,10.11 17.25,9 17.25,8C17.25,5.74 15.5,4 13.25,4H7V18H14.04C16.14,18 17.75,16.3 17.75,14.21C17.75,12.69 16.89,11.39 15.6,10.79Z"><!--v-if--></path></svg></span></button><button class="menubar__button" type="button" title="Italic"><span aria-hidden="true" class="material-design-icon format-italic-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10,4V7H12.21L8.79,15H6V18H14V15H11.79L15.21,7H18V4H10Z"><!--v-if--></path></svg></span></button><button class="menubar__button" type="button" title="Underline"><span aria-hidden="true" class="material-design-icon format-underline-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5,21H19V19H5V21M12,17A6,6 0 0,0 18,11V3H15.5V11A3.5,3.5 0 0,1 12,14.5A3.5,3.5 0 0,1 8.5,11V3H6V11A6,6 0 0,0 12,17Z"><!--v-if--></path></svg></span></button><button class="menubar__button" type="button" title="Heading Level 1"><span aria-hidden="true" class="material-design-icon format-header1-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3,4H5V10H9V4H11V18H9V12H5V18H3V4M14,18V16H16V6.31L13.5,7.75V5.44L16,4H18V16H20V18H14Z"><!--v-if--></path></svg></span></button><button class="menubar__button" type="button" title="Heading Level 2"><span aria-hidden="true" class="material-design-icon format-header2-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3,4H5V10H9V4H11V18H9V12H5V18H3V4M21,18H15A2,2 0 0,1 13,16C13,15.47 13.2,15 13.54,14.64L18.41,9.41C18.78,9.05 19,8.55 19,8A2,2 0 0,0 17,6A2,2 0 0,0 15,8H13A4,4 0 0,1 17,4A4,4 0 0,1 21,8C21,9.1 20.55,10.1 19.83,10.83L15,16H21V18Z"><!--v-if--></path></svg></span></button><button class="menubar__button" type="button" title="Heading Level 3"><span aria-hidden="true" class="material-design-icon format-header3-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3,4H5V10H9V4H11V18H9V12H5V18H3V4M15,4H19A2,2 0 0,1 21,6V16A2,2 0 0,1 19,18H15A2,2 0 0,1 13,16V15H15V16H19V12H15V10H19V6H15V7H13V6A2,2 0 0,1 15,4Z"><!--v-if--></path></svg></span></button><button class="menubar__button" type="button" title="Add link"><span aria-hidden="true" class="material-design-icon link-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3.9,12C3.9,10.29 5.29,8.9 7,8.9H11V7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H11V15.1H7C5.29,15.1 3.9,13.71 3.9,12M8,13H16V11H8V13M17,7H13V8.9H17C18.71,8.9 20.1,10.29 20.1,12C20.1,13.71 18.71,15.1 17,15.1H13V17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7Z"><!--v-if--></path></svg></span></button>
+              <!--v-if--><button class="menubar__button" type="button" title="Add picture"><span aria-hidden="true" class="material-design-icon image-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19Z"><!--v-if--></path></svg></span></button><button class="menubar__button" type="button" title="Bullet list"><span aria-hidden="true" class="material-design-icon format-list-bulleted-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z"><!--v-if--></path></svg></span></button><button class="menubar__button" type="button" title="Ordered list"><span aria-hidden="true" class="material-design-icon format-list-numbered-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7,13V11H21V13H7M7,19V17H21V19H7M7,7V5H21V7H7M3,8V5H2V4H4V8H3M2,17V16H5V20H2V19H4V18.5H3V17.5H4V17H2M4.25,10A0.75,0.75 0 0,1 5,10.75C5,10.95 4.92,11.14 4.79,11.27L3.12,13H5V14H2V13.08L4,11H2V10H4.25Z"><!--v-if--></path></svg></span></button><button class="menubar__button" type="button" title="Quote"><span aria-hidden="true" class="material-design-icon format-quote-close-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M14,17H17L19,13V7H13V13H16M6,17H9L11,13V7H5V13H8L6,17Z"><!--v-if--></path></svg></span></button><button class="menubar__button" type="button" title="Undo"><span aria-hidden="true" class="material-design-icon undo-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12.5,8C9.85,8 7.45,9 5.6,10.6L2,7V16H11L7.38,12.38C8.77,11.22 10.54,10.5 12.5,10.5C16.04,10.5 19.05,12.81 20.1,16L22.47,15.22C21.08,11.03 17.15,8 12.5,8Z"><!--v-if--></path></svg></span></button><button class="menubar__button" type="button" title="Redo"><span aria-hidden="true" class="material-design-icon redo-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18.4,10.6C16.55,9 14.15,8 11.5,8C6.85,8 2.92,11.03 1.54,15.22L3.9,16C4.95,12.81 7.95,10.5 11.5,10.5C13.45,10.5 15.23,11.22 16.62,12.38L13,16H22V7L18.4,10.6Z"><!--v-if--></path></svg></span></button>
+            </div>
+            <!--v-if-->
+            <div class="editor__content">
+              <div contenteditable="true" role="textbox" aria-multiline="false" aria-label="Post body" translate="no" class="tiptap ProseMirror prose dark:prose-invert prose-sm lg:prose-lg xl:prose-xl bg-white dark:bg-zinc-700 !max-w-full" tabindex="0">
+                <p dir="auto" data-placeholder="Write your post" class="is-empty is-editor-empty"><br class="ProseMirror-trailingBreak"></p>
+              </div>
+            </div>
+            <!--v-if-->
+          </div>
+        </div>
+        <!---->
+      </div>
+      <h2 class="mt-2">Who can view this post</h2>
+      <fieldset>
+        <legend>When the post is private, you'll need to share the link around.</legend>
+        <div class="field">
+          <div data-oruga="radio" class="o-radio o-radio--checked"><input id="v-0-4" type="radio" data-oruga-input="radio" class="o-radio__input" name="postVisibility" autocomplete="off" aria-checked="true" aria-labelledby="v-0-5" value="PUBLIC"><label id="v-0-5" for="v-0-4" class="o-radio__label">Visible everywhere on the web</label></div>
+        </div>
+        <div class="field">
+          <div data-oruga="radio" class="o-radio"><input id="v-0-6" type="radio" data-oruga-input="radio" class="o-radio__input" name="postVisibility" autocomplete="off" aria-checked="false" aria-labelledby="v-0-7" value="UNLISTED"><label id="v-0-7" for="v-0-6" class="o-radio__label">Only accessible through link</label></div>
+        </div>
+        <div class="field">
+          <div data-oruga="radio" class="o-radio"><input id="v-0-8" type="radio" data-oruga-input="radio" class="o-radio__input" name="postVisibility" autocomplete="off" aria-checked="false" aria-labelledby="v-0-9" value="PRIVATE"><label id="v-0-9" for="v-0-8" class="o-radio__label">Only accessible to members of the group</label></div>
+        </div>
+      </fieldset>
+    </div>
+    <nav class="navbar">
+      <div class="container mx-auto">
+        <div class="navbar-menu flex flex-wrap py-2">
+          <div class="flex flex-wrap justify-end ml-auto gap-1"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--text"><span class="o-button__wrapper"><!----><span class="o-button__label">Cancel</span>
+              <!----></span>
+            </button>
+            <!--v-if-->
+            <!-- If an post has been published we can't make it draft anymore -->
+            <!--v-if--><button data-oruga="button" type="submit" role="button" tabindex="0" class="o-button o-button--primary"><span class="o-button__wrapper"><!----><span class="o-button__label"><span>Publish</span></span>
+              <!----></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </form>
+</div>"
+`;

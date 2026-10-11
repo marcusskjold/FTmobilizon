@@ -5,7 +5,6 @@ defmodule Mobilizon.Web.PageControllerTest do
 
   alias Mobilizon.Actors.Actor
   alias Mobilizon.Service.ActorSuspension
-  use Mobilizon.Web, :verified_routes
 
   setup do
     conn = build_conn() |> put_req_header("accept", "text/html")

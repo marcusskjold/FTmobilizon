@@ -242,7 +242,7 @@
 <script lang="ts" setup>
 import { ADD_INSTANCE, INSTANCES } from "@/graphql/admin";
 import { Paginate } from "@/types/paginate";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import { IInstance } from "@/types/instance.model";
 import EmptyContent from "@/components/Utils/EmptyContent.vue";
 import {

@@ -4,11 +4,11 @@
 
 <script lang="ts" setup>
 import { ICurrentUserRole } from "@/types/enums";
-import { UPDATE_CURRENT_USER_CLIENT, LOGGED_USER } from "../../graphql/user";
-import RouteName from "../../router/name";
-import { saveUserData } from "../../utils/auth";
-import { changeIdentity } from "../../utils/identity";
-import { ICurrentUser, IUser } from "../../types/current-user.model";
+import { UPDATE_CURRENT_USER_CLIENT, LOGGED_USER } from "@/graphql/user";
+import RouteName from "@/router/name";
+import { saveUserData } from "@/utils/auth";
+import { changeIdentity } from "@/utils/identity";
+import { ICurrentUser, IUser } from "@/types/current-user.model";
 import { useRouter } from "vue-router";
 import { useLazyQuery, useMutation } from "@vue/apollo-composable";
 import { useI18n } from "vue-i18n";

@@ -61,11 +61,6 @@ defmodule Mobilizon.Web.ActivityPubController do
     actor_collection(conn, "posts", args)
   end
 
-  @spec todos(Plug.Conn.t(), map()) :: Plug.Conn.t()
-  def todos(conn, args) do
-    actor_collection(conn, "todos", args)
-  end
-
   @spec events(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def events(conn, args) do
     actor_collection(conn, "events", args)

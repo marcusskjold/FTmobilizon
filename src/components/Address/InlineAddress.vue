@@ -1,6 +1,6 @@
 <template>
   <div
-    class="truncate flex gap-1"
+    class="flex gap-1"
     dir="auto"
     :title="
       isDescriptionDifferentFromLocality
@@ -9,11 +9,8 @@
     "
   >
     <MapMarker />
-    <span v-if="physicalAddress.locality">
-      {{ physicalAddress.locality }}
-    </span>
-    <span v-else>
-      {{ physicalAddress.description }}
+    <span class="truncate">
+      {{ physicalAddress.locality || physicalAddress.description }}
     </span>
   </div>
 </template>

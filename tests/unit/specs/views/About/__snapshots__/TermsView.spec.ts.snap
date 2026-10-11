@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TermsView > Show simple 1`] = `
+"<div class="container mx-auto px-2">
+  <h1>Terms</h1>
+  <transition-stub name="fade" appear="false" persisted="false" css="true">
+    <!---->
+  </transition-stub>
+  <div class="prose dark:prose-invert">
+    <article class="message">
+      <p class="message-body">Some terms, technical or otherwise, used in the text below may cover concepts that are difficult to grasp. We have provided <a href="/glossary">a glossary</a>to help you understand them better.</p>
+    </article>
+  </div>
+</div>"
+`;

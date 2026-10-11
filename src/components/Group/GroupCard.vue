@@ -85,7 +85,7 @@
 
 <script lang="ts" setup>
 import { displayName, IGroup, usernameWithDomain } from "@/types/actor";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import InlineAddress from "@/components/Address/InlineAddress.vue";
 import { addressFullName } from "@/types/address.model";
 import { useI18n } from "vue-i18n";

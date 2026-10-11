@@ -71,7 +71,9 @@ defmodule Mobilizon.Service.Statistics do
     case Cachex.fetch(:statistics, :categories, fn ->
            allowed_categories =
              Categories.list()
-             |> Enum.map(fn %{id: category} -> category |> Atom.to_string() |> String.upcase() end)
+             |> Enum.map(fn %{id: category} ->
+               category |> Atom.to_string() |> String.upcase()
+             end)
 
            statistics =
              Events.category_statistics()

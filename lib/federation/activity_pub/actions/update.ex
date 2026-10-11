@@ -29,6 +29,9 @@ defmodule Mobilizon.Federation.ActivityPub.Actions.Update do
     Logger.debug(inspect(args))
 
     case Managable.update(old_entity, args, Map.put(additional, :local, local)) do
+      {:ok, entity, nil} ->
+        {:ok, nil, entity}
+
       {:ok, entity, update_data} ->
         {:ok, activity} = create_activity(update_data, local)
         maybe_federate(activity)

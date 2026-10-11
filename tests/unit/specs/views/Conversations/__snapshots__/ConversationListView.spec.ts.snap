@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ConversationListView > Show simple 1`] = `
+"<div class="container mx-auto">
+  <breadcrumbs-nav links="[object Object]"></breadcrumbs-nav>
+  <!--v-if-->
+  <section>
+    <h1>Conversations</h1><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button"><span class="o-button__wrapper"><!----><span class="o-button__label">New private message</span>
+      <!----></span>
+    </button>
+    <div class="flex flex-col items-center mt-80" role="note"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-chat 48"></i></span>
+      <h2 class="mb-3">
+        <!-- @slot Mandatory title -->There's no conversations yet
+      </h2>
+      <p class="" style="display: none;">
+        <!-- @slot Optional description -->
+      </p>
+    </div>
+  </section>
+</div>"
+`;

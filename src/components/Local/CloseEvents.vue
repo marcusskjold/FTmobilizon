@@ -79,7 +79,7 @@
 </template>
 
 <script lang="ts" setup>
-import { LocationType } from "../../types/user-location.model";
+import { LocationType } from "@/types/user-location.model";
 import MoreContent from "./MoreContent.vue";
 import CloseContent from "./CloseContent.vue";
 import { watch, computed, useAttrs } from "vue";

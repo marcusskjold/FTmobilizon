@@ -34,6 +34,12 @@ defmodule Mobilizon.GraphQL.Resolvers.UserTest do
   }
   """
 
+  @logout_query """
+  mutation Logout($refreshToken: String!) {
+    logout(refreshToken: $refreshToken)
+  }
+  """
+
   @list_users_query """
   query ListUsers(
     $email: String
@@ -158,6 +164,25 @@ defmodule Mobilizon.GraphQL.Resolvers.UserTest do
         )
 
       assert res["data"]["user"]["email"] == user.email
+
+      res =
+        conn
+        |> AbsintheHelpers.graphql_query(
+          query: @get_user_query,
+          variables: %{id: user.id}
+        )
+
+      assert hd(res["errors"])["message"] == "You need to be logged in"
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @get_user_query,
+          variables: %{id: user.id}
+        )
+
+      assert hd(res["errors"])["message"] == "You don't have permission to do this"
 
       res =
         conn
@@ -1169,6 +1194,33 @@ defmodule Mobilizon.GraphQL.Resolvers.UserTest do
                "Impossible to authenticate, either your email or password are invalid."
     end
 
+    test "test login_user/3 with disabled", %{conn: conn} do
+      {:ok, %User{} = user} =
+        Users.register(%{
+          email: "toto@tata.tld",
+          password: "p4ssw0rd",
+          moderation: @moderation_empty
+        })
+
+      {:ok, %User{} = _user} =
+        Users.update_user(user, %{
+          "confirmed_at" => DateTime.utc_now() |> DateTime.truncate(:second),
+          "confirmation_sent_at" => nil,
+          "confirmation_token" => nil,
+          "disabled" => true
+        })
+
+      res =
+        conn
+        |> AbsintheHelpers.graphql_query(
+          query: @login_mutation,
+          variables: %{email: user.email, password: user.password}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "User not found"
+    end
+
     test "test login_user/3 with invalid email", %{conn: conn} do
       res =
         conn
@@ -1278,6 +1330,57 @@ defmodule Mobilizon.GraphQL.Resolvers.UserTest do
         |> AbsintheHelpers.graphql_query(query: @logged_person_query)
 
       assert res["errors"] == nil
+    end
+  end
+
+  describe "Resolver: logout" do
+    test "with an appropriate token", %{conn: conn} do
+      user = insert(:user)
+      insert(:actor, user: user)
+      {:ok, login_token} = Authenticator.generate_refresh_token(user)
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @logout_query,
+          variables: [refreshToken: login_token]
+        )
+
+      assert res["errors"] == nil
+      assert res["data"]["logout"] == login_token
+    end
+
+    test "no logged", %{conn: conn} do
+      user = insert(:user)
+      insert(:actor, user: user)
+      {:ok, login_token} = Authenticator.generate_refresh_token(user)
+
+      res =
+        conn
+        |> AbsintheHelpers.graphql_query(
+          query: @logout_query,
+          variables: [refreshToken: login_token]
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You need to be logged in"
+    end
+
+    test "bad token", %{conn: conn} do
+      user = insert(:user)
+      insert(:actor, user: user)
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @logout_query,
+          variables: [refreshToken: "bad token"]
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "unable_to_logout"
     end
   end
 

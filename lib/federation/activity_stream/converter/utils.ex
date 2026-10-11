@@ -130,60 +130,36 @@ defmodule Mobilizon.Federation.ActivityStream.Converter.Utils do
 
   @spec maybe_fetch_actor_and_attributed_to_id(map()) ::
           {:ok, Actor.t(), Actor.t() | nil} | {:error, atom()}
-  def maybe_fetch_actor_and_attributed_to_id(%{
-        "actor" => actor_url,
-        "attributedTo" => attributed_to_url
-      })
-      when is_nil(attributed_to_url) do
-    case fetch_actor(actor_url) do
-      {:ok, %Actor{} = actor} ->
-        {:ok, actor, nil}
+  def maybe_fetch_actor_and_attributed_to_id(attrs) do
+    actor_url = Map.get(attrs, "actor")
+    attributed_to_url = Map.get(attrs, "attributedTo")
 
-      {:error, err} ->
-        {:error, err}
+    cond do
+      is_nil(actor_url) and is_nil(attributed_to_url) ->
+        {:error, :no_actor_found}
+
+      is_nil(actor_url) ->
+        fetch_group(attributed_to_url)
+
+      is_nil(attributed_to_url) ->
+        fetch_group(actor_url)
+
+      actor_url == attributed_to_url ->
+        fetch_group(actor_url)
+
+      true ->
+        with {:ok, %Actor{} = actor} <- fetch_actor(actor_url),
+             {:ok, %Actor{} = attributed_to} <- fetch_actor(attributed_to_url) do
+          {:ok, actor, attributed_to}
+        end
     end
   end
 
-  def maybe_fetch_actor_and_attributed_to_id(%{
-        "actor" => actor_url,
-        "attributedTo" => attributed_to_url
-      })
-      when is_nil(actor_url) do
-    case fetch_actor(attributed_to_url) do
-      {:ok, %Actor{} = actor} ->
-        {:ok, actor, nil}
-
-      {:error, err} ->
-        {:error, err}
+  defp fetch_group(url) do
+    with {:ok, %Actor{type: actor_type} = actor} <- fetch_actor(url) do
+      {:ok, actor, if(actor_type == :Group, do: actor, else: nil)}
     end
   end
-
-  # Only when both actor and attributedTo fields are both filled is when we can return both
-  def maybe_fetch_actor_and_attributed_to_id(%{
-        "actor" => actor_url,
-        "attributedTo" => attributed_to_url
-      })
-      when actor_url != attributed_to_url do
-    with {:ok, %Actor{} = actor} <- fetch_actor(actor_url),
-         {:ok, %Actor{} = attributed_to} <- fetch_actor(attributed_to_url) do
-      {:ok, actor, attributed_to}
-    else
-      {:error, err} ->
-        {:error, err}
-    end
-  end
-
-  # If we only have attributedTo and no actor, take attributedTo as the actor
-  def maybe_fetch_actor_and_attributed_to_id(%{
-        "attributedTo" => attributed_to_url
-      }) do
-    case fetch_actor(attributed_to_url) do
-      {:ok, %Actor{} = attributed_to} -> {:ok, attributed_to, nil}
-      {:error, err} -> {:error, err}
-    end
-  end
-
-  def maybe_fetch_actor_and_attributed_to_id(_), do: {:error, :no_actor_found}
 
   @spec fetch_actor(String.t() | map()) :: {:ok, Actor.t()} | {:error, atom()}
   def fetch_actor(%{"id" => actor_url}) when is_binary(actor_url), do: fetch_actor(actor_url)

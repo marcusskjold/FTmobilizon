@@ -2,7 +2,7 @@ import { IConfig } from "@/types/config.model";
 import { ErrorCode } from "@/types/enums";
 import { provideApolloClient, useQuery } from "@vue/apollo-composable";
 import { NavigationGuard } from "vue-router";
-import { CONFIG } from "../../graphql/config";
+import { CONFIG } from "@/graphql/config";
 import { apolloClient } from "../../vue-apollo";
 import { ErrorRouteName } from "../error";
 

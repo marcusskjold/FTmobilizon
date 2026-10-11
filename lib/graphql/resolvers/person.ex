@@ -34,8 +34,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Person do
     end
   end
 
-  def get_person(_parent, _args, _resolution), do: {:error, :unauthorized}
-
   @doc """
   Find a person
   """
@@ -60,8 +58,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Person do
     end
   end
 
-  def fetch_person(_parent, _args, _resolution), do: {:error, :unauthenticated}
-
   @spec list_persons(any(), map(), Absinthe.Resolution.t()) ::
           {:ok, Page.t(Actor.t())} | {:error, :unauthorized | :unauthenticated}
   def list_persons(
@@ -75,24 +71,10 @@ defmodule Mobilizon.GraphQL.Resolvers.Person do
           page: page,
           limit: limit
         },
-        %{
-          context: %{current_user: %User{role: role}}
-        }
-      )
-      when is_moderator(role) do
+        _context
+      ) do
     {:ok,
      Actors.list_actors(:Person, preferred_username, name, domain, local, suspended, page, limit)}
-  end
-
-  def list_persons(_parent, _args, %{
-        context: %{current_user: %User{role: role}}
-      })
-      when not is_moderator(role) do
-    {:error, :unauthorized}
-  end
-
-  def list_persons(_parent, _args, _resolution) do
-    {:error, :unauthenticated}
   end
 
   @doc """
@@ -108,10 +90,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Person do
     {:error, :no_current_person}
   end
 
-  def get_current_person(_parent, _args, _resolution) do
-    {:error, :unauthenticated}
-  end
-
   @doc """
   Returns the list of identities for the logged-in user
   """
@@ -119,10 +97,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Person do
           {:error, :unauthenticated} | {:ok, list(Actor.t())}
   def identities(_parent, _args, %{context: %{current_user: user}}) do
     {:ok, Users.get_actors_for_user(user)}
-  end
-
-  def identities(_parent, _args, _resolution) do
-    {:error, :unauthenticated}
   end
 
   @doc """
@@ -173,10 +147,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Person do
     {:error, :user_disabled}
   end
 
-  def create_person(_parent, _args, _resolution) do
-    {:error, :unauthenticated}
-  end
-
   @doc """
   This function is used to update an existing identity
   """
@@ -211,10 +181,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Person do
     end
   end
 
-  def update_person(_parent, _args, _resolution) do
-    {:error, :unauthenticated}
-  end
-
   @doc """
   This function is used to delete an existing identity
   """
@@ -240,10 +206,6 @@ defmodule Mobilizon.GraphQL.Resolvers.Person do
       {:error, err} ->
         {:error, err}
     end
-  end
-
-  def delete_person(_parent, _args, _resolution) do
-    {:error, :unauthenticated}
   end
 
   @spec owned_actor(User.t(), integer() | String.t()) :: {:error, String.t()} | {:ok, Actor.t()}
@@ -470,7 +432,7 @@ defmodule Mobilizon.GraphQL.Resolvers.Person do
   # We check that the actor is not the last administrator/creator of a group
   @spec last_admin_of_a_group?(integer()) :: boolean()
   defp last_admin_of_a_group?(actor_id) do
-    length(Actors.list_group_ids_where_last_administrator(actor_id)) > 0
+    Actors.list_group_ids_where_last_administrator(actor_id) != []
   end
 
   @spec user_can_access_person_details?(Actor.t(), User.t()) :: boolean()

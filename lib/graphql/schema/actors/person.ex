@@ -185,7 +185,14 @@ defmodule Mobilizon.GraphQL.Schema.Actors.PersonType do
     @desc "Get a person by its ID"
     field :person, :person do
       arg(:id, non_null(:id), description: "The person ID")
-      middleware(Rajska.QueryAuthorization, permit: :all)
+
+      middleware(Rajska.QueryAuthorization,
+        permit: [:user, :moderator, :administrator],
+        scope: Mobilizon.Actors.Actor,
+        args: %{},
+        rule: :user_self_identities
+      )
+
       resolve(&Person.get_person/3)
     end
 

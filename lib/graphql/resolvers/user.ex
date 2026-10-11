@@ -23,8 +23,7 @@ defmodule Mobilizon.GraphQL.Resolvers.User do
   Find an user by its ID
   """
   @spec find_user(any(), map(), Absinthe.Resolution.t()) :: {:ok, User.t()} | {:error, String.t()}
-  def find_user(_parent, %{id: id}, %{context: %{current_user: %User{role: role}}})
-      when is_moderator(role) do
+  def find_user(_parent, %{id: id}, _context) do
     case Users.get_user_with_actors(id) do
       {:ok, %User{} = user} ->
         {:ok, user}
@@ -32,10 +31,6 @@ defmodule Mobilizon.GraphQL.Resolvers.User do
       _ ->
         {:error, :user_not_found}
     end
-  end
-
-  def find_user(_parent, _args, _resolution) do
-    {:error, :unauthorized}
   end
 
   @doc """
@@ -47,10 +42,6 @@ defmodule Mobilizon.GraphQL.Resolvers.User do
     {:ok, user}
   end
 
-  def get_current_user(_parent, _args, _resolution) do
-    {:error, :unauthenticated}
-  end
-
   @doc """
   List instance users
   """
@@ -59,14 +50,9 @@ defmodule Mobilizon.GraphQL.Resolvers.User do
   def list_users(
         _parent,
         args,
-        %{context: %{current_user: %User{role: role}}}
-      )
-      when is_moderator(role) do
+        _context
+      ) do
     {:ok, Users.list_users(Keyword.new(args))}
-  end
-
-  def list_users(_parent, _args, _resolution) do
-    {:error, :unauthorized}
   end
 
   @doc """
@@ -89,9 +75,6 @@ defmodule Mobilizon.GraphQL.Resolvers.User do
 
       {:error, :user_pending} ->
         {:error, :user_pending}
-
-      {:error, :disabled_user} ->
-        {:error, dgettext("errors", "This user has been disabled")}
 
       {:error, _error} ->
         {:error,
@@ -119,10 +102,6 @@ defmodule Mobilizon.GraphQL.Resolvers.User do
         Logger.debug("Cannot refresh user token: #{inspect(message)}")
         {:error, dgettext("errors", "Cannot refresh the token")}
     end
-  end
-
-  def refresh_token(_parent, _params, _context) do
-    {:error, dgettext("errors", "You need to have an existing token to get a refresh token")}
   end
 
   @spec logout(any(), map(), Absinthe.Resolution.t()) ::

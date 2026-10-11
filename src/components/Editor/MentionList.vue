@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import { usernameWithDomain } from "@/types/actor/actor.model";
 import { IPerson } from "@/types/actor";
-import ActorInline from "../../components/Account/ActorInline.vue";
+import ActorInline from "@/components/Account/ActorInline.vue";
 import { ref, watch } from "vue";
 
 const props = defineProps<{

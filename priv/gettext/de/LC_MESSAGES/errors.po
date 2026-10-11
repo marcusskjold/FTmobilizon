@@ -867,11 +867,6 @@ msgstr "Dieses Mitglied ist bereits abgelehnt worden."
 msgid "You don't have the right to remove this member."
 msgstr "Sie haben nicht das Recht, dieses Mitglied zu entfernen."
 
-#: lib/mobilizon/actors/actor.ex:391
-#, elixir-autogen, elixir-format
-msgid "This username is already taken."
-msgstr "Dieser Benutzername ist bereits vergeben."
-
 #: lib/graphql/resolvers/discussion.ex:81
 #, elixir-autogen, elixir-format
 msgid "You must provide either an ID or a slug to access a discussion"

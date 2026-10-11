@@ -62,7 +62,7 @@
 <script lang="ts" setup>
 import { usernameWithDomain } from "@/types/actor";
 import { IMember } from "@/types/actor/member.model";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import AccountGroup from "vue-material-design-icons/AccountGroup.vue";
 import { useI18n } from "vue-i18n";
 

@@ -74,7 +74,7 @@ import { IActivity } from "@/types/activity.model";
 import { IActor, IGroup, usernameWithDomain } from "@/types/actor";
 import { ActivityGroupSubject, GroupVisibility, Openness } from "@/types/enums";
 import { computed } from "vue";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import PopoverActorCard from "../Account/PopoverActorCard.vue";
 import { formatTimeString } from "@/filters/datetime";
 

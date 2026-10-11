@@ -17,7 +17,7 @@
       :modelValue="tagsStrings"
       @update:modelValue="updateTags"
       :options="filteredTags"
-      :allow-autocomplete="true"
+      :autocomplete="true"
       :allow-new="true"
       icon="label"
       :maxlength="20"
@@ -33,7 +33,7 @@
 </template>
 <script lang="ts" setup>
 import differenceBy from "lodash/differenceBy";
-import { ITag } from "../../types/tag.model";
+import { ITag } from "@/types/tag.model";
 import { computed, onBeforeMount, ref, watch } from "vue";
 import HelpCircleOutline from "vue-material-design-icons/HelpCircleOutline.vue";
 import { useFetchTags } from "@/composition/apollo/tags";
@@ -67,9 +67,25 @@ const id = computed((): string => {
   return `tag-input-${componentId}`;
 });
 
-const { load: fetchTags } = useFetchTags();
+const {
+  load: fetchTags,
+  refetch: refetchTags,
+  onResult: onTagsResult,
+} = useFetchTags();
 
 initTagsStringsValue();
+
+onTagsResult(({ data }) => {
+  if (!data) {
+    console.error("onTagsResult: data is null");
+    return;
+  }
+  if (!data.tags) {
+    console.error("onTagsResult: data.tags is null. data: ", data);
+    return;
+  }
+  tags.value = data.tags;
+});
 
 const getFilteredTags = async (newText: string): Promise<void> => {
   text.value = newText;
@@ -78,13 +94,17 @@ const getFilteredTags = async (newText: string): Promise<void> => {
     { filter: newText },
     { debounce: 200 }
   );
-  if (res) {
-    tags.value = res.tags;
-  }
+  // fetchTags return false, except the first time
+  // We need to refetch after
+  // https://v4.apollo.vuejs.org/api/use-lazy-query.html
+  if (!res) refetchTags({ filter: newText });
 };
 
-const filteredTags = computed<OptionsPropItem<string>[]>(() => {
-  return differenceBy(tags.value, propsValue.value, "id")
+const filteredTags = computed<OptionsPropItem<ITag>[]>(() => {
+  // Empty list if there is no written text
+  if (text.value == "") return [];
+
+  return differenceBy(tags.value, propsValue.value, "slug")
     .filter(
       (tag) =>
         tag.title.toLowerCase().includes(text.value.toLowerCase()) ||
@@ -92,20 +112,28 @@ const filteredTags = computed<OptionsPropItem<string>[]>(() => {
     )
     .map((tag) => ({
       label: tag.title,
-      value: tag.slug,
+      value: { title: tag.title, slug: tag.slug },
     }));
 });
 
-const updateTags = (newTagsStrings: string[]) => {
-  const tagEntities = newTagsStrings.map((tag: string | ITag) => {
-    if (typeof tag !== "string") {
-      return tag;
+const updateTags = (newTagsStrings: (string | ITag)[]) => {
+  const seen = new Set<string>();
+
+  const tagEntities = newTagsStrings.reduce<ITag[]>((acc, tag) => {
+    const title = typeof tag === "string" ? tag : tag.title;
+    const lowerTitle = title.toLowerCase();
+
+    // Don't allow the same tag with another case
+    if (!seen.has(lowerTitle)) {
+      seen.add(lowerTitle);
+      acc.push(typeof tag === "string" ? { title: tag, slug: tag } : tag);
     }
-    return { title: tag, slug: tag } as ITag;
-  });
+
+    return acc;
+  }, []);
+
   emit("update:modelValue", tagEntities);
 };
-
 function isArraysEquals(array1: string[], array2: string[]) {
   if (array1.length !== array2.length) {
     return false;

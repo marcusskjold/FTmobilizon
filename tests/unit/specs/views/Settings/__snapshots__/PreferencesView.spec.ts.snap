@@ -1,0 +1,108 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PreferencesView > Show simple 1`] = `
+"<div data-v-3e2fccdc="">
+  <breadcrumbs-nav data-v-3e2fccdc="" links="[object Object],[object Object]"></breadcrumbs-nav>
+  <div data-v-3e2fccdc="">
+    <div data-v-3e2fccdc="" data-oruga="field" class="o-field"><label id="v-0-0" class="o-field__label">Theme</label>
+      <div class="o-field__body">
+        <div class="o-field">
+          <div data-v-3e2fccdc="" data-oruga="field" class="o-field">
+            <!---->
+            <div data-v-3e2fccdc="" data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input aria-labelledby="v-0-19" id="v-0-21" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="true"><label id="v-0-19" for="v-0-21" class="o-checkbox__label">Adapt to system theme</label></div>
+            <!---->
+          </div>
+          <div data-v-3e2fccdc="" data-oruga="field" class="o-field">
+            <!---->
+            <fieldset data-v-3e2fccdc="">
+              <legend data-v-3e2fccdc="" class="sr-only">Theme</legend>
+              <div data-v-3e2fccdc="" data-oruga="radio" class="o-radio o-radio--disabled"><input aria-labelledby="v-0-22" class="p-4 bg-white text-zinc-800 rounded-md mt-2 mr-2 border-2 o-radio__input" id="v-0-24" type="radio" data-oruga-input="radio" name="theme" disabled="" autocomplete="off" aria-checked="false" value="light"><label id="v-0-22" for="v-0-24" class="o-radio__label">Light</label></div>
+              <div data-v-3e2fccdc="" data-oruga="radio" class="o-radio o-radio--disabled"><input aria-labelledby="v-0-22" class="p-4 bg-zinc-800 rounded-md text-white mt-2 ml-2 border-2 o-radio__input" id="v-0-25" type="radio" data-oruga-input="radio" name="theme" disabled="" autocomplete="off" aria-checked="false" value="dark"><label id="v-0-22" for="v-0-25" class="o-radio__label">Dark</label></div>
+            </fieldset>
+            <!---->
+          </div>
+        </div>
+      </div>
+      <!---->
+    </div>
+    <div data-v-3e2fccdc="" data-oruga="field" class="o-field o-field--filled"><label id="v-0-9" for="setting-language" class="o-field__label">Language</label>
+      <div data-v-3e2fccdc="" data-oruga="select" class="o-select">
+        <!----><select aria-labelledby="v-0-9" loading="false" id="setting-language" data-oruga-input="select" class="o-select__input o-select__input--arrowed" autocomplete="off">
+          <!---->
+          <option data-v-3e2fccdc="" value="ar">العربية</option>
+          <option data-v-3e2fccdc="" value="bn">বাংলা</option>
+          <option data-v-3e2fccdc="" value="ca">Català</option>
+          <option data-v-3e2fccdc="" value="cs">čeština</option>
+          <option data-v-3e2fccdc="" value="cy">Cymraeg</option>
+          <option data-v-3e2fccdc="" value="de">Deutsch</option>
+          <option data-v-3e2fccdc="" value="en">English</option>
+          <option data-v-3e2fccdc="" value="es">Español</option>
+          <option data-v-3e2fccdc="" value="fa">فارسی</option>
+          <option data-v-3e2fccdc="" value="fi">suomi</option>
+          <option data-v-3e2fccdc="" value="fr">Français</option>
+          <option data-v-3e2fccdc="" value="gd">Gàidhlig</option>
+          <option data-v-3e2fccdc="" value="gl">Galego</option>
+          <option data-v-3e2fccdc="" value="hr">Hrvatski</option>
+          <option data-v-3e2fccdc="" value="hu">Magyar</option>
+          <option data-v-3e2fccdc="" value="id">Bahasa Indonesia</option>
+          <option data-v-3e2fccdc="" value="it">Italiano</option>
+          <option data-v-3e2fccdc="" value="ja">日本語</option>
+          <option data-v-3e2fccdc="" value="nl">Nederlands</option>
+          <option data-v-3e2fccdc="" value="nn">Nynorsk</option>
+          <option data-v-3e2fccdc="" value="oc">Occitan</option>
+          <option data-v-3e2fccdc="" value="pl">Polski</option>
+          <option data-v-3e2fccdc="" value="pt_BR">Português brasileiro</option>
+          <option data-v-3e2fccdc="" value="ru">Русский</option>
+          <option data-v-3e2fccdc="" value="sl">Slovenščina</option>
+          <option data-v-3e2fccdc="" value="sv">Svenska</option>
+          <option data-v-3e2fccdc="" value="zh_Hans">简体字</option>
+          <option data-v-3e2fccdc="" value="zh_Hant">繁體字</option>
+        </select>
+        <!---->
+      </div>
+      <!---->
+    </div>
+    <div data-v-3e2fccdc="" data-oruga="field" class="o-field o-field--filled"><label id="v-0-11" for="setting-timezone" class="o-field__label">Timezone</label>
+      <div data-v-3e2fccdc="" data-oruga="select" class="o-select">
+        <!----><select aria-labelledby="v-0-11" loading="false" id="setting-timezone" data-oruga-input="select" class="o-select__input o-select__input--arrowed" autocomplete="off">
+          <!---->
+        </select>
+        <!---->
+      </div>
+      <!---->
+    </div><em data-v-3e2fccdc="">Timezone detected as Europe/Paris.</em>
+    <hr data-v-3e2fccdc="" role="presentation">
+    <div data-v-3e2fccdc="" data-oruga="field" class="o-field">
+      <!---->
+      <div class="o-field__body">
+        <div class="o-field o-field--grouped">
+          <div data-v-3e2fccdc="" data-oruga="field" class="o-field" expanded=""><label id="v-0-15" for="setting-city" class="o-field__label">City or region</label>
+            <!---->
+            <!---->
+          </div>
+          <div data-v-3e2fccdc="" data-oruga="field" class="o-field"><label id="v-0-17" for="setting-radius" class="o-field__label">Radius</label>
+            <div data-v-3e2fccdc="" data-oruga="select" class="o-select">
+              <!----><select aria-labelledby="v-0-17" id="setting-radius" data-oruga-input="select" class="o-select__input o-select__input--placeholder o-select__input--arrowed" autocomplete="off">
+                <option disabled="" hidden="" value="">Select a radius</option>
+                <option data-v-3e2fccdc="" value="1">1 km</option>
+                <option data-v-3e2fccdc="" value="5">5 km</option>
+                <option data-v-3e2fccdc="" value="10">10 km</option>
+                <option data-v-3e2fccdc="" value="25">25 km</option>
+                <option data-v-3e2fccdc="" value="50">50 km</option>
+                <option data-v-3e2fccdc="" value="100">100 km</option>
+              </select>
+              <!---->
+            </div>
+            <!---->
+          </div><button data-v-3e2fccdc="" data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--disabled reset-area self-center" disabled="" aria-label="Reset"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><i class="mdi mdi-close mdi-24px"></i></span>
+            <!---->
+            <!----></span>
+          </button>
+        </div>
+      </div>
+      <!---->
+    </div>
+    <p data-v-3e2fccdc="">Your city or region and the radius will only be used to suggest you events nearby. The event radius will consider the administrative center of the area.</p>
+  </div>
+</div>"
+`;

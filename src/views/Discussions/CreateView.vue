@@ -62,7 +62,7 @@
 <script lang="ts" setup>
 import { displayName, usernameWithDomain } from "@/types/actor";
 import { CREATE_DISCUSSION } from "@/graphql/discussion";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import { computed, defineAsyncComponent, reactive, inject } from "vue";
 import { useCurrentActorClient } from "@/composition/apollo/actor";
 import { useGroup } from "@/composition/apollo/group";

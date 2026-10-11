@@ -12,6 +12,15 @@
         {{ t("Congratulations, your account is now created!") }}
         {{ t("Now, create your first profile:") }}
       </div>
+      <o-notification v-if="!isUpdate" variant="info">
+        <p class="mb-2">
+          {{
+            t(
+              "This is your personal profile and should not be used to describe your organization. After personal profile creation you can create a group for your organization."
+            )
+          }}
+        </p>
+      </o-notification>
       <o-field :label="t('Avatar')">
         <picture-upload
           v-model="avatarFile"

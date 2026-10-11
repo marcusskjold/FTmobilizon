@@ -298,6 +298,8 @@ defmodule Mobilizon.Federation.ActivityPub.Types.Events do
         end
       )
 
+    options = options |> Map.put_new(:timezone, "Etc/UTC")
+
     args
     |> Map.put(:options, options)
     |> Map.put_new(:language, "und")

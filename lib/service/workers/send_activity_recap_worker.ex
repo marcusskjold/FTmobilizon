@@ -57,7 +57,7 @@ defmodule Mobilizon.Service.Workers.SendActivityRecapWorker do
         user: user
       }
     end)
-    |> Enum.filter(fn %{activities: activities, user: _user} -> length(activities) > 0 end)
+    |> Enum.filter(fn %{activities: activities, user: _user} -> activities != [] end)
   end
 
   defp activities_for_user(
@@ -88,7 +88,9 @@ defmodule Mobilizon.Service.Workers.SendActivityRecapWorker do
     group_id
     |> Activities.list_group_activities_for_recap(actor_asking_id, last_notification_sent)
     # Don't send my own activities
-    |> Enum.filter(fn %Activity{author: %Actor{id: author_id}} -> author_id != actor_asking_id end)
+    |> Enum.filter(fn %Activity{author: %Actor{id: author_id}} ->
+      author_id != actor_asking_id
+    end)
   end
 
   defp filter_elegible_users(%User{

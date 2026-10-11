@@ -1,0 +1,74 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DeviceActivationView > Show simple 1`] = `
+"<div class="container mx-auto w-96">
+  <form class="rounded-lg bg-white dark:bg-zinc-900 shadow-xl my-6 p-4">
+    <h1 class="text-3xl text-center">Device activation</h1>
+    <p class="mb-4 text-center">Enter the code displayed on your device</p>
+    <div class="flex items-center justify-between mb-4 gap-2">
+      <div class="w-8">
+        <div data-oruga="input" class="o-input o-input--large">
+          <!----><input autocapitalize="characters" style="font-size: 22px; padding: 0.5rem 0.15rem 0.5rem 0.25rem;" required="" pattern="[A-Z]{1}" autofocus="" id="user-code-0" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" maxlength="1" autocomplete="off">
+          <!---->
+          <!---->
+        </div>
+      </div>
+      <div class="w-8">
+        <div data-oruga="input" class="o-input o-input--large">
+          <!----><input autocapitalize="characters" style="font-size: 22px; padding: 0.5rem 0.15rem 0.5rem 0.25rem;" required="" pattern="[A-Z]{1}" id="user-code-1" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" maxlength="1" autocomplete="off">
+          <!---->
+          <!---->
+        </div>
+      </div>
+      <div class="w-8">
+        <div data-oruga="input" class="o-input o-input--large">
+          <!----><input autocapitalize="characters" style="font-size: 22px; padding: 0.5rem 0.15rem 0.5rem 0.25rem;" required="" pattern="[A-Z]{1}" id="user-code-2" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" maxlength="1" autocomplete="off">
+          <!---->
+          <!---->
+        </div>
+      </div>
+      <div class="w-8">
+        <div data-oruga="input" class="o-input o-input--large">
+          <!----><input autocapitalize="characters" style="font-size: 22px; padding: 0.5rem 0.15rem 0.5rem 0.25rem;" required="" pattern="[A-Z]{1}" id="user-code-3" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" maxlength="1" autocomplete="off">
+          <!---->
+          <!---->
+        </div>
+      </div>
+      <div class="w-6"><span id="user-code-4" class="block text-3xl text-center">-</span></div>
+      <div class="w-8">
+        <div data-oruga="input" class="o-input o-input--large">
+          <!----><input autocapitalize="characters" style="font-size: 22px; padding: 0.5rem 0.15rem 0.5rem 0.25rem;" required="" pattern="[A-Z]{1}" id="user-code-5" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" maxlength="1" autocomplete="off">
+          <!---->
+          <!---->
+        </div>
+      </div>
+      <div class="w-8">
+        <div data-oruga="input" class="o-input o-input--large">
+          <!----><input autocapitalize="characters" style="font-size: 22px; padding: 0.5rem 0.15rem 0.5rem 0.25rem;" required="" pattern="[A-Z]{1}" id="user-code-6" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" maxlength="1" autocomplete="off">
+          <!---->
+          <!---->
+        </div>
+      </div>
+      <div class="w-8">
+        <div data-oruga="input" class="o-input o-input--large">
+          <!----><input autocapitalize="characters" style="font-size: 22px; padding: 0.5rem 0.15rem 0.5rem 0.25rem;" required="" pattern="[A-Z]{1}" id="user-code-7" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" maxlength="1" autocomplete="off">
+          <!---->
+          <!---->
+        </div>
+      </div>
+      <div class="w-8">
+        <div data-oruga="input" class="o-input o-input--large">
+          <!----><input autocapitalize="characters" style="font-size: 22px; padding: 0.5rem 0.15rem 0.5rem 0.25rem;" required="" pattern="[A-Z]{1}" id="user-code-8" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" maxlength="1" autocomplete="off">
+          <!---->
+          <!---->
+        </div>
+      </div>
+    </div>
+    <!--v-if-->
+    <div class="text-center"><button data-oruga="button" type="submit" role="button" tabindex="0" class="o-button"><span class="o-button__wrapper"><!----><span class="o-button__label">Continue</span>
+        <!----></span>
+      </button></div>
+  </form>
+  <!--v-if-->
+</div>"
+`;

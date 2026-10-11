@@ -47,7 +47,7 @@
 <script lang="ts" setup>
 import { usernameWithDomain } from "@/types/actor";
 import { ActivityResourceSubject } from "@/types/enums";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import PopoverActorCard from "../Account/PopoverActorCard.vue";
 import { formatTimeString } from "@/filters/datetime";
 import {

@@ -130,9 +130,6 @@ defmodule Mobilizon.Web.Router do
     get("/events/:uuid", PageController, :event)
     get("/comments/:uuid", PageController, :comment)
     get("/resource/:uuid", PageController, :resource)
-    get("/todo-list/:uuid", PageController, :todo_list)
-    get("/todo/:uuid", PageController, :todo)
-    get("/@:name/todos", PageController, :todos)
     get("/@:name/resources", PageController, :resources)
     get("/@:name/posts", PageController, :posts)
     get("/@:name/discussions", PageController, :discussions)
@@ -175,6 +172,7 @@ defmodule Mobilizon.Web.Router do
     get("/events/:uuid/export/:format", FeedController, :event)
     get("/events/going/:token/:format", FeedController, :going)
     get("/feed/instance/:format", FeedController, :instance)
+    get("/feed/search/:format", FeedController, :search)
   end
 
   ## MOBILIZON
@@ -216,10 +214,7 @@ defmodule Mobilizon.Web.Router do
     get("/interact", PageController, :interact)
 
     get("/auth/:provider", AuthController, :request)
-    # Have a look at https://github.com/ueberauth/ueberauth/issues/125 some day
-    # Also possible CSRF issue
     get("/auth/:provider/callback", AuthController, :callback)
-    post("/auth/:provider/callback", AuthController, :callback)
 
     post("/apps", ApplicationController, :create_application)
     get("/oauth/authorize", ApplicationController, :authorize)
@@ -229,6 +224,7 @@ defmodule Mobilizon.Web.Router do
 
   pipeline :login do
     plug(:accepts, ["html", "json"])
+    plug(:put_secure_browser_headers)
   end
 
   scope "/", Mobilizon.Web do

@@ -62,8 +62,8 @@
 </template>
 <script lang="ts" setup>
 import { categoriesWithPictures } from "./constants";
-import { randomGradient } from "../../utils/graphics";
-import { CategoryStatsModel } from "../../types/stats.model";
+import { randomGradient } from "@/utils/graphics";
+import { CategoryStatsModel } from "@/types/stats.model";
 
 import { useI18n } from "vue-i18n";
 

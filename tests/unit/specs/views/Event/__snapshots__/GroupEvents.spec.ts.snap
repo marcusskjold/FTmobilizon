@@ -1,0 +1,86 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GroupEvents > Show simple 1`] = `
+"<!--v-if-->
+<div class="container mx-auto">
+  <breadcrumbs-nav links="[object Object],[object Object]"></breadcrumbs-nav>
+  <section>
+    <h1 class="">Other group's events</h1>
+    <!--v-if-->
+    <!--v-if-->
+    <transition-stub name="fade" appear="false" persisted="false" css="true">
+      <!---->
+    </transition-stub>
+    <section>
+      <h2 class="text-2xl">Upcoming events</h2>
+      <div data-oruga="switch" class="o-switch o-switch--position o-switch--rounded"><input class="mb-4 o-switch__input" id="v-0-0" type="checkbox" role="switch" data-oruga-input="switch" true-value="true" false-value="false" autocomplete="off" aria-checked="false" aria-labelledby="v-0-1"><label id="v-0-1" for="v-0-0" class="o-switch__label">Past events</label></div>
+      <div data-v-c3d47f53="" class="flex flex-col gap-6 mb-6">
+        <div data-v-c3d47f53="" class="flex flex-col gap-4">
+          <h2 data-v-c3d47f53="" class="capitalize inline-block relative">mars 2026</h2><a data-v-107f3c48="" data-v-c3d47f53="" href="/events/37cb5393-ddf2-492e-ad6a-93e76bdbed95" class="block md:flex gap-x-2 gap-y-3 bg-white dark:bg-violet-2 rounded-lg shadow-md w-full" dir="auto" iscurrentactormember="false">
+            <div data-v-107f3c48="" class="event-preview mr-0 ml-0">
+              <div data-v-107f3c48="" class="relative w-full">
+                <div data-v-107f3c48="" class="flex absolute bottom-2 left-2 z-10 date-component">
+                  <div data-v-1df97f42="" data-v-107f3c48="" class="datetime-container flex flex-col rounded-lg text-center justify-center overflow-hidden items-stretch bg-white dark:bg-gray-700 text-black dark:text-white small" style="--small: 1.2;">
+                    <div data-v-1df97f42="" class="datetime-container-header bg-red-400 dark:bg-red-900"><time data-v-1df97f42="" datetime="2026-03-24T23:00:00.000Z" class="weekday">Wed</time></div>
+                    <div data-v-1df97f42="" class="datetime-container-content"><time data-v-1df97f42="" datetime="2026-03-24T23:00:00.000Z" class="day block font-semibold">25</time><time data-v-1df97f42="" datetime="2026-03-24T23:00:00.000Z" class="month font-semibold block uppercase py-1 px-0">Mar</time></div>
+                    <div data-v-1df97f42="" class="datetime-container-footer bg-red-400 dark:bg-red-900"><time data-v-1df97f42="" datetime="2026-03-24T23:00:00.000Z" class="year">2026</time></div>
+                  </div>
+                  <!--v-if-->
+                  <!--v-if-->
+                </div>
+                <div data-v-107f3c48="" class="flex-1 object-cover flex-none h-40 md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg object-cover flex-none h-40 md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg">
+                  <div class="h-full w-full max-w-100 min-h-[10rem]">
+                    <!-- Show the placeholder as background --><canvas width="32" height="32" class="transition-opacity duration-500 opacity-100"></canvas><!-- Show the real image on the top and fade in after loading --><img class="transition-opacity duration-500 rounded-lg object-cover mx-auto h-full opacity-0" alt="" src="/img/mobilizon_default_card.png" loading="lazy">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div data-v-107f3c48="" class="p-2 overflow-hidden">
+              <h3 data-v-107f3c48="" class="pb-2 text-lg leading-6 line-clamp-3 font-bold text-violet-title dark:text-white" dir="auto">
+                <!--v-if-->
+                <!--v-if-->
+                <!--v-if--> AAAAAA
+              </h3>
+              <div data-v-107f3c48="" class=""><span data-v-107f3c48="" aria-hidden="true" class="material-design-icon video-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z"><!--v-if--></path></svg></span><span data-v-107f3c48="">Online</span></div>
+              <!--v-if-->
+              <!--v-if-->
+              <!--v-if-->
+            </div>
+          </a><a data-v-107f3c48="" data-v-c3d47f53="" href="/events/db1bd598-8fcc-4979-be6b-fd34cd5b100c" class="block md:flex gap-x-2 gap-y-3 bg-white dark:bg-violet-2 rounded-lg shadow-md w-full" dir="auto" iscurrentactormember="false">
+            <div data-v-107f3c48="" class="event-preview mr-0 ml-0">
+              <div data-v-107f3c48="" class="relative w-full">
+                <div data-v-107f3c48="" class="flex absolute bottom-2 left-2 z-10 date-component">
+                  <div data-v-1df97f42="" data-v-107f3c48="" class="datetime-container flex flex-col rounded-lg text-center justify-center overflow-hidden items-stretch bg-white dark:bg-gray-700 text-black dark:text-white small" style="--small: 1.2;">
+                    <div data-v-1df97f42="" class="datetime-container-header bg-red-400 dark:bg-red-900"><time data-v-1df97f42="" datetime="2026-03-24T23:00:00.000Z" class="weekday">Wed</time></div>
+                    <div data-v-1df97f42="" class="datetime-container-content"><time data-v-1df97f42="" datetime="2026-03-24T23:00:00.000Z" class="day block font-semibold">25</time><time data-v-1df97f42="" datetime="2026-03-24T23:00:00.000Z" class="month font-semibold block uppercase py-1 px-0">Mar</time></div>
+                    <div data-v-1df97f42="" class="datetime-container-footer bg-red-400 dark:bg-red-900"><time data-v-1df97f42="" datetime="2026-03-24T23:00:00.000Z" class="year">2026</time></div>
+                  </div>
+                  <!--v-if-->
+                  <!--v-if-->
+                </div>
+                <div data-v-107f3c48="" class="flex-1 object-cover flex-none h-40 md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg object-cover flex-none h-40 md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg">
+                  <div class="h-full w-full max-w-100 min-h-[10rem]">
+                    <!-- Show the placeholder as background --><canvas width="32" height="32" class="transition-opacity duration-500 opacity-100"></canvas><!-- Show the real image on the top and fade in after loading --><img class="transition-opacity duration-500 rounded-lg object-cover mx-auto h-full opacity-0" alt="" src="/img/mobilizon_default_card.png" loading="lazy">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div data-v-107f3c48="" class="p-2 overflow-hidden">
+              <h3 data-v-107f3c48="" class="pb-2 text-lg leading-6 line-clamp-3 font-bold text-violet-title dark:text-white" dir="auto">
+                <!--v-if-->
+                <!--v-if--><span data-v-6955ca87="" data-v-107f3c48="" class="rounded-md truncate text-sm text-black px-2 py-1 bg-yellow-1 mr-2 font-normal" size="medium">Draft</span> brouillon
+              </h3>
+              <div data-v-107f3c48="" class=""><span data-v-107f3c48="" aria-hidden="true" class="material-design-icon video-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z"><!--v-if--></path></svg></span><span data-v-107f3c48="">Online</span></div>
+              <!--v-if-->
+              <!--v-if-->
+              <!--v-if-->
+            </div>
+          </a>
+        </div>
+      </div>
+      <!--v-if-->
+      <!--v-if-->
+    </section>
+  </section>
+</div>"
+`;

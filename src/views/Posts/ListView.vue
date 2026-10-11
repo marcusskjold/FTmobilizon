@@ -72,15 +72,15 @@
 
 <script lang="ts" setup>
 import { PERSON_MEMBERSHIPS } from "@/graphql/actor";
-import { FETCH_GROUP_POSTS } from "../../graphql/post";
+import { FETCH_GROUP_POSTS } from "@/graphql/post";
 import {
   usernameWithDomain,
   displayName,
   IPerson,
   IGroup,
-} from "../../types/actor";
-import RouteName from "../../router/name";
-import MultiPostListItem from "../../components/Post/MultiPostListItem.vue";
+} from "@/types/actor";
+import RouteName from "@/router/name";
+import MultiPostListItem from "@/components/Post/MultiPostListItem.vue";
 import { useCurrentActorClient } from "@/composition/apollo/actor";
 import { useQuery } from "@vue/apollo-composable";
 import { computed } from "vue";

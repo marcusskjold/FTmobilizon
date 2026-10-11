@@ -414,7 +414,9 @@ defmodule Mobilizon.ActorsTest do
 
       assert {:error,
               %Ecto.Changeset{
-                errors: [preferred_username: {"This username is already taken.", []}]
+                errors: [
+                  preferred_username: {"A profile or group with that name already exists", []}
+                ]
               }} = Actors.create_group(@valid_attrs)
     end
 
@@ -425,7 +427,9 @@ defmodule Mobilizon.ActorsTest do
 
       assert {:error,
               %Ecto.Changeset{
-                errors: [preferred_username: {"This username is already taken.", []}]
+                errors: [
+                  preferred_username: {"A profile or group with that name already exists", []}
+                ]
               }} = Actors.create_group(attrs)
     end
 

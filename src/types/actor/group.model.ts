@@ -15,7 +15,6 @@ import { IFollower } from "./follower.model";
 export interface IGroup extends IActor {
   members: Paginate<IMember>;
   resources: Paginate<IResource>;
-  todoLists: Paginate<ITodoList>;
   discussions: Paginate<IDiscussion>;
   organizedEvents: Paginate<IEvent>;
   posts: Paginate<IPost>;
@@ -35,8 +34,6 @@ export class Group extends Actor implements IGroup {
   followers: Paginate<IFollower> = { elements: [], total: 0 };
 
   resources: Paginate<IResource> = { elements: [], total: 0 };
-
-  todoLists: Paginate<ITodoList> = { elements: [], total: 0 };
 
   discussions: Paginate<IDiscussion> = { elements: [], total: 0 };
 

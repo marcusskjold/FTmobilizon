@@ -84,7 +84,7 @@ import GroupMemberCard from "@/components/Group/GroupMemberCard.vue";
 import InvitationsList from "@/components/Group/InvitationsList.vue";
 import { IMember } from "@/types/actor/member.model";
 import { MemberRole, ContentType } from "@/types/enums";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import { useRestrictions } from "@/composition/apollo/config";
 import { useMutation, useQuery } from "@vue/apollo-composable";
 import { IUser } from "@/types/current-user.model";

@@ -34,7 +34,7 @@
         @select="setSelected"
         class="FullAddressAutoComplete-o-autocomplete !mt-0 !h-full"
       >
-        <template #default="{ option }">
+        <template #option="{ option }">
           <p class="flex gap-1">
             <o-icon :icon="addressToPoiInfos(option.value).poiIcon.icon" />
             <b>{{ addressToPoiInfos(option.value).name }}</b>
@@ -186,8 +186,8 @@ import {
   addressFullName,
   addressToPoiInfos,
   resetAddress as resetAddressAction,
-} from "../../types/address.model";
-import AddressInfo from "../../components/Address/AddressInfo.vue";
+} from "@/types/address.model";
+import AddressInfo from "@/components/Address/AddressInfo.vue";
 import {
   computed,
   ref,

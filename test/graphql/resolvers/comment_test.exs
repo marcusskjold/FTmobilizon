@@ -17,7 +17,7 @@ defmodule Mobilizon.GraphQL.Resolvers.CommentTest do
     {:ok, conn: conn, actor: actor, user: user, event: event}
   end
 
-  describe "Comment Resolver" do
+  describe "Comment Resolver - create" do
     @create_comment_mutation """
     mutation CreateComment($text: String!, $eventId: ID!, $inReplyToCommentId: ID) {
       createComment(text: $text, eventId: $eventId, inReplyToCommentId: $inReplyToCommentId) {
@@ -146,6 +146,137 @@ defmodule Mobilizon.GraphQL.Resolvers.CommentTest do
       assert res["data"]["thread"] == [%{"uuid" => uuid, "text" => @comment_text}]
     end
 
+    test "bad connected", %{conn: conn, event: event} do
+      user_without_actor = insert(:user, role: :administrator)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @create_comment_mutation,
+          variables: %{text: @comment_text, eventId: event.id}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You are not allowed to create a comment if not connected"
+    end
+  end
+
+  @query_action_logs """
+    query ActionLogs {
+      actionLogs {
+        total
+        elements {
+          action,
+          actor {
+            preferredUsername
+          },
+          object {
+            ... on Report {
+              id,
+              status
+            },
+            ... on ReportNote {
+              content
+            }
+            ... on Event {
+              id,
+              title
+            },
+            ... on Comment {
+              id,
+              text
+            }
+          }
+        }
+      }
+    }
+  """
+
+  describe "Comment Resolver - update" do
+    @update_comment """
+      mutation UpdateComment($commentId: ID!, $text: String!) {
+        updateComment(commentId: $commentId, text: $text) {
+          id
+          uuid
+          url
+          text
+          actor {
+            id
+            preferredUsername
+          }
+          attributedTo {
+            id
+            preferredUsername
+          }
+          totalReplies
+        }
+      }
+    """
+
+    test "update a comment", %{
+      conn: conn,
+      user: user,
+      actor: actor
+    } do
+      comment = insert(:comment, actor: actor)
+
+      res =
+        conn
+        |> AbsintheHelpers.graphql_query(
+          query: @update_comment,
+          variables: %{text: @comment_text, commentId: comment.id}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You need to be logged in"
+
+      # Change the current actor for user
+      actor2 = insert(:actor, user: user)
+      Mobilizon.Users.update_user_default_actor(user, actor2)
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @update_comment,
+          variables: %{text: @comment_text, commentId: comment.id}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You are not the comment creator"
+
+      Mobilizon.Users.update_user_default_actor(user, actor)
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @update_comment,
+          variables: %{text: @comment_text, commentId: comment.id}
+        )
+
+      assert res["data"]["updateComment"]["text"] == @comment_text
+    end
+
+    test "bad connected", %{conn: conn, actor: actor} do
+      user_without_actor = insert(:user, role: :administrator)
+      comment = insert(:comment, actor: actor)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @update_comment,
+          variables: %{text: @comment_text, commentId: comment.id}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You are not allowed to update a comment if not connected"
+    end
+  end
+
+  describe "Comment Resolver - delete" do
     @delete_comment """
       mutation DeleteComment($commentId: ID!) {
         deleteComment(commentId: $commentId) {
@@ -221,41 +352,10 @@ defmodule Mobilizon.GraphQL.Resolvers.CommentTest do
       assert res["errors"] == nil
       assert res["data"]["deleteComment"]["id"] == to_string(comment.id)
 
-      query = """
-      query ActionLogs {
-        actionLogs {
-          total
-          elements {
-            action,
-            actor {
-              preferredUsername
-            },
-            object {
-              ... on Report {
-                id,
-                status
-              },
-              ... on ReportNote {
-                content
-              }
-              ... on Event {
-                id,
-                title
-              },
-              ... on Comment {
-                id,
-                text
-              }
-            }
-          }
-        }
-      }
-      """
-
       res =
         conn
         |> auth_conn(user_moderator)
-        |> AbsintheHelpers.graphql_query(query: query)
+        |> AbsintheHelpers.graphql_query(query: @query_action_logs)
 
       refute res["errors"]
 
@@ -264,6 +364,22 @@ defmodule Mobilizon.GraphQL.Resolvers.CommentTest do
                "actor" => %{"preferredUsername" => actor_moderator.preferred_username},
                "object" => %{"text" => comment.text, "id" => to_string(comment.id)}
              }
+    end
+
+    test "bad connected", %{conn: conn, actor: actor} do
+      user_without_actor = insert(:user, role: :administrator)
+      comment = insert(:comment, actor: actor)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @delete_comment,
+          variables: %{commentId: comment.id}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You are not allowed to delete a comment if not connected"
     end
   end
 end

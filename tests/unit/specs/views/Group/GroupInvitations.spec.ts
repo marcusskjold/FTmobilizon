@@ -67,10 +67,25 @@ const mock_group = {
   },
 };
 
+const mock_invitations = {
+  data: {
+    listInvitations: [
+      {
+        label: "label1",
+        token: "azerty",
+      },
+      {
+        label: "label2",
+        token: "qsdfg",
+      },
+    ],
+  },
+};
+
 const generateWrapper = () => {
   const global_data = getMockClient([
     [FETCH_GROUP_PUBLIC, mock_group],
-    GROUP_INVITATIONS_LIST,
+    [GROUP_INVITATIONS_LIST, mock_invitations],
     GROUP_INVITATIONS_DELETE,
     GROUP_INVITATIONS_CREATE,
     GROUP_INVITATIONS_UPDATE,

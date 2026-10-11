@@ -94,7 +94,7 @@
 </template>
 <script lang="ts" setup>
 import EventListViewCard from "@/components/Event/EventListViewCard.vue";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import { useFetchEvent } from "@/composition/apollo/event";
 import { useAnonymousParticipationConfig } from "@/composition/apollo/config";
 import { computed } from "vue";

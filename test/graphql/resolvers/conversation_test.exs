@@ -2,6 +2,7 @@ defmodule Mobilizon.GraphQL.Resolvers.ConversationTest do
   use Mobilizon.Web.ConnCase
   alias Mobilizon.Discussions
   alias Mobilizon.GraphQL.AbsintheHelpers
+
   import Mobilizon.Factory
 
   setup %{conn: conn} do
@@ -11,37 +12,37 @@ defmodule Mobilizon.GraphQL.Resolvers.ConversationTest do
     {:ok, conn: conn, user: user, actor: actor}
   end
 
-  @event_conversations_query """
-  query Event($uuid: UUID!) {
-    event(uuid: $uuid) {
-      id
-      uuid
-      conversations {
-        total
-        elements {
-          id
-          lastComment {
+  describe "Find conversations for event" do
+    @event_conversations_query """
+    query Event($uuid: UUID!) {
+      event(uuid: $uuid) {
+        id
+        uuid
+        conversations {
+          total
+          elements {
             id
-            text
-          }
-          comments {
-            total
-            elements {
+            lastComment {
               id
               text
             }
-          }
-          actor {
-            id
-            preferredUsername
+            comments {
+              total
+              elements {
+                id
+                text
+              }
+            }
+            actor {
+              id
+              preferredUsername
+            }
           }
         }
       }
     }
-  }
-  """
+    """
 
-  describe "Find conversations for event" do
     test "for a given event", %{conn: conn, user: user, actor: actor} do
       event = insert(:event, organizer_actor: actor)
       origin_comment = insert(:comment, actor: actor)
@@ -83,6 +84,64 @@ defmodule Mobilizon.GraphQL.Resolvers.ConversationTest do
 
       assert conversation_data["actor"]["preferredUsername"] ==
                conversation_participant.actor.preferred_username
+    end
+  end
+
+  describe "Create conversations for event" do
+    @post_conversation """
+      mutation PostPrivateMessageMutation(
+        $text: String!
+        $actorId: ID!
+        $language: String
+        $mentions: [String]
+      ) {
+        postPrivateMessage(
+          text: $text
+          actorId: $actorId
+          language: $language
+          mentions: $mentions
+        ) {
+            id
+            conversationParticipantId
+            actor {
+              id
+              preferredUsername
+            }
+            participants {
+              id
+              preferredUsername
+            }
+        }
+      }
+    """
+
+    @conversation_text "blablabla"
+
+    test "no connected", %{conn: conn, actor: actor} do
+      res =
+        conn
+        |> AbsintheHelpers.graphql_query(
+          query: @post_conversation,
+          variables: %{"actorId" => actor.id, "text" => @conversation_text, "language" => "fr"}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You need to be logged in"
+    end
+
+    test "bad connected", %{conn: conn, actor: actor} do
+      user_without_actor = insert(:user, role: :administrator)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @post_conversation,
+          variables: %{"actorId" => actor.id, "text" => @conversation_text, "language" => "fr"}
+        )
+
+      assert hd(res["errors"])["message"] ==
+               "You are not allowed to create a conversation if not connected"
     end
   end
 end

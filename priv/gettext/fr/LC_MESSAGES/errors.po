@@ -648,10 +648,6 @@ msgstr "Ce·tte membre a déjà été rejetté·e."
 msgid "You don't have the right to remove this member."
 msgstr "Vous n'avez pas les droits pour supprimer ce·tte membre."
 
-#: lib/mobilizon/actors/actor.ex:391
-msgid "This username is already taken."
-msgstr "Cet identifiant est déjà pris."
-
 #: lib/graphql/resolvers/discussion.ex:81
 msgid "You must provide either an ID or a slug to access a discussion"
 msgstr "Vous devez fournir un ID ou bien un slug pour accéder à une discussion"

@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 import { PostVisibility } from "@/types/enums";
-import { IPost } from "../../types/post.model";
+import { IPost } from "@/types/post.model";
 import { useI18n } from "vue-i18n";
 import ShareModal from "@/components/Share/ShareModal.vue";
 

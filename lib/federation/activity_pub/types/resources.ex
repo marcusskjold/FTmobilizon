@@ -4,16 +4,12 @@ defmodule Mobilizon.Federation.ActivityPub.Types.Resources do
   alias Mobilizon.Actors.Actor
   alias Mobilizon.Federation.ActivityPub.Permission
   alias Mobilizon.Federation.ActivityPub.Types.Entity
-  alias alias Mobilizon.Federation.ActivityStream
-  alias Mobilizon.Federation.ActivityStream.Convertible
+  alias Mobilizon.Federation.ActivityStream
   alias Mobilizon.Resources.Resource
   alias Mobilizon.Service.Activity.Resource, as: ResourceActivity
   alias Mobilizon.Service.Formatter.HTML
   alias Mobilizon.Service.RichMedia.Parser
   require Logger
-
-  import Mobilizon.Federation.ActivityPub.Utils,
-    only: [make_create_data: 2, make_update_data: 2, make_add_data: 3, make_move_data: 4]
 
   @behaviour Entity
 
@@ -21,36 +17,15 @@ defmodule Mobilizon.Federation.ActivityPub.Types.Resources do
   @spec create(map(), map()) ::
           {:ok, Resource.t(), ActivityStream.t()}
           | {:error, Ecto.Changeset.t() | :creator_not_found | :group_not_found}
-  def create(args, additional) do
+  def create(args, _additional) do
     args = prepare_args(args)
 
-    with {:ok,
-          %Resource{actor_id: group_id, creator_id: creator_id, parent_id: parent_id} = resource} <-
+    with {:ok, %Resource{actor_id: group_id, creator_id: creator_id} = resource} <-
            Resources.create_resource(args),
-         {:ok, %Actor{} = group, %Actor{url: creator_url} = creator} <-
-           group_and_creator(group_id, creator_id) do
+         {:ok, %Actor{}, %Actor{}} <- group_and_creator(group_id, creator_id) do
       ResourceActivity.insert_activity(resource, subject: "resource_created")
-      resource_as_data = Convertible.model_to_as(%{resource | actor: group, creator: creator})
 
-      audience = %{
-        "to" => [group.members_url],
-        "cc" => [],
-        "actor" => creator_url,
-        "attributedTo" => [creator_url]
-      }
-
-      create_data =
-        case parent_id do
-          nil ->
-            make_create_data(resource_as_data, Map.merge(audience, additional))
-
-          parent_id ->
-            # In case the resource has a parent we don't `Create` the resource but `Add` it to an existing resource
-            parent = Resources.get_resource(parent_id)
-            make_add_data(resource_as_data, parent, Map.merge(audience, additional))
-        end
-
-      {:ok, resource, create_data}
+      {:ok, resource, nil}
     end
   end
 
@@ -68,27 +43,16 @@ defmodule Mobilizon.Federation.ActivityPub.Types.Resources do
   end
 
   # Simple rename
-  def update(%Resource{} = old_resource, %{title: title} = _args, additional) do
+  def update(%Resource{} = old_resource, %{title: title} = _args, _additional) do
     with {:ok, %Resource{actor_id: group_id, creator_id: creator_id} = resource} <-
            Resources.update_resource(old_resource, %{title: title}),
-         {:ok, %Actor{} = group, %Actor{url: creator_url}} <-
-           group_and_creator(group_id, creator_id) do
+         {:ok, %Actor{}, %Actor{}} <- group_and_creator(group_id, creator_id) do
       ResourceActivity.insert_activity(resource,
         subject: "resource_renamed",
         old_resource: old_resource
       )
 
-      resource_as_data = Convertible.model_to_as(%{resource | actor: group})
-
-      audience = %{
-        "to" => [group.members_url],
-        "cc" => [],
-        "actor" => creator_url,
-        "attributedTo" => [creator_url]
-      }
-
-      update_data = make_update_data(resource_as_data, Map.merge(audience, additional))
-      {:ok, resource, update_data}
+      {:ok, resource, nil}
     end
   end
 
@@ -103,34 +67,17 @@ defmodule Mobilizon.Federation.ActivityPub.Types.Resources do
   def move(
         %Resource{parent_id: old_parent_id} = old_resource,
         %{parent_id: _new_parent_id} = args,
-        additional
+        _additional
       ) do
     with {:ok,
           %Resource{actor_id: group_id, creator_id: creator_id, parent_id: new_parent_id} =
             resource} <-
            Resources.update_resource(old_resource, args),
-         {:ok, old_parent, new_parent} <- parents(old_parent_id, new_parent_id),
-         {:ok, %Actor{} = group, %Actor{url: creator_url}} <-
-           group_and_creator(group_id, creator_id) do
+         {:ok, _old_parent, _new_parent} <- parents(old_parent_id, new_parent_id),
+         {:ok, %Actor{}, %Actor{}} <- group_and_creator(group_id, creator_id) do
       ResourceActivity.insert_activity(resource, subject: "resource_moved")
-      resource_as_data = Convertible.model_to_as(%{resource | actor: group})
 
-      audience = %{
-        "to" => [group.members_url],
-        "cc" => [],
-        "actor" => creator_url,
-        "attributedTo" => [creator_url]
-      }
-
-      move_data =
-        make_move_data(
-          resource_as_data,
-          old_parent,
-          new_parent,
-          Map.merge(audience, additional)
-        )
-
-      {:ok, resource, move_data}
+      {:ok, resource, nil}
     end
   end
 
@@ -171,14 +118,14 @@ defmodule Mobilizon.Federation.ActivityPub.Types.Resources do
     end
   end
 
-  @spec actor(Todo.t()) :: Actor.t() | nil
+  @spec actor(Resource.t()) :: Actor.t() | nil
   def actor(%Resource{creator_id: creator_id}),
     do: Actors.get_actor(creator_id)
 
-  @spec group_actor(Todo.t()) :: Actor.t() | nil
+  @spec group_actor(Resource.t()) :: Actor.t() | nil
   def group_actor(%Resource{actor_id: actor_id}), do: Actors.get_actor(actor_id)
 
-  @spec permissions(TodoList.t()) :: Permission.t()
+  @spec permissions(Resource.t()) :: Permission.t()
   def permissions(%Resource{}) do
     %Permission{access: :member, create: :member, update: :member, delete: :member}
   end

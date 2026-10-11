@@ -882,11 +882,6 @@ msgstr "Этот участник уже был отклонён."
 msgid "You don't have the right to remove this member."
 msgstr "У вас нет прав на удаление этого участника."
 
-#: lib/mobilizon/actors/actor.ex:391
-#, elixir-autogen, elixir-format
-msgid "This username is already taken."
-msgstr "Это имя пользователя уже занято."
-
 #: lib/graphql/resolvers/discussion.ex:81
 #, elixir-autogen, elixir-format
 msgid "You must provide either an ID or a slug to access a discussion"

@@ -105,7 +105,7 @@ import { IEventMetadataDescription } from "@/types/event-metadata";
 import cloneDeep from "lodash/cloneDeep";
 import { computed, reactive, ref } from "vue";
 import EventMetadataItem from "./EventMetadataItem.vue";
-import { eventMetaDataList } from "../../services/EventMetadata";
+import { eventMetaDataList } from "@/services/EventMetadata";
 import { EventMetadataCategories, EventMetadataType } from "@/types/enums";
 import { useI18n } from "vue-i18n";
 

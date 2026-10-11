@@ -3,7 +3,7 @@ services:
   postgres:
     container_name: mobilizon_db
     restart: unless-stopped
-    image: postgis/postgis
+    image: docker.io/postgis/postgis
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD

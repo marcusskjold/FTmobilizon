@@ -326,20 +326,20 @@ import {
   USER_NOTIFICATIONS,
   UPDATE_ACTIVITY_SETTING,
   USER_FRAGMENT_FEED_TOKENS,
-} from "../../graphql/user";
+} from "@/graphql/user";
 import {
   IActivitySetting,
   IActivitySettingMethod,
   IUser,
   IUserSettings,
-} from "../../types/current-user.model";
-import RouteName from "../../router/name";
+} from "@/types/current-user.model";
+import RouteName from "@/router/name";
 import { IFeedToken } from "@/types/feedtoken.model";
 import { CREATE_FEED_TOKEN, DELETE_FEED_TOKEN } from "@/graphql/feed_tokens";
 import {
   subscribeUserToPush,
   unsubscribeUserToPush,
-} from "../../services/push-subscription";
+} from "@/services/push-subscription";
 import {
   REGISTER_PUSH_MUTATION,
   UNREGISTER_PUSH_MUTATION,

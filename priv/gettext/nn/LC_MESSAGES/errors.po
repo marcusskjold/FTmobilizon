@@ -870,11 +870,6 @@ msgstr "Denne medlemen har allereie fått avslag."
 msgid "You don't have the right to remove this member."
 msgstr "Du har ikkje løyve til å fjerna denne medlemen."
 
-#: lib/mobilizon/actors/actor.ex:391
-#, elixir-autogen, elixir-format
-msgid "This username is already taken."
-msgstr "Dette brukarnamnet er oppteke."
-
 #: lib/graphql/resolvers/discussion.ex:81
 #, elixir-autogen, elixir-format
 msgid "You must provide either an ID or a slug to access a discussion"

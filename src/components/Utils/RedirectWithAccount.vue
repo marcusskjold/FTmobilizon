@@ -66,7 +66,7 @@
 </template>
 <script lang="ts" setup>
 import { LoginErrorCode } from "@/types/enums";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useInstanceName } from "@/composition/apollo/config";

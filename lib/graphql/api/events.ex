@@ -48,8 +48,12 @@ defmodule Mobilizon.GraphQL.API.Events do
 
     args
     |> extract_pictures_from_event_body(organizer_actor)
-    |> Map.update(:picture, nil, fn picture ->
-      process_picture(picture, organizer_actor)
+    |> then(fn args ->
+      if Map.has_key?(args, :picture) do
+        Map.update!(args, :picture, &process_picture(&1, organizer_actor))
+      else
+        args
+      end
     end)
   end
 

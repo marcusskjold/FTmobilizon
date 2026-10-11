@@ -118,13 +118,6 @@ export const scope: Record<
     ),
     icon: "timeline-text",
   },
-  "read:group:todo_lists": {
-    title: t("Access group todo-lists"),
-    text: t(
-      "This application will be allowed to list and access group todo-lists in all of the groups you're a member of"
-    ),
-    icon: "checkbox-marked",
-  },
   "write:group:group_membership": {
     title: t("Manage group memberships"),
     text: t("This application will be allowed to join and leave groups"),

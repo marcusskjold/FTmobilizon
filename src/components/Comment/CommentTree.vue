@@ -97,13 +97,13 @@
 import EventComment from "@/components/Comment/EventComment.vue";
 import IdentityPickerWrapper from "@/components/Account/IdentityPickerWrapper.vue";
 import { CommentModeration } from "@/types/enums";
-import { CommentModel, IComment } from "../../types/comment.model";
+import { CommentModel, IComment } from "@/types/comment.model";
 import {
   CREATE_COMMENT_FROM_EVENT,
   DELETE_COMMENT,
   COMMENTS_THREADS_WITH_REPLIES,
-} from "../../graphql/comment";
-import { IEvent } from "../../types/event.model";
+} from "@/graphql/comment";
+import { IEvent } from "@/types/event.model";
 import { ApolloCache, FetchResult, InMemoryCache } from "@apollo/client/core";
 import EmptyContent from "@/components/Utils/EmptyContent.vue";
 import { useCurrentActorClient } from "@/composition/apollo/actor";

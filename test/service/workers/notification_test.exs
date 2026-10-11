@@ -14,6 +14,19 @@ defmodule Mobilizon.Service.Workers.NotificationTest do
   import Swoosh.TestAssertions
   import Mobilizon.Factory
 
+  # Create an event that starts within the notification window (8 AM - next day 8 AM).
+  # The default factory creates events +2 hours from now, which may be outside
+  # the window if tests run before 6 AM in the target timezone.
+  defp event_in_notification_window(timezone \\ "Europe/Paris") do
+    # Use 10 AM in the target timezone to ensure it's within the 8 AM - 8 AM window
+    {:ok, today_10am} =
+      Date.utc_today()
+      |> NaiveDateTime.new(~T[10:00:00])
+      |> then(fn {:ok, naive} -> DateTime.from_naive(naive, timezone) end)
+
+    insert(:event, begins_on: today_10am)
+  end
+
   @email "someone@somewhere.tld"
 
   describe "A before_event_notification job sends an email" do
@@ -85,7 +98,9 @@ defmodule Mobilizon.Service.Workers.NotificationTest do
       user = Map.put(user, :settings, settings)
       %Actor{} = actor = insert(:actor, user: user)
 
-      %Participant{} = insert(:participant, role: :participant, actor: actor)
+      # Event must be within notification window (8 AM - next day 8 AM)
+      event = event_in_notification_window("Europe/Paris")
+      %Participant{} = insert(:participant, role: :participant, actor: actor, event: event)
 
       Notification.perform(%Oban.Job{
         args: %{"op" => "on_day_notification", "user_id" => user_id}
@@ -148,8 +163,13 @@ defmodule Mobilizon.Service.Workers.NotificationTest do
       user = Map.put(user, :settings, settings)
       %Actor{} = actor = insert(:actor, user: user)
 
+      # Events must be within notification window (8 AM - next day 8 AM)
       Enum.reduce(0..10, [], fn _i, acc ->
-        %Participant{} = participant = insert(:participant, role: :participant, actor: actor)
+        event = event_in_notification_window("Europe/Paris")
+
+        %Participant{} =
+          participant = insert(:participant, role: :participant, actor: actor, event: event)
+
         acc ++ [participant]
       end)
 
@@ -175,7 +195,9 @@ defmodule Mobilizon.Service.Workers.NotificationTest do
       user = Map.put(user, :settings, settings)
       %Actor{} = actor = insert(:actor, user: user)
 
-      %Participant{} = insert(:participant, role: :participant, actor: actor)
+      # Event must be within notification window (8 AM - next week 8 AM)
+      event = event_in_notification_window("Europe/Paris")
+      %Participant{} = insert(:participant, role: :participant, actor: actor, event: event)
 
       Notification.perform(%Oban.Job{
         args: %{"op" => "weekly_notification", "user_id" => user_id}
@@ -250,8 +272,13 @@ defmodule Mobilizon.Service.Workers.NotificationTest do
       user = Map.put(user, :settings, settings)
       %Actor{} = actor = insert(:actor, user: user)
 
+      # Events must be within notification window (8 AM - next week 8 AM)
       Enum.reduce(0..10, [], fn _i, acc ->
-        %Participant{} = participant = insert(:participant, role: :participant, actor: actor)
+        event = event_in_notification_window("Europe/Paris")
+
+        %Participant{} =
+          participant = insert(:participant, role: :participant, actor: actor, event: event)
+
         acc ++ [participant]
       end)
 

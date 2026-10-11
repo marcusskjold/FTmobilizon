@@ -418,7 +418,7 @@ const confirmDeleteGroup = (): void => {
   dialog?.confirm({
     title: t("Delete group"),
     message: t(
-      "Are you sure you want to <b>completely delete</b> this group? All members - including remote ones - will be notified and removed from the group, and <b>all of the group data (events, posts, discussions, todos…) will be irretrievably destroyed</b>."
+      "Are you sure you want to <b>completely delete</b> this group? All members - including remote ones - will be notified and removed from the group, and <b>all of the group data (events, posts, discussions…) will be irretrievably destroyed</b>."
     ),
     confirmText: t("Delete group"),
     cancelText: t("Cancel"),

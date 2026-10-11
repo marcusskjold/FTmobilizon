@@ -255,7 +255,7 @@ export const eventMetaDataList: IEventMetadataDescription[] = [
     type: EventMetadataType.STRING,
     keyType: EventMetadataKeyType.URL,
     category: EventMetadataCategories.VIDEO_CONFERENCE,
-    pattern: /https:\/\/teams\.live\.com\/meet\/.+/,
+    pattern: /https:\/\/teams\.microsoft\.com\/l\/meetup-join\/.+/,
   },
   {
     icon: "google-hangouts",

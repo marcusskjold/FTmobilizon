@@ -1,6 +1,6 @@
 # Update the VARIANT arg in docker-compose.yml to pick an Elixir version: 1.9, 1.10, 1.10.4
 ARG VARIANT="1.15.8"
-FROM elixir:${VARIANT}
+FROM docker.io/elixir:${VARIANT}
 
 RUN apt-get update \
   && export DEBIAN_FRONTEND=noninteractive \

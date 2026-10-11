@@ -155,7 +155,7 @@ defmodule Mix.Tasks.Mobilizon.Actors.NewTest do
       assert_received {:mix_shell, :error, [message]}
 
       assert message =~
-               "[preferred_username: {\"This username is already taken.\", []}]"
+               "[preferred_username: {\"A profile or group with that name already exists\", []}]"
 
       assert_received {:mix_shell, :error, [message]}
 

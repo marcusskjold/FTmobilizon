@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DiscussionView > Show simple 1`] = `
+"<div class="container mx-auto">
+  <!--v-if-->
+  <!--v-if-->
+  <section>
+    <div class="flex items-center gap-2" dir="auto">
+      <!--v-if-->
+      <form class="w-full" style="display: none;">
+        <div data-oruga="field" class="o-field"><label id="v-0-0" for="discussion-title" class="o-field__label">Title</label>
+          <div data-oruga="input" class="o-input o-input--expanded">
+            <!----><input aria-labelledby="v-0-0" id="discussion-title" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" autocomplete="off">
+            <!---->
+            <!---->
+          </div>
+          <!---->
+        </div>
+        <div class="flex gap-2 mt-2"><button data-oruga="button" type="submit" role="button" tabindex="0" class="o-button o-button--primary" title="Update discussion title"><span class="o-button__wrapper"><!----><!----><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-right"><i class="mdi mdi-check mdi-24px"></i></span></span></button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--outlined" title="Cancel discussion title edition"><span class="o-button__wrapper"><!----><!----><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-right"><i class="mdi mdi-close mdi-24px"></i></span></span></button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--danger" native-type="button"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><i class="mdi mdi-delete mdi-24px"></i></span><span class="o-button__label">Delete conversation</span>
+            <!----></span>
+          </button></div>
+      </form>
+    </div>
+    <!--v-if-->
+    <form>
+      <div data-oruga="field" class="o-field"><label id="v-0-2" class="o-field__label">Text</label>
+        <!---->
+        <!---->
+      </div><button data-oruga="button" type="submit" role="button" tabindex="0" class="o-button o-button--primary o-button--disabled my-2" disabled=""><span class="o-button__wrapper"><!----><span class="o-button__label">Reply</span>
+        <!----></span>
+      </button>
+    </form>
+  </section>
+</div>"
+`;

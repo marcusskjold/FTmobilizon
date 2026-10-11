@@ -26,10 +26,10 @@
 
 <script lang="ts" setup>
 import { ICurrentUserRole } from "@/types/enums";
-import { VALIDATE_USER, UPDATE_CURRENT_USER_CLIENT } from "../../graphql/user";
-import RouteName from "../../router/name";
-import { saveUserData, saveTokenData } from "../../utils/auth";
-import { changeIdentity } from "../../utils/identity";
+import { VALIDATE_USER, UPDATE_CURRENT_USER_CLIENT } from "@/graphql/user";
+import RouteName from "@/router/name";
+import { saveUserData, saveTokenData } from "@/utils/auth";
+import { changeIdentity } from "@/utils/identity";
 import { ref, onBeforeMount, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useMutation } from "@vue/apollo-composable";

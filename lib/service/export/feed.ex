@@ -222,18 +222,32 @@ defmodule Mobilizon.Service.Export.Feed do
   end
 
   # Build an atom feed from actor and its public events
-  @spec build_user_feed(list(Event.t()), User.t(), String.t()) :: String.t()
+  @spec build_user_feed(list(Event.t()), User.t(), String.t()) :: {:ok, String.t()}
   defp build_user_feed(events, %User{email: email}, token) do
-    self_url = ~p"/events/going/#{token}/format" |> url() |> URI.decode()
+    self_url =
+      ~p"/events/going/#{token}/format"
+      |> url()
+      |> URI.decode()
 
     # Title uses default instance language
-    self_url
-    |> Feed.new(
-      DateTime.utc_now(),
+    title =
       gettext("Feed for %{email} on %{instance}",
         email: email,
         instance: Config.instance_name()
       )
+
+    export_events(events, self_url, title)
+  end
+
+  @doc """
+  Export a list of events to atom format.
+  """
+  @spec export_events([Event.t()], String.t(), String.t()) :: {:ok, String.t()}
+  def export_events(events, self_url, title) when is_list(events) do
+    self_url
+    |> Feed.new(
+      DateTime.utc_now(),
+      title
     )
     |> Feed.link(self_url, rel: "self")
     |> Feed.generator(Config.instance_name(), uri: Endpoint.url(), version: version())

@@ -115,8 +115,8 @@
 
 <script lang="ts" setup>
 import { GROUP_FOLLOWERS, UPDATE_FOLLOWER } from "@/graphql/followers";
-import RouteName from "../../router/name";
-import { displayName, usernameWithDomain } from "../../types/actor";
+import RouteName from "@/router/name";
+import { displayName, usernameWithDomain } from "@/types/actor";
 import EmptyContent from "@/components/Utils/EmptyContent.vue";
 import { IFollower } from "@/types/actor/follower.model";
 import { useMutation, useQuery } from "@vue/apollo-composable";

@@ -196,6 +196,24 @@ defmodule Mobilizon.GraphQL.Resolvers.PostTest do
 
       assert res["data"]["group"]["posts"]["elements"] |> Enum.map(& &1["id"]) == [post.id]
     end
+
+    test "bad connected", %{conn: conn, group: group, post: post} do
+      user_without_actor = insert(:user, role: :administrator)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @get_group_posts,
+          variables: %{
+            name: group.preferred_username
+          }
+        )
+
+      assert is_nil(res["errors"])
+      assert res["data"]["group"]["posts"]["total"] == 1
+      assert res["data"]["group"]["posts"]["elements"] |> Enum.map(& &1["id"]) == [post.id]
+    end
   end
 
   describe "Resolver: Get a specific post" do
@@ -460,6 +478,35 @@ defmodule Mobilizon.GraphQL.Resolvers.PostTest do
 
       assert hd(res["errors"])["message"] == "Post not found"
     end
+
+    test "bad connected", %{conn: conn, post: post, post_draft: post_draft} do
+      user_without_actor = insert(:user, role: :administrator)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @post_query,
+          variables: %{
+            slug: post_draft.slug
+          }
+        )
+
+      assert hd(res["errors"])["message"] == "Post not found"
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @post_query,
+          variables: %{
+            slug: post.slug
+          }
+        )
+
+      assert is_nil(res["errors"])
+      assert res["data"]["post"]["title"] == post.title
+    end
   end
 
   describe "Resolver: Create a post" do
@@ -559,6 +606,37 @@ defmodule Mobilizon.GraphQL.Resolvers.PostTest do
                "Profile is not member of group"
              ]
     end
+
+    test "bad connected", %{conn: conn, group: group} do
+      user_without_actor = insert(:user, role: :administrator)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @create_post,
+          variables: %{
+            title: @post_title,
+            body: "My body",
+            attributedToId: group.id
+          }
+        )
+
+      assert hd(res["errors"])["message"] == "You need to be logged-in to create posts"
+
+      res =
+        conn
+        |> AbsintheHelpers.graphql_query(
+          query: @create_post,
+          variables: %{
+            title: @post_title,
+            body: "My body",
+            attributedToId: group.id
+          }
+        )
+
+      assert hd(res["errors"])["message"] == "You need to be logged in"
+    end
   end
 
   describe "Resolver: Update a post" do
@@ -583,6 +661,36 @@ defmodule Mobilizon.GraphQL.Resolvers.PostTest do
       assert is_nil(res["errors"])
 
       assert res["data"]["updatePost"]["title"] == @updated_post_title
+    end
+
+    test "bad connected", %{conn: conn, group: group} do
+      user_without_actor = insert(:user, role: :administrator)
+      %Post{id: post_id} = insert(:post, attributed_to: group)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @update_post,
+          variables: %{
+            id: post_id,
+            title: @updated_post_title
+          }
+        )
+
+      assert hd(res["errors"])["message"] == "You need to be logged-in to update posts"
+
+      res =
+        conn
+        |> AbsintheHelpers.graphql_query(
+          query: @update_post,
+          variables: %{
+            id: post_id,
+            title: @updated_post_title
+          }
+        )
+
+      assert hd(res["errors"])["message"] == "You need to be logged in"
     end
   end
 
@@ -650,6 +758,58 @@ defmodule Mobilizon.GraphQL.Resolvers.PostTest do
         )
 
       assert hd(res["errors"])["message"] == "Post doesn't exist"
+    end
+
+    test "delete_post/3 doesn't delete a post if the actor is not a member of the group",
+         %{
+           conn: conn,
+           group: group
+         } do
+      %User{} = user = insert(:user)
+      %Actor{} = insert(:actor, user: user)
+      %Post{id: post_id} = insert(:post, attributed_to: group)
+
+      res =
+        conn
+        |> auth_conn(user)
+        |> AbsintheHelpers.graphql_query(
+          query: @delete_post,
+          variables: %{
+            id: post_id
+          }
+        )
+
+      assert Enum.map(res["errors"], & &1["message"]) == [
+               "Profile is not member of group"
+             ]
+    end
+
+    test "bad connected", %{conn: conn, group: group} do
+      user_without_actor = insert(:user, role: :administrator)
+      %Post{id: post_id} = insert(:post, attributed_to: group)
+
+      res =
+        conn
+        |> auth_conn(user_without_actor)
+        |> AbsintheHelpers.graphql_query(
+          query: @delete_post,
+          variables: %{
+            id: post_id
+          }
+        )
+
+      assert hd(res["errors"])["message"] == "You need to be logged-in to delete posts"
+
+      res =
+        conn
+        |> AbsintheHelpers.graphql_query(
+          query: @delete_post,
+          variables: %{
+            id: post_id
+          }
+        )
+
+      assert hd(res["errors"])["message"] == "You need to be logged in"
     end
   end
 end

@@ -100,7 +100,7 @@ import { IMember } from "@/types/actor/member.model";
 import { useMutation } from "@vue/apollo-composable";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 
 const { t } = useI18n({ useScope: "global" });
 

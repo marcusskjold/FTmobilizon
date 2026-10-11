@@ -855,11 +855,6 @@ msgstr "Este membro xa foi rexeitado."
 msgid "You don't have the right to remove this member."
 msgstr "Non tes permiso para eliminar este membro."
 
-#: lib/mobilizon/actors/actor.ex:391
-#, elixir-autogen, elixir-format
-msgid "This username is already taken."
-msgstr "Este nome de usuaria xa está pillado."
-
 #: lib/graphql/resolvers/discussion.ex:81
 #, elixir-autogen, elixir-format
 msgid "You must provide either an ID or a slug to access a discussion"

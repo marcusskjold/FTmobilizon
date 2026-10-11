@@ -41,6 +41,71 @@
         />
       </o-field>
 
+      <section class="my-4">
+        <o-field :label="t('Published by')" />
+
+        <div v-if="features?.groups && organizerActor?.id">
+          <o-field>
+            <organizer-picker-wrapper
+              v-model="organizerActor"
+              v-model:contacts="event.contacts"
+            />
+          </o-field>
+          <p v-if="!attributedToAGroup && organizerActorEqualToCurrentActor">
+            {{
+              t("The event will show as published by your personal profile.")
+            }}
+          </p>
+          <p v-else-if="!attributedToAGroup">
+            {{ t("The event will show as published by this profile.") }}
+          </p>
+          <p v-else>
+            <span>{{
+              t("The event will show as published by this group.")
+            }}</span>
+            <span
+              v-if="event.contacts && event.contacts.length"
+              v-html="
+                ' ' +
+                t(
+                  '<b>{contact}</b> will be displayed as contact.',
+
+                  {
+                    contact: formatList(
+                      event.contacts.map((contact) =>
+                        escapeHtml(displayNameAndUsername(contact))
+                      )
+                    ),
+                  },
+                  event.contacts.length
+                )
+              "
+            />
+            <span
+              v-else
+              v-html="' ' + t('You may show some members as contacts.')"
+            />
+          </p>
+          <div v-if="!attributedToAGroup">
+            <o-notification variant="info">
+              <p class="mb-2">
+                {{
+                  t(
+                    'If the event is published by your organization, you should press "change" to attribute the event to your organization group page. The group page gathers events, activities and posts and can have followers. If your organization doesn\'t have a group page yet, you can create it now.'
+                  )
+                }}
+              </p>
+              <o-button
+                tag="router-link"
+                variant="primary"
+                :to="{ name: RouteName.CREATE_GROUP }"
+                >{{ t("Create group") }}</o-button
+              >
+            </o-notification>
+          </div>
+        </div>
+      </section>
+
       <div class="flex flex-wrap gap-4">
         <o-field
           v-if="orderedCategories"
@@ -161,52 +226,6 @@
         />
       </o-field>
 
-      <section class="my-4">
-        <h2>{{ t("Published by") }}</h2>
-
-        <div v-if="features?.groups && organizerActor?.id">
-          <o-field>
-            <organizer-picker-wrapper
-              v-model="organizerActor"
-              v-model:contacts="event.contacts"
-            />
-          </o-field>
-          <p v-if="!attributedToAGroup && organizerActorEqualToCurrentActor">
-            {{
-              t("The event will show as attributed to your personal profile.")
-            }}
-          </p>
-          <p v-else-if="!attributedToAGroup">
-            {{ t("The event will show as attributed to this profile.") }}
-          </p>
-          <p v-else>
-            <span>{{
-              t("The event will show as attributed to this group.")
-            }}</span>
-            <span
-              v-if="event.contacts && event.contacts.length"
-              v-html="
-                ' ' +
-                t(
-                  '<b>{contact}</b> will be displayed as contact.',
-
-                  {
-                    contact: formatList(
-                      event.contacts.map((contact) =>
-                        escapeHtml(displayNameAndUsername(contact))
-                      )
-                    ),
-                  },
-                  event.contacts.length
-                )
-              "
-            />
-            <span v-else>
-              {{ t("You may show some members as contacts.") }}
-            </span>
-          </p>
-        </div>
-      </section>
       <section class="my-4">
         <h2>{{ t("Event metadata") }}</h2>
         <p>
@@ -780,17 +799,25 @@ const initializeNewEvent = () => {
   hideParticipants.value = true;
 };
 
+// OrganizerActor is the visible publisher of the event
 const organizerActor = computed({
   get(): IActor | undefined {
     if (event.value?.attributedTo?.id) {
       return event.value.attributedTo;
     }
-    if (event.value?.organizerActor?.id) {
+    if (organizerActorIsOwnedByUser.value) {
       return event.value.organizerActor;
     }
     return currentActor.value;
   },
   set(actor: IActor | undefined) {
+    if (actor == undefined) {
+      // When the profile is changed, the organizerActor component send an undefined actor
+      // and the original attributedTo and organizerActor was lost
+      // Ideally, the component need to be updated to handle the case
+      console.warn("actor is undefined, ignore the change");
+      return;
+    }
     if (actor?.type === ActorType.GROUP) {
       event.value.attributedTo = actor as IGroup;
       event.value.organizerActor = currentActor.value;
@@ -803,6 +830,13 @@ const organizerActor = computed({
 
 const attributedToAGroup = computed((): boolean => {
   return event.value.attributedTo?.id !== undefined;
+});
+
+const organizerActorIsOwnedByUser = computed((): boolean => {
+  if (!identities.value) return false;
+  return identities.value.some(
+    ({ id }) => id === event.value.organizerActor?.id
+  );
 });
 
 const eventOptions = computed({
@@ -1097,12 +1131,13 @@ const buildVariables = async () => {
     options: eventOptions.value,
   };
 
-  const localOrganizerActor = event.value?.organizerActor?.id
+  // organizerActorId is the currentActor or one actor he owns
+  // but never an actor he don't own (like the original actor creating the event for a group)
+  const localOrganizerActor = organizerActorIsOwnedByUser.value
     ? event.value.organizerActor
-    : organizerActor.value;
-  if (organizerActor.value) {
-    res = { ...res, organizerActorId: localOrganizerActor?.id };
-  }
+    : currentActor.value;
+  res = { ...res, organizerActorId: localOrganizerActor?.id };
+
   const attributedToId = event.value?.attributedTo?.id
     ? event.value?.attributedTo.id
     : null;
@@ -1468,11 +1503,9 @@ const maximumAttendeeCapacity = computed({
   },
 });
 
-const {
-  event: fetchedEvent,
-  onResult: onFetchEventResult,
-  loading: onFetchEventLoading,
-} = useFetchEvent(eventId.value);
+const { event: fetchedEvent, loading: onFetchEventLoading } = useFetchEvent(
+  eventId.value
+);
 
 // update the date components if the event changed (after fetching it, for example)
 watch(event, () => {
@@ -1490,20 +1523,14 @@ watch(event, () => {
 
 watch(
   fetchedEvent,
-  () => {
+  async () => {
     if (!fetchedEvent.value) return;
-    event.value = { ...fetchedEvent.value };
+    event.value = new EventModel(fetchedEvent.value);
+    limitedPlaces.value = eventOptions.value.maximumAttendeeCapacity > 0;
+    pictureFile.value = await buildFileFromIMedia(event.value.picture);
   },
   { immediate: true }
 );
-
-onFetchEventResult(async (result) => {
-  if (result.loading || !result.data?.event) return;
-
-  event.value = { ...result.data?.event };
-  limitedPlaces.value = eventOptions.value.maximumAttendeeCapacity > 0;
-  pictureFile.value = await buildFileFromIMedia(event.value.picture);
-});
 
 const groupFederatedUsername = computed(() =>
   usernameWithDomain(fetchedEvent.value?.attributedTo)

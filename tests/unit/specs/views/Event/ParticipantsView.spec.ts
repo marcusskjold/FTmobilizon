@@ -14,30 +14,31 @@ import {
   UPDATE_PARTICIPANT,
 } from "@/graphql/event";
 import { computed } from "vue";
-
-vi.mock("@/composition/apollo/actor", () => {
-  return {
-    useCurrentActorClient: () => {
-      const error = null;
-      const loading = null;
-      const currentActor = computed(() => {
-        return {
-          id: 123,
-          name: "test",
-          domain: null,
-          preferredUsername: "test",
-        };
-      });
-      return { currentActor, error, loading };
-    },
-  };
-});
+import { eventParticipantMock } from "../../mocks/event";
 
 config.global.plugins.push(Oruga);
 
 let router: Router;
 
 beforeEach(async () => {
+  vi.mock("@/composition/apollo/actor", () => {
+    return {
+      useCurrentActorClient: () => {
+        const error = null;
+        const loading = null;
+        const currentActor = computed(() => {
+          return {
+            id: 123,
+            name: "test",
+            domain: null,
+            preferredUsername: "test",
+          };
+        });
+        return { currentActor, error, loading };
+      },
+    };
+  });
+
   router = createRouter({
     history: createWebHistory(),
     routes: routes,
@@ -45,65 +46,6 @@ beforeEach(async () => {
 
   // await router.isReady();
 });
-
-const mock_event_part = {
-  data: {
-    event: {
-      __typename: "Event",
-      attributedTo: null,
-      id: "2",
-      organizerActor: {
-        __typename: "Person",
-        avatar: null,
-        domain: null,
-        id: "2",
-        name: "test",
-        preferredUsername: "test",
-        summary: null,
-        type: "PERSON",
-        url: "http://mobilizon.test/@test",
-      },
-      participantStats: {
-        __typename: "ParticipantStats",
-        going: 2,
-        notApproved: 0,
-        participant: 1,
-        rejected: 0,
-      },
-      participants: {
-        __typename: "PaginatedParticipantList",
-        elements: [
-          {
-            __typename: "Participant",
-            actor: {
-              __typename: "Person",
-              avatar: null,
-              domain: null,
-              id: "2",
-              name: "Test",
-              preferredUsername: "test",
-              summary: null,
-              type: "PERSON",
-              url: "http://mobilizon.test/@test",
-            },
-            event: {
-              __typename: "Event",
-              id: "2",
-              uuid: "67e9b659-84d9-4414-99f3-a1baaa88cf2d",
-            },
-            id: "c058b4ca-3fb5-4601-9f71-3940da1d4bcc",
-            insertedAt: "2025-11-12T14:51:01Z",
-            metadata: null,
-            role: "CREATOR",
-          },
-        ],
-        total: 0,
-      },
-      title: "event-test",
-      uuid: "67e9b659-84d9-4414-99f3-a1baaa88cf2d",
-    },
-  },
-};
 
 const generateWrapper = (eventExtra: any) => {
   const global_data = getMockClient([
@@ -128,7 +70,7 @@ const generateWrapper = (eventExtra: any) => {
 
 describe("ParticipantsView", () => {
   it("Show simple", async () => {
-    const wrapper = generateWrapper(mock_event_part);
+    const wrapper = generateWrapper(eventParticipantMock);
     await wrapper.vm.$nextTick();
     await flushPromises();
     expect(htmlRemoveId(wrapper.html())).toMatchSnapshot();
@@ -144,7 +86,7 @@ describe("ParticipantsView", () => {
   });
 
   it("Show event's group / user admin", async () => {
-    const new_event = structuredClone(mock_event_part);
+    const new_event = structuredClone(eventParticipantMock);
     new_event.data.event.attributedTo = {
       __typename: "Group",
       id: 123,
@@ -190,7 +132,7 @@ describe("ParticipantsView", () => {
   });
 
   it("Show event's group / user member", async () => {
-    const new_event = structuredClone(mock_event_part);
+    const new_event = structuredClone(eventParticipantMock);
     new_event.data.event.attributedTo = {
       __typename: "Group",
       id: 123,

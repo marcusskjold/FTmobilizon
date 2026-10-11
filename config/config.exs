@@ -39,6 +39,7 @@ config :mobilizon, :instance,
   activity_keep_number: 100,
   duration_of_long_event: 30,
   enable_instance_feeds: true,
+  enable_search_feeds: true,
   email_from: "noreply@localhost",
   email_reply_to: "noreply@localhost"
 
@@ -203,7 +204,21 @@ config :absinthe, Absinthe.Logger, filter_variables: ["token", "password", "secr
 
 config :codepagex, :encodings, [
   :ascii,
-  ~r[iso8859]i,
+  :"ISO8859/8859-1",
+  :"ISO8859/8859-10",
+  :"ISO8859/8859-11",
+  :"ISO8859/8859-13",
+  :"ISO8859/8859-14",
+  :"ISO8859/8859-15",
+  :"ISO8859/8859-16",
+  :"ISO8859/8859-2",
+  :"ISO8859/8859-3",
+  :"ISO8859/8859-4",
+  :"ISO8859/8859-5",
+  :"ISO8859/8859-6",
+  :"ISO8859/8859-7",
+  :"ISO8859/8859-8",
+  :"ISO8859/8859-9",
   :"VENDORS/MICSFT/WINDOWS/CP1252"
 ]
 
@@ -256,7 +271,7 @@ config :mobilizon, Mobilizon.Service.Geospatial.Pelias, endpoint: nil
 
 config :mobilizon, :maps,
   tiles: [
-    endpoint: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    endpoint: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
     attribution: "© The OpenStreetMap Contributors"
   ],
   routing: [
@@ -272,7 +287,7 @@ config :mobilizon, :http_security,
     style_src: [],
     connect_src: [],
     font_src: [],
-    img_src: ["*.tile.openstreetmap.org"],
+    img_src: ["tile.openstreetmap.org"],
     manifest_src: [],
     media_src: [],
     object_src: [],
@@ -329,9 +344,6 @@ config :mobilizon, Oban,
      ]},
     {Oban.Plugins.Pruner, max_age: 300}
   ]
-
-config :hammer,
-  backend: {Hammer.Backend.ETS, [expiry_ms: 60_000 * 60 * 4, cleanup_interval_ms: 60_000 * 10]}
 
 config :mobilizon, :rich_media,
   parsers: [

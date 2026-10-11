@@ -4,9 +4,10 @@ defmodule Mobilizon.GraphQL.Resolvers.Group do
   """
 
   import Mobilizon.Users.Guards
-  alias Mobilizon.Config
-  alias Mobilizon.{Actors, Events}
+  alias Mobilizon.Actors
   alias Mobilizon.Actors.{Actor, Follower, Member}
+  alias Mobilizon.Config
+  alias Mobilizon.Events
   alias Mobilizon.Federation.ActivityPub.Actions
   alias Mobilizon.Federation.ActivityPub.Actor, as: ActivityPubActor
   alias Mobilizon.GraphQL.API
@@ -66,37 +67,15 @@ defmodule Mobilizon.GraphQL.Resolvers.Group do
     end
   end
 
-  def find_group_by_id(_parent, %{id: id}, %{
-        context: %{
-          current_actor: %Actor{id: actor_id}
-        }
-      }) do
-    with %Actor{suspended: false, id: group_id} = group <- Actors.get_actor_with_preload(id),
-         true <- Actors.member?(actor_id, group_id) do
-      {:ok, group}
-    else
-      _ ->
-        {:error, :group_not_found}
-    end
-  end
-
-  def find_group_by_id(_parent, _args, _resolution) do
-    {:error, :group_not_found}
-  end
-
   @doc """
   Get a group
   """
   @spec get_group(any(), map(), Absinthe.Resolution.t()) ::
           {:ok, Actor.t()} | {:error, String.t()}
-  def get_group(_parent, %{id: id}, %{context: %{current_user: %User{role: role}}}) do
+  def get_group(_parent, %{id: id}, _context) do
     case Actors.get_actor_with_preload(id, true) do
-      %Actor{type: :Group, suspended: suspended} = actor ->
-        if suspended == false or is_moderator(role) do
-          {:ok, actor}
-        else
-          {:error, dgettext("errors", "Group with ID %{id} not found", id: id)}
-        end
+      %Actor{type: :Group} = actor ->
+        {:ok, actor}
 
       nil ->
         {:error, dgettext("errors", "Group with ID %{id} not found", id: id)}
@@ -119,17 +98,11 @@ defmodule Mobilizon.GraphQL.Resolvers.Group do
           page: page,
           limit: limit
         },
-        %{
-          context: %{current_user: %User{role: role}}
-        }
-      )
-      when is_moderator(role) do
+        _context
+      ) do
     {:ok,
      Actors.list_actors(:Group, preferred_username, name, domain, local, suspended, page, limit)}
   end
-
-  def list_groups(_parent, _args, _resolution),
-    do: {:error, dgettext("errors", "You may not list groups unless moderator.")}
 
   # TODO Move me to somewhere cleaner
   @spec save_attached_pictures(map()) :: map()

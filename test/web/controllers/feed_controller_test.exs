@@ -4,7 +4,6 @@ defmodule Mobilizon.Web.FeedControllerTest do
   import Mobilizon.Factory
 
   alias Mobilizon.Config
-  use Mobilizon.Web, :verified_routes
 
   describe "/@:preferred_username/feed/atom" do
     test "it returns an RSS representation of the actor's public events if the actor is publicly visible",

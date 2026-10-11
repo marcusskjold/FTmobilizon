@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AnnouncementView > Show simple 1`] = `
+"<section class="container mx-auto">
+  <breadcrumbs-nav links="[object Object],[object Object],[object Object]"></breadcrumbs-nav>
+  <div class="container mx-auto section my-6">
+    <breadcrumbs-nav links=""></breadcrumbs-nav>
+    <section>
+      <h1>Announcements</h1>
+      <div class="flex flex-col items-center mt-20 mb-10" role="note"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-bullhorn 48"></i></span>
+        <h2 class="mb-3">
+          <!-- @slot Mandatory title -->There's no announcements yet
+        </h2>
+        <p class="" style="display: none;">
+          <!-- @slot Optional description -->
+        </p>
+      </div>
+    </section>
+  </div>
+  <form>
+    <h2>New announcement</h2>
+    <p>This announcement will be send to all participants with the statuses selected below. They will not be allowed to reply to your announcement, but they can create a new conversation with you.</p>
+    <div data-oruga="field" class="o-field mt-2 mb-4">
+      <!---->
+      <div data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input aria-labelledby="v-0-0" id="v-0-2" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="true" value="PARTICIPANT"><label id="v-0-0" for="v-0-2" class="o-checkbox__label">Participant</label></div>
+      <div data-oruga="checkbox" class="o-checkbox"><input aria-labelledby="v-0-0" id="v-0-3" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false" value="NOT_APPROVED"><label id="v-0-0" for="v-0-3" class="o-checkbox__label">Not approved</label></div>
+      <div data-oruga="checkbox" class="o-checkbox"><input aria-labelledby="v-0-0" id="v-0-4" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false" value="REJECTED"><label id="v-0-0" for="v-0-4" class="o-checkbox__label">Rejected</label></div>
+      <!---->
+    </div>
+    <!----><button data-oruga="button" type="submit" role="button" tabindex="0" class="o-button mt-3"><span class="o-button__wrapper"><!----><span class="o-button__label">Send</span>
+      <!----></span>
+    </button>
+  </form>
+</section>"
+`;

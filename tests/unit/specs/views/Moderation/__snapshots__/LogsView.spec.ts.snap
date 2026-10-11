@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LogsView > Show simple 1`] = `
+"<div data-v-437adeb4="">
+  <breadcrumbs-nav data-v-437adeb4="" links="[object Object],[object Object]"></breadcrumbs-nav>
+  <div data-v-437adeb4="">
+    <transition-stub data-v-437adeb4="" name="fade" appear="false" persisted="false" css="true">
+      <article data-oruga="notification" class="o-notification o-notification--info o-notification--top">
+        <!---->
+        <div class="o-notification__wrapper">
+          <!---->
+          <div class="o-notification__content">No moderation logs yet</div>
+        </div>
+      </article>
+    </transition-stub>
+  </div>
+</div>"
+`;

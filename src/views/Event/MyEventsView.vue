@@ -233,11 +233,11 @@
 <script lang="ts" setup>
 import { ParticipantRole, ContentType } from "@/types/enums";
 import RouteName from "@/router/name";
-import type { IParticipant } from "../../types/participant.model";
-import { LOGGED_USER_DRAFTS } from "../../graphql/actor";
-import type { IEvent } from "../../types/event.model";
-import MultiEventMinimalistCard from "../../components/Event/MultiEventMinimalistCard.vue";
-import EventMinimalistCard from "../../components/Event/EventMinimalistCard.vue";
+import type { IParticipant } from "@/types/participant.model";
+import { LOGGED_USER_DRAFTS } from "@/graphql/actor";
+import type { IEvent } from "@/types/event.model";
+import MultiEventMinimalistCard from "@/components/Event/MultiEventMinimalistCard.vue";
+import EventMinimalistCard from "@/components/Event/EventMinimalistCard.vue";
 import {
   LOGGED_USER_PARTICIPATIONS,
   LOGGED_USER_UPCOMING_EVENTS,

@@ -53,9 +53,9 @@
 <script lang="ts" setup>
 import { confirmLocalAnonymousParticipation } from "@/services/AnonymousParticipationStorage";
 import { EventJoinOptions } from "@/types/enums";
-import { IParticipant } from "../../types/participant.model";
-import RouteName from "../../router/name";
-import { CONFIRM_PARTICIPATION } from "../../graphql/event";
+import { IParticipant } from "@/types/participant.model";
+import RouteName from "@/router/name";
+import { CONFIRM_PARTICIPATION } from "@/graphql/event";
 import { computed, ref, watchEffect } from "vue";
 import { useMutation } from "@vue/apollo-composable";
 import { useI18n } from "vue-i18n";

@@ -26,8 +26,8 @@ import { useMutation } from "@vue/apollo-composable";
 import { ref, onBeforeMount } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { VALIDATE_EMAIL } from "../../graphql/user";
-import RouteName from "../../router/name";
+import { VALIDATE_EMAIL } from "@/graphql/user";
+import RouteName from "@/router/name";
 
 // metaInfo() {
 //   return {

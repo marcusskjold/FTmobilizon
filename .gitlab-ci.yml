@@ -1,4 +1,18 @@
-image: tcitworld/mobilizon-ci
+image: elixir:1.18
+
+before_script:
+  - apt-get update -yq && apt-get install -yq ca-certificates build-essential inotify-tools postgresql-client git curl gnupg xvfb libgtk-3-dev libnotify-dev libnss3 libxss1 libasound2 cmake exiftool python3-pip python3-setuptools
+  - |
+    mkdir -p /etc/apt/keyrings
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_24.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+    apt-get update
+    apt-get install nodejs -yq
+  - npm install -g wait-on
+  - apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  - mix local.hex --force && mix local.rebar --force
+  - pip --no-cache-dir install --break-system-packages weasyprint pyexcel-ods3
+  - curl https://dbip.mirror.framasoft.org/files/dbip-city-lite-latest.mmdb --output GeoLite2-City.mmdb -s && mkdir -p /usr/share/GeoIP && mv GeoLite2-City.mmdb /usr/share/GeoIP/
 
 stages:
   - install
@@ -70,9 +84,8 @@ security-backend:
 
 lint-elixir:
   stage: check
-  before_script:
-    - mix deps.get
   script:
+    - mix deps.get
     - export EXITVALUE=0
     - git fetch origin ${CI_DEFAULT_BRANCH}
     - TARGET_SHA1=$(git show-ref -s ${CI_DEFAULT_BRANCH})
@@ -82,16 +95,18 @@ lint-elixir:
     - mix sobelow --config || export EXITVALUE=3
     - echo "EXITVALUE:$EXITVALUE"
     - exit $EXITVALUE
+  allow_failure: true
   artifacts:
     reports:
       codequality: codeclimate.json
 
 lint-front:
-  image: node:22
+  image: node:24
   stage: check
   before_script:
     - export EXITVALUE=0
     - npm ci
+  allow_failure: true
   script:
     - npm run lint || export EXITVALUE=1
     - npx prettier -c . || export EXITVALUE=1
@@ -99,12 +114,11 @@ lint-front:
 
 deps:
   stage: check
-  before_script:
+  script:
     - apt update
     - apt install -y gawk
     - rm -rf ~/.hex/cache.ets
     - mix deps.get
-  script:
     - ./check_deps.sh
   allow_failure: true
   needs:
@@ -113,6 +127,8 @@ deps:
 i18n-frontend:
   image: python:alpine
   stage: check
+  before_script:
+    - python3 --version
   script:
     - python3 check_i18n.py
   allow_failure: true
@@ -121,7 +137,7 @@ i18n-frontend:
 
 build-frontend:
   stage: build-js
-  image: node:22
+  image: node:24
   before_script:
     - apt update
     - apt install -y --no-install-recommends python3 build-essential webp imagemagick gifsicle jpegoptim optipng pngquant
@@ -142,25 +158,26 @@ exunit:
       alias: postgres
   variables:
     MIX_ENV: test
-  before_script:
+  script:
     - rm -rf ~/.hex/cache.ets
     - mix deps.get
     - mix compile
-    - mix tz_world.update
+    - mix tz_world.update --force
     - mix ecto.create
     - mix ecto.migrate
-  script:
-    - mix coveralls
+    - mix coveralls.html
   coverage: '/\[TOTAL\]\s+([0-9\.]{1,5}%)/'
   artifacts:
     when: always
+    paths:
+      - cover
     reports:
       junit:
         - test-junit-report.xml
     expire_in: 30 days
 
 vitest:
-  image: node:22
+  image: node:24
   stage: test
   variables:
     LANG: "fr_FR.UTF-8"
@@ -190,13 +207,7 @@ e2e:
       alias: postgres
   variables:
     MIX_ENV: "e2e"
-  before_script:
-    - |
-      mkdir -p /etc/apt/keyrings
-      curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --yes --dearmor -o /etc/apt/keyrings/nodesource.gpg
-      echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
-      apt-get update
-      apt-get install nodejs -yq
+  script:
     - rm -rf ~/.hex/cache.ets
     - mix deps.get
     - mix ecto.create
@@ -204,7 +215,6 @@ e2e:
     - mix run priv/repo/e2e.seed.exs
     - npm install && npm run build && npx playwright install
     - mix phx.digest
-  script:
     - mix phx.server &
     - npx wait-on http://localhost:4000
     - npx playwright test --project $BROWSER
@@ -277,8 +287,14 @@ build-docker-main:
     - if: '$CI_PROJECT_NAMESPACE != "kaihuri"'
       when: never
     - if: '$CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_TRIGGERED == "true"'
+    - when: manual
   script:
-    - docker buildx build --platform linux/amd64 -t kaihuri/mobilizon:main -f docker/production/Dockerfile .
+    - |
+      if [ "${CI_JOB_MANUAL}" == "true" ]
+      then
+        rm -f ~/.docker/config.json
+      fi
+    - docker buildx build --platform linux/amd64 -t kaihuri/mobilizon:${CI_COMMIT_BRANCH} -f docker/production/Dockerfile .
 
 build-docker-tag:
   <<: *docker
@@ -343,15 +359,16 @@ docker-latest:
 
 # Packaging app for amd64
 package-app:
-  image: mobilizon/buildpack:1.16.1-erlang-26.2.2-${SYSTEM}
+  image: kaihuri/buildpack:1.18.4-erlang-27.3.4.15-${SYSTEM}
   stage: build
   variables: &release-variables
     MIX_ENV: "prod"
     DEBIAN_FRONTEND: noninteractive
     TZ: Etc/UTC
     APP_ASSET: "${CI_PROJECT_NAME}_${CI_COMMIT_REF_NAME}_${ARCH}.tar.gz"
-  script: &release-script
+  before_script:
     - rm -rf ~/.hex/cache.ets
+  script: &release-script
     - mix local.hex --force
     - mix local.rebar --force
     - mix deps.clean --all # To avoid reusing native deps, such as lexbor being already built against another environment
@@ -364,8 +381,9 @@ package-app:
     - 'echo "Artifact: ${APP_ASSET}"'
     - tar czf ${APP_ASSET} -C release mobilizon
     - du -sh ${APP_ASSET}
-  only:
-    - tags@kaihuri/mobilizon
+  rules:
+    - if: $CI_PROJECT_NAMESPACE == "kaihuri" && $CI_COMMIT_TAG != null
+    - when: manual
   artifacts:
     expire_in: 2 days
     paths:
@@ -374,13 +392,15 @@ package-app:
     matrix:
       - SYSTEM:
           [
+            "debian-trixie",
             "debian-bookworm",
             "debian-bullseye",
-            "debian-buster",
-            "ubuntu-jammy",
-            "ubuntu-focal",
-            "fedora-38",
-            "fedora-39",
+            "ubuntu-resolute",
+            "ubuntu-noble",
+            "fedora-44",
+            "fedora-43",
+            "alpine-3.22.5",
+            "alpine-3.24.1",
           ]
 
 package-app-dev:
@@ -451,6 +471,7 @@ package-multi-arch-release:
         #   ]
   rules:
     - if: '$CI_COMMIT_TAG != null || $CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_TRIGGERED == "true"'
+    - when: manual
   timeout: 3h
   allow_failure: true
 

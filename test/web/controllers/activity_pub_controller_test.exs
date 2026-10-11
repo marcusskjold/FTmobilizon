@@ -18,7 +18,6 @@ defmodule Mobilizon.Web.ActivityPubControllerTest do
   alias Mobilizon.Service.HTTP.ActivityPub.Mock
   alias Mobilizon.Web.ActivityPub.ActorView
   alias Mobilizon.Web.{Endpoint, PageView}
-  use Mobilizon.Web, :verified_routes
 
   setup_all do
     Mobilizon.Config.put([:instance, :federating], true)

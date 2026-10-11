@@ -145,7 +145,7 @@
             class="w-full sm:w-auto"
             @click="pickActor"
           >
-            {{ $t("Pick") }}
+            {{ $t("Close") }}
           </o-button>
         </footer>
       </div>
@@ -153,13 +153,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { IActor, IGroup, usernameWithDomain } from "../../types/actor";
+import { IActor, IGroup, usernameWithDomain } from "@/types/actor";
 import OrganizerPicker from "./OrganizerPicker.vue";
 import EmptyContent from "../Utils/EmptyContent.vue";
 import {
   LOGGED_USER_MEMBERSHIPS,
   PERSON_GROUP_MEMBERSHIPS,
-} from "../../graphql/actor";
+} from "@/graphql/actor";
 import { GROUP_MEMBERS } from "@/graphql/member";
 import { ActorType, MemberRole } from "@/types/enums";
 import { useQuery } from "@vue/apollo-composable";

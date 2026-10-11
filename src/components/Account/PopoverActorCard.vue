@@ -13,7 +13,7 @@
 </template>
 <script lang="ts" setup>
 import { ActorType } from "@/types/enums";
-import { IActor } from "../../types/actor";
+import { IActor } from "@/types/actor";
 import ActorCard from "./ActorCard.vue";
 
 withDefaults(

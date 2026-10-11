@@ -46,7 +46,7 @@ import {
   ActivityEventSubject,
 } from "@/types/enums";
 import { computed } from "vue";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import PopoverActorCard from "../Account/PopoverActorCard.vue";
 
 const props = defineProps<{

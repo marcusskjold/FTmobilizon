@@ -60,7 +60,7 @@ import {
 import { saveLocaleData } from "@/utils/auth";
 import { computed, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import langs from "../../i18n/langs.json";
+import langs from "@/i18n/langs.json";
 
 const { timezones, loading } = useTimezones();
 

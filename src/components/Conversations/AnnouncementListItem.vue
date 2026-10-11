@@ -41,10 +41,10 @@
 </template>
 <script lang="ts" setup>
 import { formatDistanceToNowStrict } from "date-fns";
-import { IConversation } from "../../types/conversation";
-import RouteName from "../../router/name";
+import { IConversation } from "@/types/conversation";
+import RouteName from "@/router/name";
 import { computed, inject } from "vue";
-import { formatDateTimeString } from "../../filters/datetime";
+import { formatDateTimeString } from "@/filters/datetime";
 import type { Locale } from "date-fns";
 import { useI18n } from "vue-i18n";
 import { useCurrentActorClient } from "@/composition/apollo/actor";

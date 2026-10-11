@@ -103,13 +103,13 @@ import RouteName from "@/router/name";
 import GroupedMultiEventMinimalistCard from "@/components/Event/GroupedMultiEventMinimalistCard.vue";
 import { PERSON_MEMBERSHIPS } from "@/graphql/actor";
 import { FETCH_GROUP_EVENTS } from "@/graphql/event";
-import EmptyContent from "../../components/Utils/EmptyContent.vue";
+import EmptyContent from "@/components/Utils/EmptyContent.vue";
 import {
   displayName,
   IGroup,
   IPerson,
   usernameWithDomain,
-} from "../../types/actor";
+} from "@/types/actor";
 import { useQuery } from "@vue/apollo-composable";
 import { useCurrentActorClient } from "@/composition/apollo/actor";
 import { computed, watch } from "vue";

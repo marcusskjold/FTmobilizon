@@ -74,8 +74,8 @@ import { useQuery } from "@vue/apollo-composable";
 import { useHead } from "@/utils/head";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { ABOUT } from "../../graphql/config";
-import { IConfig } from "../../types/config.model";
+import { ABOUT } from "@/graphql/config";
+import { IConfig } from "@/types/config.model";
 
 const { result: configResult } = useQuery<{ config: IConfig }>(ABOUT);
 

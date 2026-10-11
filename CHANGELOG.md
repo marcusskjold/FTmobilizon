@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Security
+
+* Upgrade hackney from 1.25.0 to 4.6.0 to fix four security advisories affecting hackney up to 4.0.1, for which no fix was backported to the 1.x branch:
+  * [EEF-CVE-2026-47071 / GHSA-gp9c-pm5m-5cxr](https://github.com/advisories/GHSA-gp9c-pm5m-5cxr) (High): a hostile SOCKS5 proxy could block the calling process indefinitely
+  * [EEF-CVE-2026-47076 / GHSA-pj7v-xfvx-wmjq](https://github.com/advisories/GHSA-pj7v-xfvx-wmjq) (Medium): SSRF allowlist bypass through percent-encoded hosts
+  * [EEF-CVE-2026-47075 / GHSA-j9wq-vxxc-94wf](https://github.com/advisories/GHSA-j9wq-vxxc-94wf) (Medium): CR/LF injection in request query parameters
+  * [EEF-CVE-2026-47069 / GHSA-mp55-p8c9-rfw2](https://github.com/advisories/GHSA-mp55-p8c9-rfw2) (Low): CRLF injection in cookie domain/path options
+
+  This requires upgrading HTTPoison to 3.0 (the first release depending on hackney 4).
+
+### ⚠️ Runtime requirements change
+
+* **Erlang/OTP 27 and Elixir 1.17 are now the minimum required versions**, because hackney 4 only supports OTP 27 and later. Instance administrators must upgrade their Erlang/Elixir runtime before installing this version. Debian 13 "trixie" ships OTP 27 and is fine; Debian 12 "bookworm" ships OTP 25 and requires asdf, containers or a third-party repository.
+
+### Changed
+
+* hackney 4 no longer forwards authorization credentials and cookies when following a redirect to a different host (fixes CVE-2018-1000007 behaviour). Mobilizon does not rely on this, but instances behind unusual media hosting setups may notice redirected remote media fetches behaving more strictly.
+* Outgoing SOCKS5/HTTP CONNECT proxy support was removed from hackney 4. Mobilizon has never exposed an outbound proxy setting, so no Mobilizon configuration is affected.
+
 ## 4.1.0 (2024-02-29)
 
 This release is the last provided by Framasoft. [The project is now supported by the Kaihuri association](https://framacolibri.org/t/mobilizon-nous/19752).

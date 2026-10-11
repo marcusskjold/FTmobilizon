@@ -29,27 +29,6 @@ const groupEvents = (): Promise<any> => import("@/views/Event/GroupEvents.vue");
 
 export const groupsRoutes: RouteRecordRaw[] = [
   {
-    path: "/@:preferredUsername/todo-lists",
-    name: GroupsRouteName.TODO_LISTS,
-    component: (): Promise<any> => import("@/views/Todos/TodoLists.vue"),
-    props: true,
-    meta: { requiredAuth: true, announcer: { skip: true } },
-  },
-  {
-    path: "/todo-lists/:id",
-    name: GroupsRouteName.TODO_LIST,
-    component: (): Promise<any> => import("@/views/Todos/TodoList.vue"),
-    props: true,
-    meta: { requiredAuth: true, announcer: { skip: true } },
-  },
-  {
-    path: "/todo/:todoId",
-    name: GroupsRouteName.TODO,
-    component: (): Promise<any> => import("@/views/Todos/TodoView.vue"),
-    props: true,
-    meta: { requiredAuth: true, announcer: { skip: true } },
-  },
-  {
     path: "/@:preferredUsername/resources",
     name: GroupsRouteName.RESOURCE_FOLDER_ROOT,
     component: resourceFolder,

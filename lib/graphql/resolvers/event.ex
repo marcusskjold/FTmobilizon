@@ -27,16 +27,20 @@ defmodule Mobilizon.GraphQL.Resolvers.Event do
   @spec organizer_for_event(Event.t(), map(), Absinthe.Resolution.t()) ::
           {:ok, Actor.t() | nil} | {:error, String.t()}
   def organizer_for_event(
-        %Event{attributed_to_id: attributed_to_id, organizer_actor_id: organizer_actor_id},
+        %Event{attributed_to_id: group_id, organizer_actor_id: organizer_actor_id},
         _args,
         %{
-          context: %{current_user: %User{role: user_role}, current_actor: %Actor{id: actor_id}}
+          context: %{current_user: %User{role: user_role} = user}
         } = _resolution
       )
-      when not is_nil(attributed_to_id) do
-    with %Actor{id: group_id} <- Actors.get_actor(attributed_to_id),
-         {:member, true} <-
-           {:member, Actors.member?(actor_id, group_id) or is_moderator(user_role)},
+      when not is_nil(group_id) do
+    actor_ids = user.actors |> Enum.map(&Map.get(&1, :id))
+
+    # at least one actor of the user should be member of the group
+    with true <-
+           Enum.any?(actor_ids, fn actor_id ->
+             Actors.member?(actor_id, group_id) or is_moderator(user_role)
+           end),
          %Actor{} = actor <- Actors.get_actor(organizer_actor_id) do
       {:ok, actor}
     else
@@ -277,8 +281,8 @@ defmodule Mobilizon.GraphQL.Resolvers.Event do
            {:organizer_group_member, organizer_group_member?(args)},
          args_with_organizer <-
            args |> Map.put(:organizer_actor, organizer_actor) |> extract_timezone(user.id),
-         {:askismet, :ham} <-
-           {:askismet,
+         {:anti_spam, :ham} <-
+           {:anti_spam,
             AntiSpam.service().check_event(
               args.description,
               organizer_actor.preferred_username,
@@ -314,7 +318,7 @@ defmodule Mobilizon.GraphQL.Resolvers.Event do
            "Organizer profile doesn't have permission to create an event on behalf of this group"
          )}
 
-      {:askismet, _} ->
+      {:anti_spam, _} ->
         {:error,
          dgettext(
            "errors",
@@ -367,26 +371,61 @@ defmodule Mobilizon.GraphQL.Resolvers.Event do
   def update_event(
         _parent,
         %{event_id: event_id} = args,
-        %{context: %{current_user: %User{} = user, current_actor: %Actor{} = actor}} = _resolution
+        %{context: %{current_user: %User{} = user}} = _resolution
       ) do
     # See https://github.com/absinthe-graphql/absinthe/issues/490
     args = Map.put(args, :options, args[:options] || %{})
 
+    # Use the first user actor if organizer_actor_id is not given
+    actor_id = args[:organizer_actor_id] || user.actors |> Enum.at(0) |> Map.get(:id)
+
     with {:ok, %Event{} = event} <- Events.get_event_with_preload(event_id),
+         {:is_owned, %Actor{} = actor} <- User.owns_actor(user, actor_id),
          {:ok, args} <- verify_profile_change(args, event, user, actor),
          args <- extract_timezone(args, user.id),
          {:event_can_be_managed, true} <-
-           {:event_can_be_managed, can_event_be_updated_by?(event, actor)},
+           {:event_can_be_managed,
+            organizer_group_member?(%{
+              attributed_to_id: event.attributed_to && event.attributed_to.id,
+              organizer_actor_id: actor.id
+            })},
+         new_actor = Actors.get_actor(Map.get(args, :attributed_to_id)),
+         {:new_actor_is_group_or_nil, true} <-
+           {:new_actor_is_group_or_nil, actor_is_group_or_nil?(new_actor)},
+         new_event = %{event | attributed_to: new_actor},
+         {:new_group_allowed, true} <-
+           {:new_group_allowed,
+            organizer_group_member?(%{
+              attributed_to_id: new_event.attributed_to && new_event.attributed_to.id,
+              organizer_actor_id: actor.id
+            })},
          {:event_external, true} <- edit_event_external_checker(args),
          {:ok, %Activity{data: %{"object" => %{"type" => "Event"}}}, %Event{} = event} <-
            API.Events.update_event(args, event) do
       {:ok, event}
     else
+      {:is_owned, nil} ->
+        {:error, dgettext("errors", "You don't own the profile given to update this event.")}
+
       {:event_can_be_managed, false} ->
         {:error,
          dgettext(
            "errors",
            "This profile doesn't have permission to update an event on behalf of this group"
+         )}
+
+      {:new_actor_is_group_or_nil, false} ->
+        {:error,
+         dgettext(
+           "errors",
+           "Event attributed_to must be an actor or nil"
+         )}
+
+      {:new_group_allowed, false} ->
+        {:error,
+         dgettext(
+           "errors",
+           "This profile doesn't have permission to add an event to this group"
          )}
 
       {:event_external, false} ->
@@ -543,10 +582,10 @@ defmodule Mobilizon.GraphQL.Resolvers.Event do
           timezone,
           Map.get(physical_address, :geom),
           fallback_tz
-        )
+        ) || "Etc/UTC"
 
       _ ->
-        timezone || fallback_tz
+        timezone || fallback_tz || "Etc/UTC"
     end
   end
 end

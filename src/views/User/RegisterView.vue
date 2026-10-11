@@ -252,11 +252,11 @@
 </template>
 
 <script setup lang="ts">
-import { CREATE_USER } from "../../graphql/user";
-import RouteName from "../../router/name";
-import { IConfig } from "../../types/config.model";
-import { CONFIG } from "../../graphql/config";
-import AuthProviders from "../../components/User/AuthProviders.vue";
+import { CREATE_USER } from "@/graphql/user";
+import RouteName from "@/router/name";
+import { IConfig } from "@/types/config.model";
+import { CONFIG } from "@/graphql/config";
+import AuthProviders from "@/components/User/AuthProviders.vue";
 import { computed, reactive, ref, watch } from "vue";
 import { useMutation, useQuery } from "@vue/apollo-composable";
 import { useI18n } from "vue-i18n";

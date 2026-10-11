@@ -93,7 +93,7 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { IComment } from "../../types/comment.model";
+import { IComment } from "@/types/comment.model";
 import { usernameWithDomain } from "@/types/actor";
 import AccountCircle from "vue-material-design-icons/AccountCircle.vue";
 import { useFocus } from "@vueuse/core";

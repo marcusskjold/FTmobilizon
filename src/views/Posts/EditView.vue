@@ -141,14 +141,14 @@ import {
   DELETE_POST,
   FETCH_POST,
   UPDATE_POST,
-} from "../../graphql/post";
+} from "@/graphql/post";
 
-import { IPost } from "../../types/post.model";
-import Editor from "../../components/TextEditor.vue";
-import { displayName, IActor, usernameWithDomain } from "../../types/actor";
-import TagInput from "../../components/Event/TagInput.vue";
-import RouteName from "../../router/name";
-import PictureUpload from "../../components/PictureUpload.vue";
+import { IPost } from "@/types/post.model";
+import Editor from "@/components/TextEditor.vue";
+import { displayName, IActor, usernameWithDomain } from "@/types/actor";
+import TagInput from "@/components/Event/TagInput.vue";
+import RouteName from "@/router/name";
+import PictureUpload from "@/components/PictureUpload.vue";
 import { useGroup } from "@/composition/apollo/group";
 import {
   useCurrentActorClient,

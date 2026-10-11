@@ -15,13 +15,11 @@ defmodule Mobilizon.Federation.ActivityPub.TransmogrifierTest do
   alias Mobilizon.Actors.Actor
   alias Mobilizon.Discussions.Comment
   alias Mobilizon.Events.Event
-  alias Mobilizon.Resources.Resource
-  alias Mobilizon.Todos.{Todo, TodoList}
 
   alias Mobilizon.Federation.ActivityPub
+  alias Mobilizon.Federation.ActivityPub.{Activity, Relay, Transmogrifier}
   alias Mobilizon.Federation.ActivityPub.Actor, as: ActivityPubActor
   alias Mobilizon.Federation.ActivityPub.Utils
-  alias Mobilizon.Federation.ActivityPub.{Activity, Relay, Transmogrifier}
   alias Mobilizon.Federation.ActivityStream.Convertible
 
   alias Mobilizon.GraphQL.API
@@ -172,453 +170,237 @@ defmodule Mobilizon.Federation.ActivityPub.TransmogrifierTest do
 
         assert event.organizer_actor_id == actor_id
         assert event.attributed_to_id == group_id
+        assert event.begins_on == ~U[2018-02-12T14:08:20Z]
+        assert event.ends_on == nil
         assert activity_data["actor"] == actor_url
         assert activity_data["attributedTo"] == group_url
         assert activity_data["object"]["actor"] == actor_url
         assert activity_data["object"]["attributedTo"] == group_url
       end
     end
-  end
 
-  describe "handle incoming todo lists" do
-    test "it ignores an incoming todo list if we already have it" do
-      todo_list = insert(:todo_list)
-      actor = insert(:actor)
-
-      activity = %{
-        "type" => "Create",
-        "to" => ["https://www.w3.org/ns/activitystreams#Public"],
-        "actor" => actor.url,
-        "object" => Convertible.model_to_as(todo_list)
-      }
-
-      data =
-        File.read!("test/fixtures/mastodon-post-activity.json")
-        |> Jason.decode!()
-        |> Map.put("object", activity["object"])
-
-      assert {:ok, nil, _} = Transmogrifier.handle_incoming(data)
-    end
-
-    test "it accepts incoming todo lists" do
-      actor = insert(:actor)
-      group = insert(:group, domain: "morebilizon.com")
-
-      activity = %{
-        "type" => "Create",
-        "to" => ["https://www.w3.org/ns/activitystreams#Public"],
-        "actor" => actor.url,
-        "object" => %{
-          "type" => "TodoList",
-          "actor" => group.url,
-          "id" => "https://mobilizon.app/todo-list/gjfkghfkd",
-          "name" => "My new todo list"
-        }
-      }
-
-      assert {:ok, %Activity{data: data, local: false}, %TodoList{}} =
-               Transmogrifier.handle_incoming(activity)
-
-      assert data["actor"] == actor.url
-      assert data["object"]["actor"] == group.url
-    end
-
-    @mobilizon_group_url "https://mobilizon.app/@mygroupe"
-    test "it accepts incoming todo lists and fetches the group if needed" do
-      group = insert(:group, domain: "morebilizon.com", url: @mobilizon_group_url)
-      %Actor{url: actor_url} = actor = insert(:actor)
+    test "it works for incoming events with group in actor & attributedTo" do
+      %Actor{url: group_url, id: group_id} = group = insert(:group)
+      relay = Relay.get_actor()
 
       with_mock ActivityPubActor, [:passthrough],
         get_or_fetch_actor_by_url: fn url ->
           case url do
-            @mobilizon_group_url -> {:ok, group}
-            ^actor_url -> {:ok, actor}
+            ^group_url -> {:ok, group}
+            "https://www.w3.org/ns/activitystreams#Public" -> {:ok, relay}
           end
         end do
-        activity = %{
-          "type" => "Create",
-          "to" => ["https://www.w3.org/ns/activitystreams#Public"],
-          "actor" => actor.url,
-          "object" => %{
-            "type" => "TodoList",
-            "actor" => @mobilizon_group_url,
-            "id" => "https://mobilizon.app/todo-list/gjfkghfkd",
-            "name" => "My new todo list"
-          }
-        }
+        data = File.read!("test/fixtures/mobilizon-post-activity-group.json") |> Jason.decode!()
 
-        assert {:ok, %Activity{data: data, local: false}, %TodoList{}} =
-                 Transmogrifier.handle_incoming(activity)
+        object =
+          data["object"] |> Map.put("actor", group_url) |> Map.put("attributedTo", group_url)
 
-        assert data["actor"] == actor.url
-        assert data["object"]["actor"] == @mobilizon_group_url
+        data =
+          data
+          |> Map.put("actor", group_url)
+          |> Map.put("attributedTo", group_url)
+          |> Map.put("object", object)
+
+        assert {:ok, %Activity{data: activity_data, local: false}, %Event{} = event} =
+                 Transmogrifier.handle_incoming(data)
+
+        assert event.organizer_actor_id == group_id
+        assert event.attributed_to_id == group_id
+        assert event.begins_on == ~U[2018-02-12T14:08:20Z]
+        assert event.ends_on == nil
+        assert activity_data["actor"] == group_url
+        assert activity_data["attributedTo"] == group_url
+        assert activity_data["object"]["actor"] == group_url
+        assert activity_data["object"]["attributedTo"] == group_url
       end
     end
 
-    test "it accepts incoming todo lists and handles group being not found" do
-      %Actor{url: actor_url} = actor = insert(:actor)
+    test "it works for incoming events with group in attributedTo - actor is nil" do
+      %Actor{url: group_url, id: group_id} = group = insert(:group)
+      relay = Relay.get_actor()
 
       with_mock ActivityPubActor, [:passthrough],
         get_or_fetch_actor_by_url: fn url ->
           case url do
-            @mobilizon_group_url -> {:error, :http_not_found}
-            ^actor_url -> {:ok, actor}
+            ^group_url -> {:ok, group}
+            "https://www.w3.org/ns/activitystreams#Public" -> {:ok, relay}
           end
         end do
-        activity = %{
-          "type" => "Create",
-          "to" => ["https://www.w3.org/ns/activitystreams#Public"],
-          "actor" => actor_url,
-          "object" => %{
-            "type" => "TodoList",
-            "actor" => @mobilizon_group_url,
-            "id" => "https://mobilizon.app/todo-list/gjfkghfkd",
-            "name" => "My new todo list"
-          }
-        }
+        data = File.read!("test/fixtures/mobilizon-post-activity-group.json") |> Jason.decode!()
 
-        assert :error = Transmogrifier.handle_incoming(activity)
+        object =
+          data["object"] |> Map.put("actor", nil) |> Map.put("attributedTo", group_url)
+
+        data =
+          data
+          |> Map.put("actor", nil)
+          |> Map.put("attributedTo", group_url)
+          |> Map.put("object", object)
+
+        assert {:ok, %Activity{data: activity_data, local: false}, %Event{} = event} =
+                 Transmogrifier.handle_incoming(data)
+
+        assert event.organizer_actor_id == group_id
+        assert event.attributed_to_id == group_id
+        assert event.begins_on == ~U[2018-02-12T14:08:20Z]
+        assert event.ends_on == nil
+        assert activity_data["actor"] == group_url
+        assert activity_data["attributedTo"] == group_url
+        assert activity_data["object"]["actor"] == group_url
+        assert activity_data["object"]["attributedTo"] == group_url
       end
     end
-  end
 
-  describe "handle incoming todos" do
-    test "it ignores an incoming todo if we already have it" do
-      todo = insert(:todo)
-      actor = insert(:actor)
-
-      activity = %{
-        "type" => "Create",
-        "to" => ["https://www.w3.org/ns/activitystreams#Public"],
-        "actor" => actor.url,
-        "object" => Convertible.model_to_as(todo)
-      }
-
-      data =
-        File.read!("test/fixtures/mastodon-post-activity.json")
-        |> Jason.decode!()
-        |> Map.put("object", activity["object"])
-
-      assert {:ok, nil, _} = Transmogrifier.handle_incoming(data)
-    end
-
-    test "it accepts incoming todos" do
-      actor = insert(:actor)
-      todo_list = insert(:todo_list)
-
-      activity = %{
-        "type" => "Create",
-        "to" => ["https://www.w3.org/ns/activitystreams#Public"],
-        "actor" => actor.url,
-        "object" => %{
-          "type" => "Todo",
-          "actor" => actor.url,
-          "todoList" => todo_list.url,
-          "id" => "https://mobilizon.app/todo/gjfkghfkd",
-          "name" => "My new todo",
-          "status" => false
-        }
-      }
-
-      assert {:ok, %Activity{data: data, local: false},
-              %Todo{todo_list: %TodoList{id: todo_list_id}}} =
-               Transmogrifier.handle_incoming(activity)
-
-      assert data["actor"] == actor.url
-      assert data["object"]["todoList"] == todo_list.url
-      assert todo_list_id == todo_list.id
-    end
-
-    @mobilizon_group_url "https://mobilizon.app/@mygroupe"
-    test "it accepts incoming todos and fetches the todo list if needed" do
-      group = insert(:group, domain: "morebilizon.com", url: @mobilizon_group_url)
-      %Actor{url: actor_url} = actor = insert(:actor)
+    test "it works for incoming events with group in attributedTo - no actor" do
+      %Actor{url: group_url, id: group_id} = group = insert(:group)
+      relay = Relay.get_actor()
 
       with_mock ActivityPubActor, [:passthrough],
         get_or_fetch_actor_by_url: fn url ->
           case url do
-            @mobilizon_group_url -> {:ok, group}
-            ^actor_url -> {:ok, actor}
+            ^group_url -> {:ok, group}
+            "https://www.w3.org/ns/activitystreams#Public" -> {:ok, relay}
           end
         end do
-        activity = %{
-          "type" => "Create",
-          "to" => ["https://www.w3.org/ns/activitystreams#Public"],
-          "actor" => actor.url,
-          "object" => %{
-            "type" => "TodoList",
-            "actor" => @mobilizon_group_url,
-            "id" => "https://mobilizon.app/todo-list/gjfkghfkd",
-            "name" => "My new todo list"
-          }
-        }
+        data = File.read!("test/fixtures/mobilizon-post-activity-group.json") |> Jason.decode!()
 
-        assert {:ok, %Activity{data: data, local: false}, %TodoList{}} =
-                 Transmogrifier.handle_incoming(activity)
+        object =
+          data["object"] |> Map.delete("actor") |> Map.put("attributedTo", group_url)
 
-        assert data["actor"] == actor.url
-        assert data["object"]["actor"] == @mobilizon_group_url
+        data =
+          data
+          |> Map.delete("actor")
+          |> Map.put("attributedTo", group_url)
+          |> Map.put("object", object)
+
+        assert {:ok, %Activity{data: activity_data, local: false}, %Event{} = event} =
+                 Transmogrifier.handle_incoming(data)
+
+        assert event.organizer_actor_id == group_id
+        assert event.attributed_to_id == group_id
+        assert event.begins_on == ~U[2018-02-12T14:08:20Z]
+        assert event.ends_on == nil
+        assert activity_data["actor"] == group_url
+        assert activity_data["attributedTo"] == group_url
+        assert activity_data["object"]["actor"] == group_url
+        assert activity_data["object"]["attributedTo"] == group_url
       end
     end
 
-    test "it accepts incoming todo lists and handles group being not found" do
-      %Actor{url: actor_url} = actor = insert(:actor)
+    test "it works for incoming events with group in actor - attributedTo is null" do
+      %Actor{url: group_url, id: group_id} = group = insert(:group)
+      relay = Relay.get_actor()
 
       with_mock ActivityPubActor, [:passthrough],
         get_or_fetch_actor_by_url: fn url ->
           case url do
-            @mobilizon_group_url -> {:error, :http_not_found}
-            ^actor_url -> {:ok, actor}
+            ^group_url -> {:ok, group}
+            "https://www.w3.org/ns/activitystreams#Public" -> {:ok, relay}
           end
         end do
-        activity = %{
-          "type" => "Create",
-          "to" => ["https://www.w3.org/ns/activitystreams#Public"],
-          "actor" => actor_url,
-          "object" => %{
-            "type" => "TodoList",
-            "actor" => @mobilizon_group_url,
-            "id" => "https://mobilizon.app/todo-list/gjfkghfkd",
-            "name" => "My new todo list"
-          }
-        }
+        data = File.read!("test/fixtures/mobilizon-post-activity-group.json") |> Jason.decode!()
 
-        assert :error = Transmogrifier.handle_incoming(activity)
+        object =
+          data["object"] |> Map.put("actor", group_url) |> Map.put("attributedTo", nil)
+
+        data =
+          data
+          |> Map.put("actor", nil)
+          |> Map.put("attributedTo", group_url)
+          |> Map.put("object", object)
+
+        assert {:ok, %Activity{data: activity_data, local: false}, %Event{} = event} =
+                 Transmogrifier.handle_incoming(data)
+
+        assert event.organizer_actor_id == group_id
+        assert event.attributed_to_id == group_id
+        assert event.begins_on == ~U[2018-02-12T14:08:20Z]
+        assert event.ends_on == nil
+        assert activity_data["actor"] == group_url
+        assert activity_data["attributedTo"] == group_url
+        assert activity_data["object"]["actor"] == group_url
+        assert activity_data["object"]["attributedTo"] == group_url
       end
     end
-  end
 
-  describe "handle incoming resources" do
-    test "it ignores an incoming resource if we already have it" do
-      actor = insert(:actor)
-      group = insert(:group)
-      %Resource{} = resource = insert(:resource, actor: group, creator: actor)
+    test "it works for incoming events with group in actor - no attributedTo" do
+      %Actor{url: group_url, id: group_id} = group = insert(:group)
+      relay = Relay.get_actor()
 
-      activity = %{
-        "type" => "Add",
-        "to" => [group.members_url],
-        "actor" => actor.url,
-        "target" => group.resources_url,
-        "object" => Convertible.model_to_as(resource)
-      }
+      with_mock ActivityPubActor, [:passthrough],
+        get_or_fetch_actor_by_url: fn url ->
+          case url do
+            ^group_url -> {:ok, group}
+            "https://www.w3.org/ns/activitystreams#Public" -> {:ok, relay}
+          end
+        end do
+        data = File.read!("test/fixtures/mobilizon-post-activity-group.json") |> Jason.decode!()
 
-      assert {:ok, nil, _} = Transmogrifier.handle_incoming(activity)
+        object =
+          data["object"] |> Map.put("actor", group_url) |> Map.delete("attributedTo")
+
+        data =
+          data
+          |> Map.put("actor", nil)
+          |> Map.delete("attributedTo")
+          |> Map.put("object", object)
+
+        assert {:ok, %Activity{data: activity_data, local: false}, %Event{} = event} =
+                 Transmogrifier.handle_incoming(data)
+
+        assert event.organizer_actor_id == group_id
+        assert event.attributed_to_id == group_id
+        assert event.begins_on == ~U[2018-02-12T14:08:20Z]
+        assert event.ends_on == nil
+        assert activity_data["actor"] == group_url
+        assert activity_data["attributedTo"] == group_url
+        assert activity_data["object"]["actor"] == group_url
+        assert activity_data["object"]["attributedTo"] == group_url
+      end
     end
 
-    test "it accepts incoming resources" do
-      creator =
+    test "it works for incoming events with end date not null" do
+      %Actor{url: group_url} = group = insert(:group)
+
+      %Actor{url: actor_url} =
+        actor =
         insert(:actor,
-          domain: "mobilizon.app",
-          url: "https://mobilizon.app/@myremoteactor",
-          preferred_username: "myremoteactor"
+          domain: "mobilizon.fr",
+          url: "https://mobilizon.fr/@member",
+          preferred_username: "member"
         )
 
-      group =
-        insert(:group,
-          domain: "somewhere.com",
-          url: "https://somewhere.com/@myremotegroup",
-          preferred_username: "myremotegroup"
-        )
+      relay = Relay.get_actor()
 
-      insert(:member, parent: group, actor: creator, role: :member)
+      with_mock ActivityPubActor, [:passthrough],
+        get_or_fetch_actor_by_url: fn url ->
+          case url do
+            ^group_url -> {:ok, group}
+            ^actor_url -> {:ok, actor}
+            "https://www.w3.org/ns/activitystreams#Public" -> {:ok, relay}
+          end
+        end do
+        data = File.read!("test/fixtures/mobilizon-post-activity-group.json") |> Jason.decode!()
 
-      activity = %{
-        "type" => "Add",
-        "to" => [group.members_url],
-        "actor" => creator.url,
-        "target" => group.resources_url,
-        "object" => %{
-          "type" => "Document",
-          "actor" => creator.url,
-          "attributedTo" => [group.url],
-          "id" => "https://mobilizon.app/resource/gjfkghfkd",
-          "name" => "My new resource",
-          "summary" => "A description for the resource",
-          "url" => "https://framasoft.org"
-        }
-      }
+        object =
+          data["object"]
+          |> Map.put("actor", actor_url)
+          |> Map.put("attributedTo", group_url)
+          |> Map.put("timezone", "Etc/UTC")
+          |> Map.put("endTime", "2018-02-12T23:59:59Z")
 
-      assert {:ok, %Activity{data: _data, local: false}, %Resource{} = resource} =
-               Transmogrifier.handle_incoming(activity)
+        data =
+          data
+          |> Map.put("actor", actor_url)
+          |> Map.put("attributedTo", group_url)
+          |> Map.put("object", object)
 
-      assert resource.actor_id == group.id
-      assert resource.creator_id == creator.id
-      assert resource.title == "My new resource"
-      assert resource.type == :link
-      assert is_nil(resource.parent_id)
-    end
+        assert {:ok, %Activity{local: false}, %Event{} = event} =
+                 Transmogrifier.handle_incoming(data)
 
-    test "it accepts incoming folders" do
-      creator =
-        insert(:actor,
-          domain: "mobilizon.app",
-          url: "https://mobilizon.app/@myremoteactor",
-          preferred_username: "myremoteactor"
-        )
-
-      group =
-        insert(:group,
-          domain: "somewhere.com",
-          url: "https://somewhere.com/@myremotegroup",
-          preferred_username: "myremotegroup"
-        )
-
-      insert(:member, parent: group, actor: creator, role: :member)
-
-      activity = %{
-        "type" => "Add",
-        "to" => [group.members_url],
-        "actor" => creator.url,
-        "target" => group.resources_url,
-        "object" => %{
-          "type" => "ResourceCollection",
-          "actor" => creator.url,
-          "attributedTo" => [group.url],
-          "id" => "https://mobilizon.app/resource/gjfkghfkd",
-          "name" => "My new folder"
-        }
-      }
-
-      assert {:ok, %Activity{data: _data, local: false}, %Resource{} = resource} =
-               Transmogrifier.handle_incoming(activity)
-
-      assert resource.actor_id == group.id
-      assert resource.creator_id == creator.id
-      assert resource.title == "My new folder"
-      assert resource.type == :folder
-      assert is_nil(resource.parent_id)
-    end
-
-    test "it accepts incoming resources that are in a folder" do
-      creator =
-        insert(:actor,
-          domain: "mobilizon1.com",
-          url: "http://mobilizon1.com/@tcit",
-          preferred_username: "tcit",
-          user: nil
-        )
-
-      group =
-        insert(:group,
-          domain: "mobilizon1.com",
-          url: "http://mobilizon1.com/@demo",
-          preferred_username: "demo",
-          resources_url: "http://mobilizon1.com/@demo/resources"
-        )
-
-      insert(:member, parent: group, actor: creator, role: :member)
-
-      parent_resource =
-        insert(:resource,
-          type: :folder,
-          title: "folder",
-          path: "/folder",
-          actor: group,
-          creator: creator
-        )
-
-      activity = %{
-        "type" => "Add",
-        "to" => [group.members_url],
-        "actor" => creator.url,
-        "target" => parent_resource.url,
-        "object" => %{
-          "type" => "Document",
-          "actor" => creator.url,
-          "attributedTo" => [group.url],
-          "id" => "https://mobilizon.app/resource/gjfkghfkd",
-          "name" => "My new resource",
-          "summary" => "A description for the resource",
-          "context" => parent_resource.url,
-          "url" => "https://framasoft.org"
-        }
-      }
-
-      assert {:ok, %Activity{data: _data, local: false}, %Resource{} = resource} =
-               Transmogrifier.handle_incoming(activity)
-
-      assert resource.actor_id == group.id
-      assert resource.creator_id == creator.id
-      assert resource.title == "My new resource"
-      assert resource.type == :link
-      refute is_nil(resource.parent_id)
-      assert resource.parent_id == parent_resource.id
-    end
-
-    test "it accepts incoming resources and handles group being not found" do
-      Mock
-      |> expect(:call, fn
-        %{method: :get, url: "https://someurl.com/notfound"}, _opts ->
-          {:ok, %Tesla.Env{status: 404, body: ""}}
-      end)
-
-      creator =
-        insert(:actor,
-          domain: "mobilizon.app",
-          url: "https://mobilizon.app/@myremoteactor",
-          preferred_username: "myremoteactor"
-        )
-
-      group =
-        insert(:group,
-          domain: "somewhere.com",
-          url: "https://somewhere.com/@myremotegroup",
-          preferred_username: "myremotegroup"
-        )
-
-      insert(:member, parent: group, actor: creator, role: :member)
-
-      activity = %{
-        "type" => "Add",
-        "to" => [group.members_url],
-        "actor" => creator.url,
-        "target" => group.resources_url,
-        "object" => %{
-          "type" => "Document",
-          "actor" => "https://someurl.com/notfound",
-          "attributedTo" => "https://someurl.com/notfound",
-          "id" => "https://mobilizon.app/resource/gjfkghfkd",
-          "name" => "My new resource",
-          "summary" => "A description for the resource",
-          "url" => "https://framasoft.org"
-        }
-      }
-
-      assert :error = Transmogrifier.handle_incoming(activity)
-    end
-
-    test "it refuses incoming resources if actor is not a member of the group" do
-      creator =
-        insert(:actor,
-          domain: "mobilizon.app",
-          url: "https://mobilizon.app/@myremoteactor",
-          preferred_username: "myremoteactor"
-        )
-
-      group =
-        insert(:group,
-          domain: "somewhere.com",
-          url: "https://somewhere.com/@myremotegroup",
-          preferred_username: "myremotegroup"
-        )
-
-      activity = %{
-        "type" => "Add",
-        "to" => [group.members_url],
-        "actor" => creator.url,
-        "target" => group.resources_url,
-        "object" => %{
-          "type" => "Document",
-          "actor" => creator.url,
-          "attributedTo" => [group.url],
-          "id" => "https://mobilizon.app/resource/gjfkghfkd",
-          "name" => "My new resource",
-          "summary" => "A description for the resource",
-          "url" => "https://framasoft.org"
-        }
-      }
-
-      assert :error = Transmogrifier.handle_incoming(activity)
+        assert event.begins_on == ~U[2018-02-12T14:08:20Z]
+        assert event.ends_on == nil
+      end
     end
   end
 

@@ -73,6 +73,14 @@ defmodule Mobilizon.Service.Export.ICalendar do
   def export_event(%Event{} = event), do: {:ok, events_to_ics([event])}
 
   @doc """
+  Export a list of events to iCalendar format.
+  """
+  @spec export_events([Event.t()]) :: {:ok, String.t()}
+  def export_events(events) when is_list(events) do
+    {:ok, events_to_ics(events)}
+  end
+
+  @doc """
   Export a public event to iCalendar format.
 
   The event must have a visibility of `:public` or `:unlisted`
@@ -143,7 +151,7 @@ defmodule Mobilizon.Service.Export.ICalendar do
       end
 
     icalendar_event =
-      if length(event.tags) > 0 do
+      if event.tags != [] do
         %ICalendar.Event{icalendar_event | categories: event.tags |> Enum.map(& &1.title)}
       else
         icalendar_event

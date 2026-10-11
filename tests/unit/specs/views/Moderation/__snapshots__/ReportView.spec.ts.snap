@@ -1,0 +1,67 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ReportView > Show simple 1`] = `
+"<breadcrumbs-nav data-v-a10d6a44="" links="[object Object],[object Object],[object Object]"></breadcrumbs-nav>
+<div data-v-a10d6a44="" class="container mx-auto">
+  <div data-v-a10d6a44="" class="flex flex-wrap gap-2 my-2"><button data-v-a10d6a44="" data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--primary"><span class="o-button__wrapper"><!----><span class="o-button__label">Mark as resolved</span>
+      <!----></span>
+    </button><button data-v-a10d6a44="" data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--success"><span class="o-button__wrapper"><!----><span class="o-button__label">Reopen</span>
+      <!----></span>
+    </button><button data-v-a10d6a44="" data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--danger"><span class="o-button__wrapper"><!----><span class="o-button__label">Close</span>
+      <!----></span>
+    </button>
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+  <section data-v-a10d6a44="" class="w-full">
+    <table data-v-a10d6a44="" class="table w-full">
+      <tbody data-v-a10d6a44="">
+        <tr data-v-a10d6a44="">
+          <td data-v-a10d6a44="">Reported identity</td>
+          <td data-v-a10d6a44="">Unknown actor</td>
+        </tr>
+        <tr data-v-a10d6a44="">
+          <td data-v-a10d6a44="">Reported by</td>
+          <td data-v-a10d6a44="">Unknown actor</td>
+        </tr>
+        <tr data-v-a10d6a44="">
+          <td data-v-a10d6a44="">Reported at</td>
+          <td data-v-a10d6a44="">Thursday, January 1, 1970 at 1:00 AM</td>
+        </tr>
+        <!--v-if-->
+        <tr data-v-a10d6a44="">
+          <td data-v-a10d6a44="">Status</td>
+          <td data-v-a10d6a44=""><span data-v-a10d6a44="">Unknown</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section data-v-a10d6a44="" class="bg-white dark:bg-zinc-700 rounded px-2 pt-1 pb-2 my-3">
+    <h2 data-v-a10d6a44="" class="mb-1">Report reason</h2>
+    <div data-v-a10d6a44="" class="">
+      <div data-v-a10d6a44="" class="flex gap-1"><span data-v-a10d6a44="" aria-hidden="true" class="material-design-icon account-circle-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="36" height="36" viewBox="0 0 24 24"><path d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"><!--v-if--></path></svg></span>
+        <p data-v-a10d6a44="">Unknown actor</p>
+      </div>
+      <p data-v-a10d6a44="">No comment</p>
+    </div>
+  </section>
+  <!--v-if-->
+  <!--v-if-->
+  <!--v-if-->
+  <section data-v-a10d6a44="" class="bg-white dark:bg-zinc-700 rounded px-2 pt-1 pb-2 my-3">
+    <h2 data-v-a10d6a44="" class="mb-1">Notes</h2>
+    <form data-v-a10d6a44="">
+      <div data-v-a10d6a44="" data-oruga="field" class="o-field"><label id="v-0-0" for="" class="o-field__label">New note</label>
+        <div data-v-a10d6a44="" data-oruga="input" class="o-input o-input--expanded o-input--textarea">
+          <!----><textarea aria-labelledby="v-0-0" id="" data-oruga-input="textarea" class="o-input__input o-input__input--placeholder"></textarea>
+          <!---->
+          <!---->
+        </div>
+        <!---->
+      </div><button data-v-a10d6a44="" data-oruga="button" type="submit" role="button" tabindex="0" class="o-button mt-2"><span class="o-button__wrapper"><!----><span class="o-button__label">Add a note</span>
+        <!----></span>
+      </button>
+    </form>
+  </section>
+</div>"
+`;

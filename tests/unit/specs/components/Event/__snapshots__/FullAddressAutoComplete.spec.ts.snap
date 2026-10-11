@@ -17,22 +17,10 @@ exports[`FullAddressAutoComplete > Show list 1`] = `
         <div id="v-0-2" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--auto" style="max-height: 200px; overflow: auto; display: none;" role="listbox" aria-labelledby="v-0-0" aria-multiselectable="false">
           <!---->
           <!---->
-          <div id="v-0-2-2" data-oruga="dropdown-item" data-id="dropdown-2" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false">
-            <p class="flex gap-1"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-city mdi-24px"></i></span><b>Lyon</b></p>
-            <p class="text-small">Auvergne-Rhône-Alpes, France</p>
-          </div>
-          <div id="v-0-2-3" data-oruga="dropdown-item" data-id="dropdown-3" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false">
-            <p class="flex gap-1"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-map-marker mdi-24px"></i></span><b>Lyon County</b></p>
-            <p class="text-small">Kansas, États-Unis d'Amérique</p>
-          </div>
-          <div id="v-0-2-4" data-oruga="dropdown-item" data-id="dropdown-4" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false">
-            <p class="flex gap-1"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-city mdi-24px"></i></span><b>Lyon</b></p>
-            <p class="text-small">Auvergne-Rhône-Alpes, France</p>
-          </div>
-          <div id="v-0-2-5" data-oruga="dropdown-item" data-id="dropdown-5" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false">
-            <p class="flex gap-1"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-city mdi-24px"></i></span><b>Lyon</b></p>
-            <p class="text-small">Mississippi, États-Unis d'Amérique</p>
-          </div>
+          <div id="v-0-2-2" data-oruga="dropdown-item" data-id="dropdown-2" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false"><span>Lyon, Auvergne-Rhône-Alpes, France</span></div>
+          <div id="v-0-2-3" data-oruga="dropdown-item" data-id="dropdown-3" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false"><span>Lyon County, Kansas, États-Unis d'Amérique</span></div>
+          <div id="v-0-2-4" data-oruga="dropdown-item" data-id="dropdown-4" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false"><span>Lyon, Auvergne-Rhône-Alpes, France</span></div>
+          <div id="v-0-2-5" data-oruga="dropdown-item" data-id="dropdown-5" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false"><span>Lyon, Mississippi, États-Unis d'Amérique</span></div>
           <!---->
           <!---->
         </div>
@@ -68,22 +56,10 @@ exports[`FullAddressAutoComplete > Show list 2`] = `
         <div id="v-0-2" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--bottom o-dropdown__menu--active" style="max-height: 200px; overflow: auto;" role="listbox" aria-labelledby="v-0-0" aria-multiselectable="false">
           <!---->
           <!---->
-          <div id="v-0-2-2" data-oruga="dropdown-item" data-id="dropdown-2" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false">
-            <p class="flex gap-1"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-city mdi-24px"></i></span><b>Lyon</b></p>
-            <p class="text-small">Auvergne-Rhône-Alpes, France</p>
-          </div>
-          <div id="v-0-2-3" data-oruga="dropdown-item" data-id="dropdown-3" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false">
-            <p class="flex gap-1"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-map-marker mdi-24px"></i></span><b>Lyon County</b></p>
-            <p class="text-small">Kansas, États-Unis d'Amérique</p>
-          </div>
-          <div id="v-0-2-4" data-oruga="dropdown-item" data-id="dropdown-4" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false">
-            <p class="flex gap-1"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-city mdi-24px"></i></span><b>Lyon</b></p>
-            <p class="text-small">Auvergne-Rhône-Alpes, France</p>
-          </div>
-          <div id="v-0-2-5" data-oruga="dropdown-item" data-id="dropdown-5" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false">
-            <p class="flex gap-1"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-city mdi-24px"></i></span><b>Lyon</b></p>
-            <p class="text-small">Mississippi, États-Unis d'Amérique</p>
-          </div>
+          <div id="v-0-2-2" data-oruga="dropdown-item" data-id="dropdown-2" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false"><span>Lyon, Auvergne-Rhône-Alpes, France</span></div>
+          <div id="v-0-2-3" data-oruga="dropdown-item" data-id="dropdown-3" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false"><span>Lyon County, Kansas, États-Unis d'Amérique</span></div>
+          <div id="v-0-2-4" data-oruga="dropdown-item" data-id="dropdown-4" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false"><span>Lyon, Auvergne-Rhône-Alpes, France</span></div>
+          <div id="v-0-2-5" data-oruga="dropdown-item" data-id="dropdown-5" class="o-dropdown__item o-dropdown__item--clickable o-autocomplete__item" role="option" tabindex="-1" aria-selected="false" aria-disabled="false"><span>Lyon, Mississippi, États-Unis d'Amérique</span></div>
           <!---->
           <!---->
         </div>

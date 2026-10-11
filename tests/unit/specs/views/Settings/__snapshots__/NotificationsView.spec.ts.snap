@@ -1,0 +1,346 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`NotificationsView > Show simple 1`] = `
+"<div data-v-07822acf="">
+  <breadcrumbs-nav data-v-07822acf="" links="[object Object],[object Object]"></breadcrumbs-nav>
+  <section data-v-07822acf="" class="my-4">
+    <h2 data-v-07822acf="">Browser notifications</h2>
+    <transition-stub data-v-07822acf="" name="fade" appear="false" persisted="false" css="true">
+      <article data-oruga="notification" class="o-notification o-notification--warning o-notification--top">
+        <!---->
+        <div class="o-notification__wrapper">
+          <!---->
+          <div class="o-notification__content">This instance hasn't got push notifications enabled. Ask your instance admin to <a data-v-07822acf="" href="https://docs.mobilizon.org/3.%20System%20administration/configure/push/" target="_blank" rel="noopener noreferer">enable the feature</a>.</div>
+        </div>
+      </article>
+    </transition-stub>
+  </section>
+  <section data-v-07822acf="" class="my-4">
+    <h2 data-v-07822acf="">Notification settings</h2>
+    <p data-v-07822acf="">Select the activities for which you wish to receive an email or a push notification.</p>
+    <table data-v-07822acf="" class="table table-auto">
+      <tbody data-v-07822acf="">
+        <tr data-v-07822acf="">
+          <th data-v-07822acf="" colspan="3">Mentions</th>
+        </tr>
+        <tr data-v-07822acf="">
+          <th data-v-07822acf="">Email</th>
+          <th data-v-07822acf="">Push</th>
+          <th data-v-07822acf="">Description</th>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input id="v-0-0" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled o-checkbox--checked"><input id="v-0-1" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">I've been mentionned in a conversation</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input id="v-0-2" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled o-checkbox--checked"><input id="v-0-3" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">I've been mentionned in a comment under an event</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input id="v-0-4" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled"><input id="v-0-5" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">I've been mentionned in a group discussion</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <th data-v-07822acf="" colspan="3">Participations</th>
+        </tr>
+        <tr data-v-07822acf="">
+          <th data-v-07822acf="">Email</th>
+          <th data-v-07822acf="">Push</th>
+          <th data-v-07822acf="">Description</th>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled o-checkbox--checked"><input id="v-0-6" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled o-checkbox--checked"><input id="v-0-7" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">An event I'm going to has been updated</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input id="v-0-8" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled o-checkbox--checked"><input id="v-0-9" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">An event I'm going to has posted an announcement</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <th data-v-07822acf="" colspan="3">Organizers</th>
+        </tr>
+        <tr data-v-07822acf="">
+          <th data-v-07822acf="">Email</th>
+          <th data-v-07822acf="">Push</th>
+          <th data-v-07822acf="">Description</th>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input id="v-0-10" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled o-checkbox--checked"><input id="v-0-11" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">An event I'm organizing has a new pending participation</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox"><input id="v-0-12" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled"><input id="v-0-13" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">An event I'm organizing has a new participation</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input id="v-0-14" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled"><input id="v-0-15" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">An event I'm organizing has a new comment</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <th data-v-07822acf="" colspan="3">Group activity</th>
+        </tr>
+        <tr data-v-07822acf="">
+          <th data-v-07822acf="">Email</th>
+          <th data-v-07822acf="">Push</th>
+          <th data-v-07822acf="">Description</th>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input id="v-0-16" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled"><input id="v-0-17" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">An event from one of my groups has been published</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox"><input id="v-0-18" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled"><input id="v-0-19" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">An event from one of my groups has been updated or deleted</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox"><input id="v-0-20" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled"><input id="v-0-21" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">A discussion has been created or updated</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox"><input id="v-0-22" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled"><input id="v-0-23" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">A post has been published</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox"><input id="v-0-24" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled"><input id="v-0-25" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">A post has been updated</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox"><input id="v-0-26" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled"><input id="v-0-27" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">A resource has been created or updated</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input id="v-0-28" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled o-checkbox--checked"><input id="v-0-29" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">A member requested to join one of my groups</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox"><input id="v-0-30" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled"><input id="v-0-31" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">A member has been updated</td>
+        </tr>
+        <tr data-v-07822acf="">
+          <th data-v-07822acf="" colspan="3">User settings</th>
+        </tr>
+        <tr data-v-07822acf="">
+          <th data-v-07822acf="">Email</th>
+          <th data-v-07822acf="">Push</th>
+          <th data-v-07822acf="">Description</th>
+        </tr>
+        <tr data-v-07822acf="">
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled o-checkbox--checked"><input id="v-0-32" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="true">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">
+            <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--disabled"><input id="v-0-33" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" disabled="" autocomplete="off" aria-checked="false">
+              <!---->
+            </div>
+          </td>
+          <td data-v-07822acf="">You changed your email or password</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-v-07822acf="" data-oruga="field" class="o-field o-field--filled"><label id="v-0-34" for="" class="o-field__label">Send notification e-mails</label>
+      <div data-v-07822acf="" data-oruga="select" class="o-select">
+        <!----><select aria-labelledby="v-0-34" aria-describedby="v-0-35" id="" data-oruga-input="select" class="o-select__input o-select__input--arrowed" autocomplete="off">
+          <!---->
+          <option data-v-07822acf="" value="NONE">Do not receive any mail</option>
+          <option data-v-07822acf="" value="DIRECT">Receive one email for each activity</option>
+          <option data-v-07822acf="" value="ONE_HOUR">Hourly email summary</option>
+          <option data-v-07822acf="" value="ONE_DAY">Daily email summary</option>
+          <option data-v-07822acf="" value="ONE_WEEK">Weekly email summary</option>
+        </select>
+        <!---->
+      </div>
+      <p id="v-0-35" class="o-field__message">Announcements and mentions notifications are always sent straight away.</p>
+    </div>
+  </section>
+  <section data-v-07822acf="" class="my-4">
+    <h2 data-v-07822acf="">Participation notifications</h2>
+    <div data-v-07822acf="" class="field"><strong data-v-07822acf="">Mobilizon will send you an email when the events you are attending have important changes: date and time, address, confirmation or cancellation, etc.</strong></div>
+    <p data-v-07822acf="">Other notification options:</p>
+    <div data-v-07822acf="" class="field">
+      <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input id="v-0-36" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="true" aria-labelledby="v-0-37"><label id="v-0-37" for="v-0-36" class="o-checkbox__label"><strong data-v-07822acf="">Notification on the day of the event</strong>
+          <p data-v-07822acf="">We'll use your timezone settings to send a recap of the morning of the event.</p><span data-v-07822acf="">You can pick your timezone into your preferences.</span>
+        </label></div>
+    </div>
+    <div data-v-07822acf="" class="field">
+      <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox"><input id="v-0-38" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false" aria-labelledby="v-0-39"><label id="v-0-39" for="v-0-38" class="o-checkbox__label"><strong data-v-07822acf="">Recap every week</strong>
+          <p data-v-07822acf="">You'll get a weekly recap every Monday for upcoming events, if you have any.</p>
+        </label></div>
+    </div>
+    <div data-v-07822acf="" class="field">
+      <div data-v-07822acf="" data-oruga="checkbox" class="o-checkbox"><input id="v-0-40" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="false" aria-labelledby="v-0-41"><label id="v-0-41" for="v-0-40" class="o-checkbox__label"><strong data-v-07822acf="">Notification before the event</strong>
+          <p data-v-07822acf="">We'll send you an email one hour before the event begins, to be sure you won't forget about it.</p>
+        </label></div>
+    </div>
+  </section>
+  <section data-v-07822acf="" class="my-4">
+    <h2 data-v-07822acf="">Organizer notifications</h2>
+    <div data-v-07822acf="" class="field is-primary"><label data-v-07822acf="" class="has-text-weight-bold" for="">Notifications for manually approved participations to an event</label>
+      <p data-v-07822acf="">If you have opted for manual validation of participants, Mobilizon will send you an email to inform you of new participations to be processed. You can choose the frequency of these notifications below.</p>
+      <div data-v-07822acf="" data-oruga="select" class="o-select">
+        <!----><select id="" data-oruga-input="select" class="o-select__input o-select__input--arrowed" autocomplete="off">
+          <!---->
+          <option data-v-07822acf="" value="NONE">Do not receive any mail</option>
+          <option data-v-07822acf="" value="DIRECT">Receive one email per request</option>
+          <option data-v-07822acf="" value="ONE_HOUR">Hourly email summary</option>
+          <option data-v-07822acf="" value="ONE_DAY">Daily email summary</option>
+          <option data-v-07822acf="" value="ONE_WEEK">Weekly email summary</option>
+        </select>
+        <!---->
+      </div>
+    </div>
+  </section>
+  <section data-v-07822acf="" class="my-4">
+    <h2 data-v-07822acf="">Personal feeds</h2>
+    <p data-v-07822acf="">These feeds contain event data for the events for which any of your profiles is a participant or creator. You should keep these private. You can find feeds for specific profiles on each profile edition page.</p>
+    <div data-v-07822acf=""><button data-v-07822acf="" data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--text"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><i class="mdi mdi-refresh mdi-24px"></i></span><span class="o-button__label">Create new links</span>
+        <!----></span>
+      </button></div>
+  </section>
+</div>"
+`;

@@ -477,7 +477,7 @@ defmodule Mobilizon.Events do
   def list_public_upcoming_events_for_actor(%Actor{id: actor_id}, page, limit) do
     actor_id
     |> do_list_public_events_for_actor()
-    |> event_filter_begins_on(DateTime.utc_now(), nil)
+    |> event_filter_begins_on(DateTime.utc_now())
     |> Page.build_page(page, limit)
     |> with_virtual_fields()
   end
@@ -615,6 +615,7 @@ defmodule Mobilizon.Events do
     |> maybe_join_address(args)
     |> events_for_location(args)
     |> events_for_bounding_box(args)
+    |> preload_for_event()
     |> filter_online(args)
     |> filter_draft()
     |> filter_local(if Map.get(args, :local_only, nil) == true, do: true, else: nil)
@@ -1435,21 +1436,21 @@ defmodule Mobilizon.Events do
 
   @spec events_for_categories(Ecto.Queryable.t(), map()) :: Ecto.Query.t()
   defp events_for_categories(query, %{category_one_of: category_one_of})
-       when length(category_one_of) > 0 do
+       when category_one_of != [] do
     where(query, [q], q.category in ^category_one_of)
   end
 
   defp events_for_categories(query, _args), do: query
 
   defp events_for_languages(query, %{language_one_of: language_one_of})
-       when length(language_one_of) > 0 do
+       when language_one_of != [] do
     where(query, [q], q.language in ^language_one_of)
   end
 
   defp events_for_languages(query, _args), do: query
 
   defp events_for_statuses(query, %{status_one_of: status_one_of})
-       when length(status_one_of) > 0 do
+       when status_one_of != [] do
     where(query, [q], q.status in ^status_one_of)
   end
 
@@ -1457,10 +1458,36 @@ defmodule Mobilizon.Events do
 
   @spec events_for_tags(Ecto.Queryable.t(), map()) :: Ecto.Query.t()
   defp events_for_tags(query, %{tags: tags}) when is_valid_string(tags) do
-    query
-    |> join(:inner, [q], te in "events_tags", on: q.id == te.event_id)
-    |> join(:inner, [q, ..., te], t in Tag, on: te.tag_id == t.id)
-    |> where([q, ..., t], t.title in ^String.split(tags, ",", trim: true))
+    tag_titles =
+      tags
+      |> String.split(",", trim: true)
+      |> Enum.map(&String.trim/1)
+      |> Enum.reject(&(&1 == ""))
+      |> Enum.map(&String.downcase/1)
+      |> Enum.uniq()
+
+    if tag_titles == [] do
+      query
+    else
+      tag_ids_query =
+        from(t in Tag,
+          where: fragment("LOWER(?)", t.title) in ^tag_titles,
+          select: t.id
+        )
+
+      query
+      |> join(
+        :inner,
+        [event],
+        events_tags in "events_tags",
+        as: :events_tags,
+        on: event.id == events_tags.event_id
+      )
+      |> where(
+        [events_tags: events_tags],
+        events_tags.tag_id in subquery(tag_ids_query)
+      )
+    end
   end
 
   defp events_for_tags(query, _args), do: query
@@ -1976,24 +2003,8 @@ defmodule Mobilizon.Events do
     where(query, visibility: ^:public, draft: false)
   end
 
-  defp event_filter_begins_on(query, nil, nil), do: query
-
-  defp event_filter_begins_on(query, %DateTime{} = after_datetime, nil) do
+  defp event_filter_begins_on(query, %DateTime{} = after_datetime) do
     where(query, [e], e.begins_on > ^after_datetime)
-  end
-
-  defp event_filter_begins_on(query, nil, %DateTime{} = before_datetime) do
-    where(query, [e], e.begins_on < ^before_datetime)
-  end
-
-  defp event_filter_begins_on(
-         query,
-         %DateTime{} = after_datetime,
-         %DateTime{} = before_datetime
-       ) do
-    query
-    |> where([e], e.begins_on < ^before_datetime)
-    |> where([e], e.begins_on > ^after_datetime)
   end
 
   defp event_filter_ends_on(query, nil, nil), do: query

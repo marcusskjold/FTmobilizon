@@ -109,8 +109,8 @@
 </template>
 <script lang="ts" setup>
 import { LIST_GROUPS } from "@/graphql/group";
-import RouteName from "../../router/name";
-import EmptyContent from "../../components/Utils/EmptyContent.vue";
+import RouteName from "@/router/name";
+import EmptyContent from "@/components/Utils/EmptyContent.vue";
 import { useRestrictions } from "@/composition/apollo/config";
 import { useQuery } from "@vue/apollo-composable";
 import {

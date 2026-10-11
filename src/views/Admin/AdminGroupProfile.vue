@@ -323,16 +323,16 @@
 import { GET_GROUP, REFRESH_PROFILE } from "@/graphql/group";
 import { formatBytes } from "@/utils/datetime";
 import { MemberRole } from "@/types/enums";
-import { SUSPEND_PROFILE, UNSUSPEND_PROFILE } from "../../graphql/actor";
-import { IGroup } from "../../types/actor";
+import { SUSPEND_PROFILE, UNSUSPEND_PROFILE } from "@/graphql/actor";
+import { IGroup } from "@/types/actor";
 import {
   usernameWithDomain,
   displayName,
   IActor,
-} from "../../types/actor/actor.model";
-import RouteName from "../../router/name";
-import ActorCard from "../../components/Account/ActorCard.vue";
-import EmptyContent from "../../components/Utils/EmptyContent.vue";
+} from "@/types/actor/actor.model";
+import RouteName from "@/router/name";
+import ActorCard from "@/components/Account/ActorCard.vue";
+import EmptyContent from "@/components/Utils/EmptyContent.vue";
 import { ApolloCache, FetchResult } from "@apollo/client/core";
 import { useMutation, useQuery } from "@vue/apollo-composable";
 import { computed, inject } from "vue";
@@ -420,7 +420,7 @@ const confirmSuspendProfile = (): void => {
         { instance: group.value.domain }
       )
     : t(
-        "Are you sure you want to <b>suspend</b> this group? All members - including remote ones - will be notified and removed from the group, and <b>all of the group data (events, posts, discussions, todos…) will be irretrievably destroyed</b>."
+        "Are you sure you want to <b>suspend</b> this group? All members - including remote ones - will be notified and removed from the group, and <b>all of the group data (events, posts, discussions…) will be irretrievably destroyed</b>."
       );
 
   dialog?.confirm({

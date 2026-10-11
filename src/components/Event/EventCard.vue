@@ -211,7 +211,7 @@ import ArrowRightThin from "vue-material-design-icons/ArrowRightThin.vue";
 import MenuDown from "vue-material-design-icons/MenuDown.vue";
 import LazyImageWrapper from "@/components/Image/LazyImageWrapper.vue";
 import { EventStatus } from "@/types/enums";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import InlineAddress from "@/components/Address/InlineAddress.vue";
 
 import { computed, inject } from "vue";

@@ -878,11 +878,6 @@ msgstr "Ez a tag már vissza lett utasítva."
 msgid "You don't have the right to remove this member."
 msgstr "Nincs meg a jogosultsága a tag eltávolításához."
 
-#: lib/mobilizon/actors/actor.ex:391
-#, elixir-autogen, elixir-format
-msgid "This username is already taken."
-msgstr "Ez a felhasználónév már foglalt."
-
 #: lib/graphql/resolvers/discussion.ex:81
 #, elixir-autogen, elixir-format
 msgid "You must provide either an ID or a slug to access a discussion"

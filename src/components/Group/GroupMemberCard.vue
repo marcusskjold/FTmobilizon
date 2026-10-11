@@ -89,7 +89,7 @@
 import { displayNameAndUsername, usernameWithDomain } from "@/types/actor";
 import { IMember } from "@/types/actor/member.model";
 import { MemberRole } from "@/types/enums";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import ExitToApp from "vue-material-design-icons/ExitToApp.vue";
 import DotsHorizontal from "vue-material-design-icons/DotsHorizontal.vue";
 import AccountGroup from "vue-material-design-icons/AccountGroup.vue";

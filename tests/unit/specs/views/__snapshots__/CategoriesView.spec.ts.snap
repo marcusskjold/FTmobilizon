@@ -1,0 +1,126 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CategoriesView > Show simple 1`] = `
+"<div class="container mx-auto py-4 md:py-12 px-2 md:px-60">
+  <main>
+    <h1>Category list</h1>
+    <div>
+      <div class="flex flex-col items-center mt-20 mb-10" role="note"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-image 48"></i></span>
+        <h2 class="mb-3">
+          <!-- @slot Mandatory title -->No categories with public upcoming events on this instance were found.
+        </h2>
+        <p class="" style="display: none;">
+          <!-- @slot Optional description -->
+        </p>
+      </div>
+    </div>
+    <div class="mx-auto w-full max-w-lg rounded-2xl dark:bg-gray-800 p-2 mt-10">
+      <div data-oruga="collapse" class="o-collapse o-collapse--top" aria-id="contentIdForA11y5">
+        <div id="v-0-1" class="o-collapse__trigger" role="button" tabindex="0" aria-controls="v-0-0" aria-expanded="false"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button" aria-controls="contentIdForA11y1"><span class="o-button__wrapper"><!----><span class="o-button__label">Category illustrations credits</span><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-right"><i class="mdi mdi-chevron-down mdi-24px"></i></span></span></button></div>
+        <transition-stub name="fade" appear="false" persisted="false" css="true">
+          <div id="v-0-0" class="o-collapse__content" aria-labelledby="v-0-1" style="display: none;">
+            <div class="flex flex-col dark:text-zinc-300 gap-2 py-4 px-1">
+              <p class="flex flex-row gap-1 items-center"><a href="https://www.flickr.com/photos/30815420@N00/2213310171" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/theatre.webp 2x, /img/categories/theatre.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/theatre.webp 2x, /img/categories/theatre-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/theatre.webp" srcset="/img/categories/theatre-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://www.flickr.com/photos/deapeajay/">David Joyce</a> on <a target="_blank" class="underline font-medium" href="https://www.flickr.com/photos/30815420@N00/2213310171">Flickr</a> (<a target="_blank" class="underline font-medium" href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/lQpFRPrepQ8" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/sports.webp 2x, /img/categories/sports.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/sports.webp 2x, /img/categories/sports-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/sports.webp" srcset="/img/categories/sports-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@mahdi17">Md Mahdi</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/lQpFRPrepQ8">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/YjtevpXFHQY" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/music.webp 2x, /img/categories/music.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/music.webp 2x, /img/categories/music-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/music.webp" srcset="/img/categories/music-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@starkie_pics">Michael Starkie</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/YjtevpXFHQY">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/_Yc7OtfFn-0" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/arts.webp 2x, /img/categories/arts.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/arts.webp 2x, /img/categories/arts-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/arts.webp" srcset="/img/categories/arts-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@rhondak">RhondaK Native Florida Folk Artist</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/_Yc7OtfFn-0">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/_KPuV9qSSlU" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/spirituality_religion_beliefs.webp 2x, /img/categories/spirituality_religion_beliefs.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/spirituality_religion_beliefs.webp 2x, /img/categories/spirituality_religion_beliefs-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/spirituality_religion_beliefs.webp" srcset="/img/categories/spirituality_religion_beliefs-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@thedancingrain">The Dancing Rain</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/_KPuV9qSSlU">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/moytQ7vzhAM" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/movements_politics.webp 2x, /img/categories/movements_politics.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/movements_politics.webp 2x, /img/categories/movements_politics-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/movements_politics.webp" srcset="/img/categories/movements_politics-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@navy99">Kyle Fiori</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/moytQ7vzhAM">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/pJ_DCj9KswI" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/party.webp 2x, /img/categories/party.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/party.webp 2x, /img/categories/party-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/party.webp" srcset="/img/categories/party-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@amyshamblen">Amy Shamblen</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/pJ_DCj9KswI">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/6-c8GV2MBmg" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/business.webp 2x, /img/categories/business.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/business.webp 2x, /img/categories/business-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/business.webp" srcset="/img/categories/business-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@heysupersimi">Simone Hutsch</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/6-c8GV2MBmg">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/ENtn4fH8C3g" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/film_media.webp 2x, /img/categories/film_media.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/film_media.webp 2x, /img/categories/film_media-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/film_media.webp" srcset="/img/categories/film_media-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@dansenior">Dan Senior</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/ENtn4fH8C3g">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/k3oSs0hWOPo" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/photography.webp 2x, /img/categories/photography.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/photography.webp 2x, /img/categories/photography-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/photography.webp" srcset="/img/categories/photography-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@nathynmasters">Nathyn Masters</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/k3oSs0hWOPo">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/Gi8Q8IfpxdY" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/health.webp 2x, /img/categories/health.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/health.webp 2x, /img/categories/health-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/health.webp" srcset="/img/categories/health-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@drugwatcher">Derek Finch</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/Gi8Q8IfpxdY">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/_EoxKxrDL20" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/games.webp 2x, /img/categories/games.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/games.webp 2x, /img/categories/games-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/games.webp" srcset="/img/categories/games-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@randyfath">Randy Fath</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/_EoxKxrDL20">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/RYN-kov1lTY" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/outdoors_adventure.webp 2x, /img/categories/outdoors_adventure.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/outdoors_adventure.webp 2x, /img/categories/outdoors_adventure-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/outdoors_adventure.webp" srcset="/img/categories/outdoors_adventure-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@davide_sak_">Davide Sacchet</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/RYN-kov1lTY">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/bBzjWthTqb8" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/food_drink.webp 2x, /img/categories/food_drink.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/food_drink.webp 2x, /img/categories/food_drink-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/food_drink.webp" srcset="/img/categories/food_drink-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@sinapiryae">sina piryae</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/bBzjWthTqb8">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/Jcb5O26G08A" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/crafts.webp 2x, /img/categories/crafts.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/crafts.webp 2x, /img/categories/crafts-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/crafts.webp" srcset="/img/categories/crafts-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@rocknwool">rocknwool</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/Jcb5O26G08A">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+              <p class="flex flex-row gap-1 items-center"><a href="https://unsplash.com/photos/HsraPtCtRCM" target="_blank" class="shrink-0">
+                  <picture class="brightness-50">
+                    <source srcset="/img/categories/lgbtq.webp 2x, /img/categories/lgbtq.webp" media="(min-width: 1000px)">
+                    <source srcset="/img/categories/lgbtq.webp 2x, /img/categories/lgbtq-small.webp" media="(min-width: 300px)"><img loading="lazy" class="w-full h-12 w-12 object-cover" src="/img/categories/lgbtq.webp" srcset="/img/categories/lgbtq-small.webp " alt="">
+                  </picture>
+                </a><span class="flex-0">Illustration picture for “” by <a target="_blank" class="underline font-medium" href="https://unsplash.com/@anigmb">analuisa gamboa</a> on <a target="_blank" class="underline font-medium" href="https://unsplash.com/photos/HsraPtCtRCM">Unsplash</a> (<a target="_blank" class="underline font-medium" href="https://unsplash.com/license">Unsplash License</a>)</span></p>
+            </div>
+          </div>
+        </transition-stub>
+      </div>
+    </div>
+  </main>
+</div>"
+`;

@@ -65,6 +65,24 @@ export const GROUP_MINIMAL_FIELDS_FRAGMENTS = gql`
   ${ACTOR_FRAGMENT}
 `;
 
+export const GROUP_PARTICIPANTS_FIELDS_FRAGMENTS = gql`
+  fragment GroupParticipantsFields on Group {
+    ...GroupMinimalFields
+    members {
+      elements {
+        id
+        role
+        actor {
+          ...ActorFragment
+        }
+        insertedAt
+      }
+      total
+    }
+  }
+  ${GROUP_MINIMAL_FIELDS_FRAGMENTS}
+`;
+
 export const GROUP_VERY_BASIC_FIELDS_FRAGMENTS = gql`
   fragment GroupVeryBasicFields on Group {
     ...ActorFragment
@@ -238,26 +256,6 @@ export const GROUP_FIELDS_FRAGMENTS = gql`
         path
         metadata {
           ...ResourceMetadataBasicFields
-        }
-      }
-      total
-    }
-    todoLists {
-      elements {
-        id
-        title
-        todos {
-          elements {
-            id
-            title
-            status
-            dueDate
-            assignedTo {
-              id
-              preferredUsername
-            }
-          }
-          total
         }
       }
       total

@@ -64,7 +64,7 @@
 <script lang="ts" setup>
 import { useCurrentUserIdentities } from "@/composition/apollo/actor";
 import { computed, ref } from "vue";
-import { IPerson } from "../../types/actor";
+import { IPerson } from "@/types/actor";
 import IdentityPicker from "./IdentityPicker.vue";
 import AccountCircle from "vue-material-design-icons/AccountCircle.vue";
 import { useI18n } from "vue-i18n";

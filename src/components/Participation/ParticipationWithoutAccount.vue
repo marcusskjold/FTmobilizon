@@ -137,7 +137,7 @@ import { FETCH_EVENT_BASIC, JOIN_EVENT } from "@/graphql/event";
 import { addLocalUnconfirmedAnonymousParticipation } from "@/services/AnonymousParticipationStorage";
 import { EventJoinOptions, ParticipantRole } from "@/types/enums";
 import RouteName from "@/router/name";
-import { IParticipant } from "../../types/participant.model";
+import { IParticipant } from "@/types/participant.model";
 import { ApolloCache, FetchResult } from "@apollo/client/core";
 import { useFetchEventBasic } from "@/composition/apollo/event";
 import { useAnonymousActorId } from "@/composition/apollo/config";

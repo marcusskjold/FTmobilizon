@@ -77,7 +77,7 @@ export const configMock = {
         tiles: {
           __typename: "Tiles",
           attribution: "© The OpenStreetMap Contributors",
-          endpoint: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          endpoint: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         },
         routing: {
           __typename: "Routing",
@@ -126,6 +126,21 @@ export const configMock = {
       },
       eventCategories: [],
       analytics: [],
+      privacy: {
+        __typename: "Privacy",
+        bodyHtml:
+          '<article class="message"><p class="message-body">Some terms, technical or otherwise, used in the text below may cover concepts that are difficult to grasp. We have provided <a href="/glossary">a glossary</a> to help you understand them better.</p></article>',
+        type: "DEFAULT",
+        url: null,
+      },
+      rules: "Simple rules: first, second and third",
+      terms: {
+        __typename: "Terms",
+        bodyHtml:
+          '<article class="message"><p class="message-body">Some terms, technical or otherwise, used in the text below may cover concepts that are difficult to grasp. We have provided <a href="/glossary">a glossary</a>to help you understand them better.</p></article>',
+        type: "DEFAULT",
+        url: null,
+      },
     },
   },
 };

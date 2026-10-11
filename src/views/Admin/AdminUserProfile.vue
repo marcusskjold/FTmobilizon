@@ -356,11 +356,11 @@ import {
   GET_USER,
   DELETE_ACCOUNT_AS_MODERATOR,
   UNBAN_ACCOUNT_AS_MODERATOR,
-} from "../../graphql/user";
-import RouteName from "../../router/name";
-import { IUser } from "../../types/current-user.model";
-import EmptyContent from "../../components/Utils/EmptyContent.vue";
-import ActorCard from "../../components/Account/ActorCard.vue";
+} from "@/graphql/user";
+import RouteName from "@/router/name";
+import { IUser } from "@/types/current-user.model";
+import EmptyContent from "@/components/Utils/EmptyContent.vue";
+import ActorCard from "@/components/Account/ActorCard.vue";
 import { ADMIN_UPDATE_USER, LANGUAGES_CODES } from "@/graphql/admin";
 import { useMutation, useQuery } from "@vue/apollo-composable";
 import { ILanguage } from "@/types/admin.model";

@@ -154,8 +154,8 @@ import { IDiscussion } from "@/types/discussions";
 import { displayName, IPerson, usernameWithDomain } from "@/types/actor";
 import DiscussionComment from "@/components/Discussion/DiscussionComment.vue";
 import { DELETE_COMMENT, UPDATE_COMMENT } from "@/graphql/comment";
-import RouteName from "../../router/name";
-import { IComment } from "../../types/comment.model";
+import RouteName from "@/router/name";
+import { IComment } from "@/types/comment.model";
 import {
   ApolloCache,
   FetchResult,

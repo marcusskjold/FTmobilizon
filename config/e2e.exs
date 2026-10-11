@@ -43,6 +43,7 @@ config :mobilizon, :instance,
   email_from: "mobilizon@mobilizon1.com",
   email_reply_to: nil,
   enable_instance_feeds: true,
+  enable_search_feeds: true,
   koena_connect_link: true,
   extra_categories: [
     %{

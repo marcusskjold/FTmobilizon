@@ -876,11 +876,6 @@ msgstr "Ovaj je član već odbijen."
 msgid "You don't have the right to remove this member."
 msgstr "Nemaš prava za uklanjanje ovog člana."
 
-#: lib/mobilizon/actors/actor.ex:391
-#, elixir-autogen, elixir-format
-msgid "This username is already taken."
-msgstr "Ovo je korisničko ime već zauzeto."
-
 #: lib/graphql/resolvers/discussion.ex:81
 #, elixir-autogen, elixir-format
 msgid "You must provide either an ID or a slug to access a discussion"

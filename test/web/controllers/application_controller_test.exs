@@ -1,7 +1,6 @@
 defmodule Mobilizon.Web.ApplicationControllerTest do
   use Mobilizon.Web.ConnCase
   alias Mobilizon.Service.Auth.Applications
-  use Mobilizon.Web, :verified_routes
   import Mobilizon.Factory
 
   describe "create application" do

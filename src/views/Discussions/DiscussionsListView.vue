@@ -75,7 +75,7 @@
 <script lang="ts" setup>
 import { displayName, usernameWithDomain } from "@/types/actor";
 import DiscussionListItem from "@/components/Discussion/DiscussionListItem.vue";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import { MemberRole } from "@/types/enums";
 import { useGroupDiscussionsList } from "@/composition/apollo/discussions";
 import { IMember } from "@/types/actor/member.model";

@@ -1,0 +1,338 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`EventView > Show simple 1`] = `
+"<div class="container mx-auto">
+  <transition-stub name="fade" appear="false" persisted="false" css="true">
+    <!---->
+  </transition-stub>
+  <div class="flex flex-col mb-3">
+    <div class="flex justify-center max-h-80">
+      <div class="flex-1">
+        <div class="h-full w-full max-w-100 min-h-[10rem]">
+          <!-- Show the placeholder as background --><canvas width="32" height="32" class="transition-opacity duration-500 opacity-100"></canvas><!-- Show the real image on the top and fade in after loading --><img class="transition-opacity duration-500 rounded-lg object-cover mx-auto h-full opacity-0" alt="" src="/img/mobilizon_default_card.png" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col relative pb-2 bg-white dark:bg-zinc-700 my-4 rounded">
+      <div class="date-calendar-icon-wrapper relative">
+        <div data-v-1df97f42="" class="datetime-container flex flex-col rounded-lg text-center justify-center overflow-hidden items-stretch bg-white dark:bg-gray-700 text-black dark:text-white absolute left-3 -top-16" style="--small: 2;">
+          <div data-v-1df97f42="" class="datetime-container-header bg-red-400 dark:bg-red-900"><time data-v-1df97f42="" datetime="2026-04-28T15:00:00.000Z" class="weekday">Tue</time></div>
+          <div data-v-1df97f42="" class="datetime-container-content"><time data-v-1df97f42="" datetime="2026-04-28T15:00:00.000Z" class="day block font-semibold">28</time><time data-v-1df97f42="" datetime="2026-04-28T15:00:00.000Z" class="month font-semibold block uppercase py-1 px-0">Apr</time></div>
+          <div data-v-1df97f42="" class="datetime-container-footer bg-red-400 dark:bg-red-900"><time data-v-1df97f42="" datetime="2026-04-28T15:00:00.000Z" class="year">2026</time></div>
+        </div>
+      </div>
+      <!--v-if-->
+      <section class="intro px-2 pt-4" dir="auto">
+        <div class="flex flex-wrap gap-2 justify-end">
+          <div class="flex-1 min-w-[300px]">
+            <h1 class="text-4xl font-bold m-0" dir="auto" lang="en">event-test</h1>
+            <div class="organizer">
+              <div>
+                <vmenu distance="16" triggers="hover" class="popover inline">By <span dir="ltr">test</span></vmenu>
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 gap-y-4 mt-2 my-3">
+              <!--v-if-->
+              <p class="inline-flex gap-1"><span aria-hidden="true" class="material-design-icon earth-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"><!--v-if--></path></svg></span> Public event</p>
+              <!--v-if-->
+              <!--v-if-->
+              <p class="flex flex-wrap gap-1 items-center" dir="auto">
+                <!--v-if-->
+              </p>
+              <!--v-if-->
+            </div>
+          </div>
+          <div class="">
+            <!--v-if-->
+            <div class="flex flex-col gap-1 mt-1">
+              <p class="inline-flex gap-2 ml-auto"><span aria-hidden="true" class="material-design-icon ticket-confirmation-outline-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M22 10V6C22 4.89 21.1 4 20 4H4C2.9 4 2 4.89 2 6V10C3.11 10 4 10.9 4 12S3.11 14 2 14V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V14C20.9 14 20 13.1 20 12S20.9 10 22 10M20 8.54C18.81 9.23 18 10.53 18 12S18.81 14.77 20 15.46V18H4V15.46C5.19 14.77 6 13.47 6 12C6 10.5 5.2 9.23 4 8.54L4 6H20V8.54M11 15H13V17H11M11 11H13V13H11M11 7H13V9H11Z"><!--v-if--></path></svg></span><a href="/events/67e9b659-84d9-4414-99f3-a1baaa88cf2d/participations" class="participations-link underline">
+                  <!-- We retire one because of the event creator who is a
+                    participant --><span>One person participating</span>
+                </a>
+                <!--v-if-->
+              </p>
+              <div data-oruga="dropdown" class="o-dropdown o-dropdown--position-bottom-left ml-auto">
+                <div class="o-dropdown__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0-1-0"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button"><span class="o-button__wrapper"><!----><span class="o-button__label">Actions</span><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-right"><i class="mdi mdi-dots-horizontal mdi-24px"></i></span></span></button></div>
+                <!--teleport start-->
+                <!---->
+                <transition-stub name="fade" appear="false" persisted="false" css="true">
+                  <div id="v-0-1-0" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--bottom-left" role="menu" aria-hidden="true" style="display: none;">
+                    <div id="v-0-1-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-dropdown__item o-dropdown__item--clickable" role="menuitem" tabindex="-1" aria-disabled="false" aria-role="listitem" has-link=""><span aria-hidden="true" class="material-design-icon bullhorn-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12,8H4A2,2 0 0,0 2,10V14A2,2 0 0,0 4,16H5V20A1,1 0 0,0 6,21H8A1,1 0 0,0 9,20V16H12L17,20V4L12,8M21.5,12C21.5,13.71 20.54,15.26 19,16V8C20.53,8.75 21.5,10.3 21.5,12Z"><!--v-if--></path></svg></span> Announcements</div>
+                    <div id="v-0-1-0-2" data-oruga="dropdown-item" data-id="dropdown-2" class="o-dropdown__item o-dropdown__item--clickable" role="menuitem" tabindex="-1" aria-disabled="false" aria-role="listitem" has-link=""><span aria-hidden="true" class="material-design-icon pencil-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"><!--v-if--></path></svg></span> Edit</div>
+                    <div id="v-0-1-0-3" data-oruga="dropdown-item" data-id="dropdown-3" class="o-dropdown__item o-dropdown__item--clickable" role="menuitem" tabindex="-1" aria-disabled="false" aria-role="listitem" has-link=""><span aria-hidden="true" class="material-design-icon content-duplicate-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M11,17H4A2,2 0 0,1 2,15V3A2,2 0 0,1 4,1H16V3H4V15H11V13L15,16L11,19V17M19,21V7H8V13H6V7A2,2 0 0,1 8,5H19A2,2 0 0,1 21,7V21A2,2 0 0,1 19,23H8A2,2 0 0,1 6,21V19H8V21H19Z"><!--v-if--></path></svg></span> Duplicate</div>
+                    <div id="v-0-1-0-4" data-oruga="dropdown-item" data-id="dropdown-4" class="o-dropdown__item o-dropdown__item--clickable" role="menuitem" tabindex="-1" aria-disabled="false" aria-role="listitem"><span class="flex gap-1"><span aria-hidden="true" class="material-design-icon delete-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"><!--v-if--></path></svg></span> Delete</span></div>
+                    <hr role="presentation" class="dropdown-divider" aria-role="o-dropdown-item">
+                    <div id="v-0-1-0-5" data-oruga="dropdown-item" data-id="dropdown-5" class="o-dropdown__item o-dropdown__item--clickable p-1" role="menuitem" tabindex="-1" aria-disabled="false" aria-role="listitem"><span class="flex gap-1"><span aria-hidden="true" class="material-design-icon share-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21,12L14,5V9C7,10 4,15 3,20C5.5,16.5 9,14.9 14,14.9V19L21,12Z"><!--v-if--></path></svg></span> Share this event</span></div>
+                    <div id="v-0-1-0-6" data-oruga="dropdown-item" data-id="dropdown-6" class="o-dropdown__item o-dropdown__item--clickable" role="menuitem" tabindex="-1" aria-disabled="false" aria-role="listitem"><span class="flex gap-1"><span aria-hidden="true" class="material-design-icon calendar-plus-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 19V8H5V19H19M16 1H18V3H19C20.11 3 21 3.9 21 5V19C21 20.11 20.11 21 19 21H5C3.89 21 3 20.1 3 19V5C3 3.89 3.89 3 5 3H6V1H8V3H16V1M11 9.5H13V12.5H16V14.5H13V17.5H11V14.5H8V12.5H11V9.5Z"><!--v-if--></path></svg></span> Add to my calendar</span></div>
+                    <div id="v-0-1-0-7" data-oruga="dropdown-item" data-id="dropdown-7" class="o-dropdown__item o-dropdown__item--clickable p-1" role="menuitem" tabindex="-1" aria-disabled="false" aria-role="listitem"><span class="flex gap-1"><span aria-hidden="true" class="material-design-icon flag-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z"><!--v-if--></path></svg></span> Report</span></div>
+                  </div>
+                </transition-stub>
+                <!--teleport end-->
+              </div>
+            </div>
+          </div>
+          <!--teleport start-->
+          <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+            <div has-modal-card="" close-button-aria-label="Close" data-oruga="modal" class="o-modal" tabindex="-1" role="dialog" aria-modal="false" style="display: none;">
+              <div class="o-modal__overlay" tabindex="-1"></div>
+              <div class="o-modal__content" style="max-width: 960px;">
+                <div data-v-e0cceef3="" class="p-2">
+                  <header data-v-e0cceef3="" class="mb-3">
+                    <h2 data-v-e0cceef3="" class="text-2xl">Report this event</h2>
+                  </header>
+                  <section data-v-e0cceef3="">
+                    <div data-v-e0cceef3="" class="flex gap-1 flex-row mb-3 bg-mbz-yellow dark:text-black p-3 rounded items-center"><span data-v-e0cceef3="" data-oruga="icon" class="o-icon o-icon--warning hidden md:block flex-1"><i class="mdi mdi-alert 48"></i></span>
+                      <p data-v-e0cceef3="">The report will be sent to the moderators of your instance. You can explain why you report this content below.</p>
+                    </div>
+                    <div data-v-e0cceef3="">
+                      <!--v-if-->
+                      <div data-v-e0cceef3="" data-oruga="field" class="o-field"><label id="v-0-1-8" for="additional-comments" class="o-field__label">Additional comments</label>
+                        <div data-v-e0cceef3="" data-oruga="input" class="o-input o-input--expanded o-input--textarea">
+                          <!----><textarea aria-labelledby="v-0-1-8" autofocus="" id="additional-comments" data-oruga-input="textarea" class="o-input__input o-input__input--placeholder"></textarea>
+                          <!---->
+                          <!---->
+                        </div>
+                        <!---->
+                      </div>
+                      <!--v-if-->
+                    </div>
+                  </section>
+                  <footer data-v-e0cceef3="" class="flex gap-2 py-3"><button data-v-e0cceef3="" data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--outlined"><span class="o-button__wrapper"><!----><span class="o-button__label">Cancel</span>
+                      <!----></span>
+                    </button><button data-v-e0cceef3="" data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--primary"><span class="o-button__wrapper"><!----><span class="o-button__label">Send the report</span>
+                      <!----></span>
+                    </button></footer>
+                </div><button type="button" class="o-modal__close" aria-label="Close" data-oruga="close" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--medium"><i class="mdi mdi-close mdi-36px"></i></span></button>
+              </div>
+            </div>
+          </transition-stub>
+          <!--teleport end-->
+          <!--teleport start-->
+          <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+            <div close-button-aria-label="Close" has-modal-card="" data-oruga="modal" class="o-modal" tabindex="-1" role="dialog" aria-modal="false" style="display: none;">
+              <div class="o-modal__overlay" tabindex="-1"></div>
+              <div class="o-modal__content" style="max-width: 960px;">
+                <!----><button type="button" class="o-modal__close" aria-label="Close" data-oruga="close" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--medium"><i class="mdi mdi-close mdi-36px"></i></span></button>
+              </div>
+            </div>
+          </transition-stub>
+          <!--teleport end-->
+          <!--teleport start-->
+          <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+            <div has-modal-card="" close-button-aria-label="Close" data-oruga="modal" class="o-modal" tabindex="-1" role="dialog" aria-modal="false" style="display: none;">
+              <div class="o-modal__overlay" tabindex="-1"></div>
+              <div class="o-modal__content" style="max-width: 960px;">
+                <div>
+                  <header class="">
+                    <h2 class="">Pick an identity</h2>
+                  </header>
+                  <section class="">
+                    <transition-group-stub tag="ul" enteractiveclass="duration-300 ease-out" enterfromclass="transform opacity-0" entertoclass="opacity-100" leaveactiveclass="duration-200 ease-in" leavefromclass="opacity-100" leavetoclass="transform opacity-0" appear="false" persisted="false" css="true" class="grid grid-cols-1 gap-y-3 m-5 max-w-md">
+                      <li class="relative focus-within:shadow-lg"><input class="sr-only peer" type="radio" name="availableActors" id="availableActor-2" value="[object Object]"><label class="flex items-center gap-2 p-3 bg-white hover:bg-gray-50 dark:bg-violet-3 dark:hover:bg-violet-3/60 border border-gray-300 rounded-lg cursor-pointer peer-checked:ring-primary peer-checked:ring-2 peer-checked:border-transparent" for="availableActor-2"><span aria-hidden="true" class="material-design-icon account-circle-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="48" height="48" viewBox="0 0 24 24"><path d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"><!--v-if--></path></svg></span>
+                          <div class="flex-1 w-px">
+                            <h3 class="line-clamp-2">test</h3><small class="flex truncate">@test</small>
+                          </div>
+                        </label></li>
+                    </transition-group-stub>
+                  </section>
+                  <footer class="flex gap-2"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--outlined"><span class="o-button__wrapper"><!----><span class="o-button__label">Cancel</span>
+                      <!----></span>
+                    </button><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--primary"><span class="o-button__wrapper"><!----><span class="o-button__label">Confirm my particpation</span>
+                      <!----></span>
+                    </button></footer>
+                </div><button type="button" class="o-modal__close" aria-label="Close" data-oruga="close" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--medium"><i class="mdi mdi-close mdi-36px"></i></span></button>
+              </div>
+            </div>
+          </transition-stub>
+          <!--teleport end-->
+          <!--teleport start-->
+          <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+            <div has-modal-card="" close-button-aria-label="Close" data-oruga="modal" class="o-modal" tabindex="-1" role="dialog" aria-modal="false" style="display: none;">
+              <div class="o-modal__overlay" tabindex="-1"></div>
+              <div class="o-modal__content" style="max-width: 960px;">
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <p class="modal-card-title">Participation confirmation</p>
+                  </header>
+                  <section class="modal-card-body">
+                    <p>The event organiser has chosen to validate manually participations. Do you want to add a little note to explain why you want to participate to this event?</p>
+                    <form>
+                      <div data-oruga="field" class="o-field"><label id="v-0-1-10" class="o-field__label" for="v-0-1-12">Message</label>
+                        <div data-oruga="input" class="o-input o-input--medium o-input--textarea">
+                          <!----><textarea aria-labelledby="v-0-1-10" minlength="10" id="v-0-1-12" data-oruga-input="textarea" class="o-input__input o-input__input--placeholder"></textarea>
+                          <!---->
+                          <!---->
+                        </div>
+                        <!---->
+                      </div>
+                      <div class="buttons"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button button" native-type="button"><span class="o-button__wrapper"><!----><span class="o-button__label">Cancel</span>
+                          <!----></span>
+                        </button><button data-oruga="button" type="submit" role="button" tabindex="0" class="o-button o-button--primary"><span class="o-button__wrapper"><!----><span class="o-button__label">Confirm my participation</span>
+                          <!----></span>
+                        </button></div>
+                    </form>
+                  </section>
+                </div><button type="button" class="o-modal__close" aria-label="Close" data-oruga="close" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--medium"><i class="mdi mdi-close mdi-36px"></i></span></button>
+              </div>
+            </div>
+          </transition-stub>
+          <!--teleport end-->
+        </div>
+      </section>
+    </div>
+    <div class="rounded-lg dark:border-violet-title flex flex-wrap flex-col md:flex-row-reverse gap-4">
+      <aside class="rounded bg-white dark:bg-zinc-700 shadow-md h-min max-w-screen-sm">
+        <div class="sticky p-4">
+          <div data-v-52aab8fa="">
+            <div data-v-06ecec57="" data-v-52aab8fa="" icon="city">
+              <h2 data-v-06ecec57="">Location</h2>
+              <div data-v-06ecec57="" class="flex items-center mb-3 gap-1 eventMetadataBlock"><span data-v-52aab8fa="" data-oruga="icon" class="o-icon"><i class="mdi mdi-city 36"></i></span><!-- Custom icons -->
+                <!-- <span
+        class="icon is-medium"
+        v-if="icon && icon.substring(0, 7) === 'mz:icon'"
+      >
+        <img
+          :src="\`/img/\${icon.substring(8)}_monochrome.svg\`"
+          width="32"
+          height="32"
+        />
+      </span>
+      <o-icon v-else-if="icon" :icon="icon" size="is-medium" /> -->
+                <div data-v-06ecec57="" class="content-wrapper overflow-hidden w-full">
+                  <div data-v-52aab8fa="" class="address-wrapper">
+                    <!--v-if-->
+                    <div data-v-52aab8fa="" class="address">
+                      <address data-v-f169049d="" data-v-52aab8fa="" dir="auto">
+                        <!--v-if-->
+                        <p data-v-f169049d=""><span data-v-f169049d="" class="addressDescription" title="Lyon">Lyon</span><br data-v-f169049d=""><span data-v-f169049d="">Auvergne-Rhône-Alpes, France</span><br data-v-f169049d="">
+                          <!--v-if-->
+                        </p>
+                      </address><button data-v-52aab8fa="" data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--text map-show-button"><span class="o-button__wrapper"><!----><span class="o-button__label">Show map</span>
+                        <!----></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div data-v-06ecec57="" data-v-52aab8fa="">
+              <h2 data-v-06ecec57="">Date and time</h2>
+              <div data-v-06ecec57="" class="flex items-center mb-3 gap-1 eventMetadataBlock"><span data-v-52aab8fa="" aria-hidden="true" class="material-design-icon calendar-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="36" height="36" viewBox="0 0 24 24"><path d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z"><!--v-if--></path></svg></span><!-- Custom icons -->
+                <!-- <span
+        class="icon is-medium"
+        v-if="icon && icon.substring(0, 7) === 'mz:icon'"
+      >
+        <img
+          :src="\`/img/\${icon.substring(8)}_monochrome.svg\`"
+          width="32"
+          height="32"
+        />
+      </span>
+      <o-icon v-else-if="icon" :icon="icon" size="is-medium" /> -->
+                <div data-v-06ecec57="" class="content-wrapper overflow-hidden w-full">
+                  <p><span>April 28, 2026</span></p>
+                  <!--v-if-->
+                </div>
+              </div>
+            </div>
+            <div data-v-06ecec57="" data-v-52aab8fa="" class="metadata-organized-by">
+              <h2 data-v-06ecec57="">Published by</h2>
+              <div data-v-06ecec57="" class="flex items-center mb-3 gap-1 eventMetadataBlock">
+                <!-- Custom icons -->
+                <!-- <span
+        class="icon is-medium"
+        v-if="icon && icon.substring(0, 7) === 'mz:icon'"
+      >
+        <img
+          :src="\`/img/\${icon.substring(8)}_monochrome.svg\`"
+          width="32"
+          height="32"
+        />
+      </span>
+      <o-icon v-else-if="icon" :icon="icon" size="is-medium" /> -->
+                <div data-v-06ecec57="" class="content-wrapper overflow-hidden w-full">
+                  <div data-v-b0ff4ece="" data-v-52aab8fa="" class="bg-white dark:bg-mbz-purple rounded-lg flex space-x-4 items-center">
+                    <div data-v-b0ff4ece="" class="flex pl-2"><span data-v-b0ff4ece="" class="ltr:-mr-0.5 rtl:-ml-0.5 material-design-icon account-circle-icon ltr:-mr-0.5 rtl:-ml-0.5" aria-hidden="true" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"><!--v-if--></path></svg></span></div>
+                    <div data-v-b0ff4ece="" class="overflow-hidden w-full">
+                      <h5 data-v-b0ff4ece="" class="text-xl font-medium violet-title tracking-tight text-gray-900 dark:text-gray-200 whitespace-pre-line line-clamp-2">test</h5>
+                      <p data-v-b0ff4ece="" class="text-gray-500 dark:text-gray-200 truncate"><span data-v-b0ff4ece="" dir="ltr">@test</span></p>
+                      <!--v-if-->
+                      <!--v-if-->
+                    </div>
+                    <div data-v-b0ff4ece="" class="flex pr-2"><a data-v-b0ff4ece="" href="/conversations?newMessage=true&amp;personMentions=test" class=""><span data-v-b0ff4ece="" aria-hidden="true" class="material-design-icon email-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"><!--v-if--></path></svg></span></a></div>
+                  </div>
+                  <!-- <div
+    class="p-4 bg-white rounded-lg shadow-md sm:p-8 flex items-center space-x-4"
+    dir="auto"
+  >
+    <div class="flex-shrink-0">
+      <figure class="w-12 h-12" v-if="actor.avatar">
+        <img
+          class="rounded-lg"
+          :src="actor.avatar.url"
+          alt=""
+          width="48"
+          height="48"
+        />
+      </figure>
+      <o-icon
+        v-else
+        size="large"
+        icon="account-circle"
+        class="ltr:-mr-0.5 rtl:-ml-0.5"
+      />
+    </div>
+
+    <div class="flex-1 min-w-0">
+      <h5 class="text-xl font-medium violet-title tracking-tight text-gray-900">
+        {{ displayName(actor) }}
+      </h5>
+      <p class="text-gray-500 truncate" v-if="actor.name">
+        <span dir="ltr">@{{ usernameWithDomain(actor) }}</span>
+      </p>
+      <div
+        v-if="full"
+        class="line-clamp-3"
+        :class="{ limit: limit }"
+        v-html="actor.summary"
+      />
+    </div>
+  </div> -->
+                </div>
+              </div>
+            </div>
+            <!--v-if-->
+          </div>
+        </div>
+      </aside>
+      <div class="flex-1">
+        <section class="event-description bg-white dark:bg-zinc-700 px-3 pt-1 pb-3 rounded mb-4">
+          <h2 class="text-2xl">About this event</h2>
+          <!--v-if-->
+          <!--v-if-->
+          <div>
+            <div lang="en" dir="auto" class="mt-4 prose md:prose-lg lg:prose-xl dark:prose-invert prose-h1:text-xl prose-h1:font-semibold prose-h2:text-lg prose-h3:text-base md:prose-h1:text-2xl md:prose-h1:font-semibold md:prose-h2:text-xl md:prose-h3:text-lg lg:prose-h1:text-2xl lg:prose-h1:font-semibold lg:prose-h2:text-xl lg:prose-h3:text-lg">event of test</div>
+          </div>
+        </section>
+        <section class="my-4"></section>
+        <section class="bg-white dark:bg-zinc-700 px-3 pt-1 pb-3 rounded my-4"><a href="#comments">
+            <h2 class="text-2xl" id="comments">Comments</h2>
+          </a>
+          <!--v-if-->
+        </section>
+      </div>
+    </div>
+    <!--v-if-->
+    <!--teleport start-->
+    <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+      <div close-button-aria-label="Close" class="map-modal o-modal" has-modal-card="" can-cancel="escape,outside" data-oruga="modal" tabindex="-1" role="dialog" aria-modal="false" style="display: none;">
+        <div class="o-modal__overlay" tabindex="-1"></div>
+        <div class="o-modal__content o-modal__content--full-screen">
+          <!----><button type="button" class="o-modal__close" aria-label="Close" data-oruga="close" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--medium"><i class="mdi mdi-close mdi-36px"></i></span></button>
+        </div>
+      </div>
+    </transition-stub>
+    <!--teleport end-->
+  </div>
+</div>"
+`;

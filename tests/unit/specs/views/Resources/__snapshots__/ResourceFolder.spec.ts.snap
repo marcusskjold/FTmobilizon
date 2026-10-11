@@ -1,0 +1,146 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ResourceFolder > Show simple 1`] = `
+"<div data-v-92381510="" class="container mx-auto">
+  <breadcrumbs-nav data-v-92381510="" links="">
+    <li data-v-92381510="">
+      <div data-v-92381510="" data-oruga="dropdown" class="o-dropdown o-dropdown--position-bottom-left" aria-role="list">
+        <div class="o-dropdown__trigger" aria-haspopup="menu" aria-disabled="false" aria-controls="v-0-0"><button data-v-92381510="" data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--primary"><span class="o-button__wrapper"><!----><span class="o-button__label">+</span>
+            <!----></span>
+          </button></div>
+        <!--teleport start-->
+        <!---->
+        <transition-stub name="fade" appear="false" persisted="false" css="true">
+          <div id="v-0-0" tabindex="-1" class="o-dropdown__menu o-dropdown__menu--bottom-left" role="menu" aria-hidden="true" style="display: none;">
+            <div data-v-92381510="" id="v-0-0-1" data-oruga="dropdown-item" data-id="dropdown-1" class="o-dropdown__item o-dropdown__item--clickable" role="menuitem" tabindex="-1" aria-disabled="false" aria-role="listitem"><span data-v-92381510="" aria-hidden="true" class="material-design-icon folder-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"><!--v-if--></path></svg></span> New folder</div>
+            <div data-v-92381510="" id="v-0-0-2" data-oruga="dropdown-item" data-id="dropdown-2" class="o-dropdown__item o-dropdown__item--clickable" role="menuitem" tabindex="-1" aria-disabled="false" aria-role="listitem"><span data-v-92381510="" aria-hidden="true" class="material-design-icon link-icon" role="img"><svg fill="currentColor" class="material-design-icon__svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3.9,12C3.9,10.29 5.29,8.9 7,8.9H11V7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H11V15.1H7C5.29,15.1 3.9,13.71 3.9,12M8,13H16V11H8V13M17,7H13V8.9H17C18.71,8.9 20.1,10.29 20.1,12C20.1,13.71 18.71,15.1 17,15.1H13V17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7Z"><!--v-if--></path></svg></span> New link</div>
+            <!--v-if-->
+          </div>
+        </transition-stub>
+        <!--teleport end-->
+      </div>
+    </li>
+  </breadcrumbs-nav>
+  <!--v-if-->
+  <!--v-if-->
+  <!--teleport start-->
+  <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+    <div has-modal-card="" close-button-aria-label="Close" data-oruga="modal" class="o-modal" tabindex="-1" role="dialog" aria-modal="false" style="display: none;">
+      <div class="o-modal__overlay" tabindex="-1"></div>
+      <div class="o-modal__content" style="max-width: 960px;">
+        <div data-v-92381510="" class="w-full md:w-[640px]">
+          <section data-v-92381510="">
+            <form data-v-92381510="">
+              <div data-v-92381510="" data-oruga="field" class="o-field"><label id="v-0-3" class="o-field__label" for="v-0-5">Title</label>
+                <div data-v-92381510="" data-oruga="input" class="o-input o-input--expanded">
+                  <!----><input aria-labelledby="v-0-3" aria-required="true" id="v-0-5" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" autocomplete="off">
+                  <!---->
+                  <!---->
+                </div>
+                <!---->
+              </div><button data-v-92381510="" data-oruga="button" type="submit" role="button" tabindex="0" class="o-button"><span class="o-button__wrapper"><!----><span class="o-button__label">Rename resource</span>
+                <!----></span>
+              </button>
+            </form>
+          </section>
+        </div><button type="button" class="o-modal__close" aria-label="Close" data-oruga="close" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--medium"><i class="mdi mdi-close mdi-36px"></i></span></button>
+      </div>
+    </div>
+  </transition-stub>
+  <!--teleport end-->
+  <!--teleport start-->
+  <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+    <div has-modal-card="" close-button-aria-label="Close" data-oruga="modal" class="o-modal" tabindex="-1" role="dialog" aria-modal="false" style="display: none;">
+      <div class="o-modal__overlay" tabindex="-1"></div>
+      <div class="o-modal__content" style="max-width: 960px;">
+        <div data-v-92381510="" class="w-full">
+          <section data-v-92381510="">
+            <div data-v-2c3c77bc="" data-v-92381510="">
+              <article data-v-2c3c77bc="" class="">
+                <h2 data-v-2c3c77bc="" class="mb-2">Move ""</h2>
+                <!--v-if-->
+                <p data-v-2c3c77bc="" class="">No resources in this folder</p>
+                <!--v-if-->
+              </article>
+              <div data-v-2c3c77bc="" class="flex gap-2 mt-2"><button data-v-2c3c77bc="" data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--text"><span class="o-button__wrapper"><!----><span class="o-button__label">Cancel</span>
+                  <!----></span>
+                </button><button data-v-2c3c77bc="" data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--primary"><span class="o-button__wrapper"><!----><span class="o-button__label">Move resource to azerty</span>
+                  <!----></span>
+                </button></div>
+            </div>
+          </section>
+        </div><button type="button" class="o-modal__close" aria-label="Close" data-oruga="close" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--medium"><i class="mdi mdi-close mdi-36px"></i></span></button>
+      </div>
+    </div>
+  </transition-stub>
+  <!--teleport end-->
+  <!--teleport start-->
+  <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+    <div has-modal-card="" close-button-aria-label="Close" data-oruga="modal" class="o-modal" tabindex="-1" role="dialog" aria-modal="false" style="display: none;">
+      <div class="o-modal__overlay" tabindex="-1"></div>
+      <div class="o-modal__content" style="max-width: 960px;">
+        <section data-v-92381510="" class="w-full md:w-[640px]">
+          <!--v-if-->
+          <form data-v-92381510="">
+            <!--v-if-->
+            <div data-v-92381510="" data-oruga="field" class="o-field"><label id="v-0-6" for="new-resource-title" class="o-field__label">Title</label>
+              <div data-v-92381510="" data-oruga="input" class="o-input o-input--expanded">
+                <!----><input aria-labelledby="v-0-6" aria-required="true" id="new-resource-title" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" autocomplete="off">
+                <!---->
+                <!---->
+              </div>
+              <!---->
+            </div><button data-v-92381510="" data-oruga="button" type="submit" role="button" tabindex="0" class="o-button mt-2"><span class="o-button__wrapper"><!----><span class="o-button__label"></span>
+              <!----></span>
+            </button>
+          </form>
+        </section><button type="button" class="o-modal__close" aria-label="Close" data-oruga="close" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--medium"><i class="mdi mdi-close mdi-36px"></i></span></button>
+      </div>
+    </div>
+  </transition-stub>
+  <!--teleport end-->
+  <!--teleport start-->
+  <transition-stub name="zoom-out" appear="false" persisted="false" css="true">
+    <div has-modal-card="" aria-modal="false" close-button-aria-label="Close" data-oruga="modal" class="o-modal" tabindex="-1" role="dialog" style="display: none;">
+      <div class="o-modal__overlay" tabindex="-1"></div>
+      <div class="o-modal__content" style="max-width: 640px;">
+        <div data-v-92381510="" class="w-full md:w-[640px]">
+          <section data-v-92381510="" class="p-10">
+            <!--v-if-->
+            <form data-v-92381510="">
+              <div data-v-92381510="" data-oruga="field" class="o-field" expanded=""><label id="v-0-8" for="new-resource-url" class="o-field__label">URL</label>
+                <div data-v-92381510="" data-oruga="input" class="o-input o-input--expanded">
+                  <!----><input aria-labelledby="v-0-8" required="" id="new-resource-url" type="url" data-oruga-input="url" class="o-input__input o-input__input--placeholder" autocomplete="off">
+                  <!---->
+                  <!---->
+                </div>
+                <!---->
+              </div>
+              <!--v-if-->
+              <div data-v-92381510="" data-oruga="field" class="o-field"><label id="v-0-10" for="new-resource-link-title" class="o-field__label">Title</label>
+                <div data-v-92381510="" data-oruga="input" class="o-input o-input--expanded">
+                  <!----><input aria-labelledby="v-0-10" aria-required="true" id="new-resource-link-title" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" autocomplete="off">
+                  <!---->
+                  <!---->
+                </div>
+                <!---->
+              </div>
+              <div data-v-92381510="" data-oruga="field" class="o-field"><label id="v-0-12" for="new-resource-summary" class="o-field__label">Description</label>
+                <div data-v-92381510="" data-oruga="input" class="o-input o-input--expanded o-input--textarea">
+                  <!----><textarea aria-labelledby="v-0-12" id="new-resource-summary" data-oruga-input="textarea" class="o-input__input o-input__input--placeholder"></textarea>
+                  <!---->
+                  <!---->
+                </div>
+                <!---->
+              </div><button data-v-92381510="" data-oruga="button" type="submit" role="button" tabindex="0" class="o-button mt-2"><span class="o-button__wrapper"><!----><span class="o-button__label">Create resource</span>
+                <!----></span>
+              </button>
+            </form>
+          </section>
+        </div><button type="button" class="o-modal__close" aria-label="Close" data-oruga="close" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--medium"><i class="mdi mdi-close mdi-36px"></i></span></button>
+      </div>
+    </div>
+  </transition-stub>
+  <!--teleport end-->
+</div>"
+`;

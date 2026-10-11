@@ -35,7 +35,7 @@ exports[`OrganizerPickerWrapper > Show simple 1`] = `
               </div>
             </div>
           </section>
-          <footer class="my-2 text-center sm:text-right"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--primary w-full sm:w-auto"><span class="o-button__wrapper"><!----><span class="o-button__label">Pick</span>
+          <footer class="my-2 text-center sm:text-right"><button data-oruga="button" type="button" role="button" tabindex="0" class="o-button o-button--primary w-full sm:w-auto"><span class="o-button__wrapper"><!----><span class="o-button__label">Close</span>
               <!----></span>
             </button></footer>
         </div><button type="button" class="o-modal__close" aria-label="Close" data-oruga="close" style="display: none;"><span data-oruga="icon" class="o-icon o-icon--medium"><i class="mdi mdi-close mdi-36px"></i></span></button>

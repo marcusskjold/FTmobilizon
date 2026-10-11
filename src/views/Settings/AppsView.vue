@@ -85,7 +85,7 @@ import { useMutation, useQuery } from "@vue/apollo-composable";
 import { useHead } from "@/utils/head";
 import { computed, inject } from "vue";
 import { useI18n } from "vue-i18n";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import { IUser } from "@/types/current-user.model";
 import { formatDateString } from "@/filters/datetime";
 import { Notifier } from "@/plugins/notifier";

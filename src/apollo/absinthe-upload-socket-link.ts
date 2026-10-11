@@ -1,5 +1,5 @@
 import fetch from "unfetch";
-import { createLink } from "apollo-absinthe-upload-link";
+import { createLink } from "./apollo-absinthe-upload-link.ts";
 import { GRAPHQL_API_ENDPOINT, GRAPHQL_API_FULL_PATH } from "@/api/_entrypoint";
 
 // Endpoints

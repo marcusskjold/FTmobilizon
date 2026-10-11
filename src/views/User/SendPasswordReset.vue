@@ -64,8 +64,8 @@
 </template>
 
 <script lang="ts" setup>
-import { SEND_RESET_PASSWORD } from "../../graphql/auth";
-import RouteName from "../../router/name";
+import { SEND_RESET_PASSWORD } from "@/graphql/auth";
+import RouteName from "@/router/name";
 import { computed, ref } from "vue";
 import { useMutation } from "@vue/apollo-composable";
 import { useHead } from "@/utils/head";

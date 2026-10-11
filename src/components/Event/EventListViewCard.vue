@@ -67,7 +67,7 @@ import { IEventCardOptions, IEvent } from "@/types/event.model";
 import DateCalendarIcon from "@/components/Event/DateCalendarIcon.vue";
 import { displayName } from "@/types/actor";
 import { EventVisibility } from "@/types/enums";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import Earth from "vue-material-design-icons/Earth.vue";
 import Link from "vue-material-design-icons/Link.vue";
 import Lock from "vue-material-design-icons/Lock.vue";

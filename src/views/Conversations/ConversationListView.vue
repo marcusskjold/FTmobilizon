@@ -42,7 +42,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import { useQuery } from "@vue/apollo-composable";
 import { computed, defineAsyncComponent, ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
@@ -52,8 +52,8 @@ import {
   useRouteQuery,
 } from "vue-use-route-query";
 import { PROFILE_CONVERSATIONS } from "@/graphql/event";
-import ConversationListItem from "../../components/Conversations/ConversationListItem.vue";
-import EmptyContent from "../../components/Utils/EmptyContent.vue";
+import ConversationListItem from "@/components/Conversations/ConversationListItem.vue";
+import EmptyContent from "@/components/Utils/EmptyContent.vue";
 import { useHead } from "@/utils/head";
 import { IPerson } from "@/types/actor";
 import { useOruga } from "@oruga-ui/oruga-next";

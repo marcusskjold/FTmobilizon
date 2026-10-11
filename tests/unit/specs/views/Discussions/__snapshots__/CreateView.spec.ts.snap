@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CreateView > Show simple 1`] = `
+"<section data-v-584d79c8="" class="container mx-auto">
+  <!--v-if-->
+  <h1 data-v-584d79c8="" class="title">Create a discussion</h1>
+  <form data-v-584d79c8="">
+    <div data-v-584d79c8="" data-oruga="field" class="o-field"><label id="v-0-0" for="discussion-title" class="o-field__label">Title</label>
+      <div data-v-584d79c8="" data-oruga="input" class="o-input o-input--expanded">
+        <!----><input aria-labelledby="v-0-0" aria-required="true" required="" id="discussion-title" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" autocomplete="off">
+        <!---->
+        <!---->
+      </div>
+      <!---->
+    </div>
+    <div data-v-584d79c8="" data-oruga="field" class="o-field"><label id="v-0-2" class="o-field__label">Text</label>
+      <!---->
+      <!---->
+    </div><button data-v-584d79c8="" data-oruga="button" type="submit" role="button" tabindex="0" class="o-button mt-2"><span class="o-button__wrapper"><!----><span class="o-button__label">Create the discussion</span>
+      <!----></span>
+    </button>
+  </form>
+</section>"
+`;

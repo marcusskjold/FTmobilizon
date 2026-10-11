@@ -31,7 +31,7 @@
         />
       </div>
     </div>
-    <div class="p-2">
+    <div class="p-2 overflow-hidden">
       <h3
         class="pb-2 text-lg leading-6 line-clamp-3 font-bold text-violet-title dark:text-white"
         :lang="event.language"
@@ -142,7 +142,7 @@ import { IEvent, organizer, organizerDisplayName } from "@/types/event.model";
 import DateCalendarIcon from "@/components/Event/DateCalendarIcon.vue";
 import MenuDown from "vue-material-design-icons/MenuDown.vue";
 import { EventStatus, ParticipantRole } from "@/types/enums";
-import RouteName from "../../router/name";
+import RouteName from "@/router/name";
 import LazyImageWrapper from "@/components/Image/LazyImageWrapper.vue";
 import InlineAddress from "@/components/Address/InlineAddress.vue";
 import Video from "vue-material-design-icons/Video.vue";

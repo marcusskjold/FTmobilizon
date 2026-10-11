@@ -41,7 +41,7 @@ defmodule Mobilizon.Federation.ActivityPub.Types.EventsTest do
                    "commentsEnabled" => false,
                    "content" => nil,
                    "draft" => false,
-                   "endTime" => nil,
+                   "endTime" => "2021-07-28T23:59:59Z",
                    "ical:status" => "CONFIRMED",
                    "joinMode" => "free",
                    "maximumAttendeeCapacity" => nil,
@@ -89,7 +89,7 @@ defmodule Mobilizon.Federation.ActivityPub.Types.EventsTest do
                    "commentsEnabled" => false,
                    "content" => nil,
                    "draft" => false,
-                   "endTime" => nil,
+                   "endTime" => "2021-07-28T23:59:59Z",
                    "ical:status" => "CONFIRMED",
                    "joinMode" => "free",
                    "maximumAttendeeCapacity" => nil,
@@ -146,7 +146,7 @@ defmodule Mobilizon.Federation.ActivityPub.Types.EventsTest do
                    "commentsEnabled" => false,
                    "content" => nil,
                    "draft" => false,
-                   "endTime" => nil,
+                   "endTime" => "2021-07-28T23:59:59Z",
                    "ical:status" => "CONFIRMED",
                    "joinMode" => "free",
                    "maximumAttendeeCapacity" => nil,
@@ -175,7 +175,9 @@ defmodule Mobilizon.Federation.ActivityPub.Types.EventsTest do
       %Actor{url: actor_url, followers_url: followers_url} = actor = insert(:actor)
 
       {:ok, begins_on, _} = DateTime.from_iso8601(@event_begins_on)
-      %Event{} = event = insert(:event, organizer_actor: actor, begins_on: begins_on)
+
+      %Event{} =
+        event = insert(:event, organizer_actor: actor, begins_on: begins_on, ends_on: nil)
 
       assert {:ok, %Event{}, data} =
                Events.update(
@@ -203,6 +205,7 @@ defmodule Mobilizon.Federation.ActivityPub.Types.EventsTest do
                    "name" => @event_updated_title,
                    "repliesModerationOption" => nil,
                    "startTime" => @event_begins_on,
+                   "endTime" => "2021-07-28T23:59:59Z",
                    "status" => "CONFIRMED",
                    "tag" => [],
                    "to" => [@ap_public],
@@ -234,7 +237,12 @@ defmodule Mobilizon.Federation.ActivityPub.Types.EventsTest do
 
       %Event{} =
         event =
-        insert(:event, organizer_actor: actor_1, begins_on: begins_on, attributed_to: group)
+        insert(:event,
+          organizer_actor: actor_1,
+          begins_on: begins_on,
+          ends_on: nil,
+          attributed_to: group
+        )
 
       assert {:ok, %Event{}, data} =
                Events.update(
@@ -264,6 +272,7 @@ defmodule Mobilizon.Federation.ActivityPub.Types.EventsTest do
                    "name" => @event_updated_title,
                    "repliesModerationOption" => nil,
                    "startTime" => @event_begins_on,
+                   "endTime" => "2021-07-28T23:59:59Z",
                    "status" => "CONFIRMED",
                    "tag" => [],
                    "to" => [@ap_public],
@@ -295,7 +304,12 @@ defmodule Mobilizon.Federation.ActivityPub.Types.EventsTest do
 
       %Event{} =
         event =
-        insert(:event, organizer_actor: actor_2, begins_on: begins_on, attributed_to: group)
+        insert(:event,
+          organizer_actor: actor_2,
+          begins_on: begins_on,
+          ends_on: nil,
+          attributed_to: group
+        )
 
       assert {:ok, %Event{}, data} =
                Events.update(
@@ -325,6 +339,7 @@ defmodule Mobilizon.Federation.ActivityPub.Types.EventsTest do
                    "name" => @event_updated_title,
                    "repliesModerationOption" => nil,
                    "startTime" => @event_begins_on,
+                   "endTime" => "2021-07-28T23:59:59Z",
                    "status" => "CONFIRMED",
                    "tag" => [],
                    "to" => [@ap_public],

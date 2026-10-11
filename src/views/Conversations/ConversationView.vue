@@ -170,11 +170,11 @@ import {
   GET_CONVERSATION,
   MARK_CONVERSATION_AS_READ,
   REPLY_TO_PRIVATE_MESSAGE_MUTATION,
-} from "../../graphql/conversations";
-import DiscussionComment from "../../components/Discussion/DiscussionComment.vue";
-import { DELETE_COMMENT, UPDATE_COMMENT } from "../../graphql/comment";
-import RouteName from "../../router/name";
-import { IComment } from "../../types/comment.model";
+} from "@/graphql/conversations";
+import DiscussionComment from "@/components/Discussion/DiscussionComment.vue";
+import { DELETE_COMMENT, UPDATE_COMMENT } from "@/graphql/comment";
+import RouteName from "@/router/name";
+import { IComment } from "@/types/comment.model";
 import {
   ApolloCache,
   FetchResult,
@@ -191,8 +191,8 @@ import {
 } from "vue";
 import { useHead } from "@/utils/head";
 import { useRouter } from "vue-router";
-import { useCurrentActorClient } from "../../composition/apollo/actor";
-import { AbsintheGraphQLError } from "../../types/errors.model";
+import { useCurrentActorClient } from "@/composition/apollo/actor";
+import { AbsintheGraphQLError } from "@/types/errors.model";
 import { useI18n } from "vue-i18n";
 import { IConversation } from "@/types/conversation";
 import { usernameWithDomain, displayName } from "@/types/actor";
@@ -280,7 +280,7 @@ const groupParticipants = computed(() => {
 });
 
 const Editor = defineAsyncComponent(
-  () => import("../../components/TextEditor.vue")
+  () => import("@/components/TextEditor.vue")
 );
 
 const { t } = useI18n({ useScope: "global" });

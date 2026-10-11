@@ -29,13 +29,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import AnnouncementListItem from "../../components/Conversations/AnnouncementListItem.vue";
-import EmptyContent from "../../components/Utils/EmptyContent.vue";
+import AnnouncementListItem from "@/components/Conversations/AnnouncementListItem.vue";
+import EmptyContent from "@/components/Utils/EmptyContent.vue";
 import { useI18n } from "vue-i18n";
 import { useRouteQuery, integerTransformer } from "vue-use-route-query";
 import { computed } from "vue";
-import { IEvent } from "../../types/event.model";
-import { EVENT_CONVERSATIONS } from "../../graphql/event";
+import { IEvent } from "@/types/event.model";
+import { EVENT_CONVERSATIONS } from "@/graphql/event";
 import { useQuery } from "@vue/apollo-composable";
 
 const page = useRouteQuery("page", 1, integerTransformer);

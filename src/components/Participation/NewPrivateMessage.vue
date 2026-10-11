@@ -160,6 +160,6 @@ onEventPrivateMessageError((err) => {
 });
 
 const Editor = defineAsyncComponent(
-  () => import("../../components/TextEditor.vue")
+  () => import("@/components/TextEditor.vue")
 );
 </script>

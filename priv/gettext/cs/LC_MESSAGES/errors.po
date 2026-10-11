@@ -857,11 +857,6 @@ msgstr "Tento člen již byl odmítnut."
 msgid "You don't have the right to remove this member."
 msgstr "Nemáte oprávnění tohoto člena odstranit."
 
-#: lib/mobilizon/actors/actor.ex:391
-#, elixir-autogen, elixir-format
-msgid "This username is already taken."
-msgstr "Toto uživatelské jméno je již obsazeno."
-
 #: lib/graphql/resolvers/discussion.ex:81
 #, elixir-autogen, elixir-format
 msgid "You must provide either an ID or a slug to access a discussion"

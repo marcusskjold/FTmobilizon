@@ -104,12 +104,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { LIST_USERS } from "../../graphql/user";
-import RouteName from "../../router/name";
+import { LIST_USERS } from "@/graphql/user";
+import RouteName from "@/router/name";
 import { LANGUAGES_CODES } from "@/graphql/admin";
 import { IUser } from "@/types/current-user.model";
 import { Paginate } from "@/types/paginate";
-import EmptyContent from "../../components/Utils/EmptyContent.vue";
+import EmptyContent from "@/components/Utils/EmptyContent.vue";
 import { useQuery } from "@vue/apollo-composable";
 import { ILanguage } from "@/types/admin.model";
 import { computed, ref } from "vue";

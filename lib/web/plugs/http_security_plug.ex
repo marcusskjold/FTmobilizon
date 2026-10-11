@@ -106,7 +106,9 @@ defmodule Mobilizon.Web.Plugs.HTTPSecurityPlug do
         [
           @script_src,
           "'sha256-4RS22DYeB7U14dra4KcQYxmwt5HkOInieXK1NUMBmQI=' ",
-          "'sha256-zJdRXhLWm9NGI6BFr+sNmHBBrjAdJdFr7MpUq0EwK58=' "
+          # The hash of the script in lib/web/templates/page/index.html.heex
+          # for initial theme loading
+          "'sha256-o4dviO6MIZ0IAKwaAr74d6hmSYmYk1WeieADjYp90AY=' "
         ]
       end
 
