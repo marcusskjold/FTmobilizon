@@ -8,9 +8,9 @@ defmodule Mobilizon.Federation.ActivityPub.Transmogrifier.UpdateTest do
   alias Mobilizon.{Actors, Events, Posts}
   alias Mobilizon.Actors.{Actor, Member}
   alias Mobilizon.Events.Event
-  alias Mobilizon.Posts.Post
   alias Mobilizon.Federation.ActivityPub.{Activity, Relay, Transmogrifier}
   alias Mobilizon.Federation.ActivityStream.Convertible
+  alias Mobilizon.Posts.Post
   alias Mobilizon.Service.HTTP.ActivityPub.Mock
 
   describe "handle incoming update activities" do
@@ -157,6 +157,10 @@ defmodule Mobilizon.Federation.ActivityPub.Transmogrifier.UpdateTest do
   end
 
   describe "handle incoming updates activities for group posts" do
+    # Tagged :network — these payloads reference remote media, which is downloaded
+    # through the unmocked RemoteMediaDownloaderClient, so each test waits on real
+    # HTTP timeouts (~21s). Everything else in this file is <1s.
+    @describetag :network
     test "it works for incoming update activities on group posts when remote actor is a moderator" do
       %Actor{url: remote_actor_url} =
         remote_actor =

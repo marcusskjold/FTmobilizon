@@ -97,6 +97,10 @@ defmodule Mobilizon.ActorsTest do
       assert actor_found_id == actor_id
     end
 
+    # Tagged :network — the ActivityPub fetch is mocked, but the avatar/banner
+    # downloads in Converter.Actor use the unmocked RemoteMediaDownloaderClient
+    # and wait on real HTTP timeouts (~41s). See work item #1377.
+    @tag :network
     test "get_actor_by_name/1 returns a remote actor" do
       tcit_social_tcit =
         "test/fixtures/mastodon-tcit-tcit.json" |> File.read!() |> Jason.decode!()
@@ -166,6 +170,7 @@ defmodule Mobilizon.ActorsTest do
       assert event_found_id == event.id
     end
 
+    @tag :network
     test "get_actor_by_name_with_preload!/1 returns the remote actor with its organized events" do
       tcit_social_tcit =
         "test/fixtures/mastodon-tcit-tcit.json" |> File.read!() |> Jason.decode!()
@@ -202,6 +207,7 @@ defmodule Mobilizon.ActorsTest do
       assert MapSet.new([actor_found_id, actor2_found_id]) == MapSet.new([actor.id, actor2.id])
     end
 
+    @tag :network
     test "test search_actors/4 returns actors with similar usernames",
          %{actor: %Actor{id: actor_id}} do
       tcit_social_tcit =

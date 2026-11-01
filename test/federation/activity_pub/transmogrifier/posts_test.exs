@@ -8,6 +8,9 @@ defmodule Mobilizon.Federation.ActivityPub.Transmogrifier.PostsTest do
   alias Mobilizon.Posts.Post
 
   describe "handle incoming posts" do
+    # Tagged :network — remote media in the payload triggers the unmocked
+    # RemoteMediaDownloaderClient, so these wait on real HTTP timeouts (~21s each).
+    @tag :network
     test "it ignores an incoming post if we already have it" do
       post = insert(:post)
       post = Repo.preload(post, [:author, :attributed_to, :picture, :media])
@@ -54,6 +57,7 @@ defmodule Mobilizon.Federation.ActivityPub.Transmogrifier.PostsTest do
       assert {:ok, %Activity{}, %Post{draft: true}} = Transmogrifier.handle_incoming(data)
     end
 
+    @tag :network
     test "it publishes a previously draft post correctly as a member" do
       %Actor{} = group = insert(:group, domain: "remote.tld", url: "https://remote.tld/@group")
       %Actor{} = author = insert(:actor, domain: "remote.tld", url: "https://remote.tld/@author")
