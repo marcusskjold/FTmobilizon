@@ -19,8 +19,9 @@ jobs:
       - name: Set up Elixir
         uses: erlef/setup-beam@v1
         with:
-          elixir-version: "1.15"
-          otp-version: "26"
+          # Single source of truth: upstream's .tool-versions.
+          # Never pin otp-version/elixir-version here — see RELEASE.md § Toolchain.
+          version-file: .tool-versions
 
       - name: Install system dependencies
         run: |
@@ -31,7 +32,22 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version-file: .tool-versions
+
+      - name: Verify toolchain
+        run: |
+          OTP="$(erl -noshell -eval 'io:format("~s", [erlang:system_info(otp_release)]), halt().')"
+          echo "OTP:    ${OTP}"
+          elixir --version
+          node --version
+
+          # mix.exs enforces its own Elixir requirement, but nothing enforces OTP:
+          # hackney 4 (the HTTPoison 3 stack) needs OTP 27+, and a mismatch only
+          # shows up later as a confusing compile error or runtime crash.
+          if [ "${OTP}" -lt 27 ]; then
+            echo "::error::OTP ${OTP} is too old: hackney 4 needs OTP 27+. Bump erlang in .tool-versions; do not pin otp-version here."
+            exit 1
+          fi
 
       - name: Restore Mix deps cache
         uses: actions/cache@v4

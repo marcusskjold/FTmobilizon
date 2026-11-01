@@ -4,6 +4,20 @@
 - Machine 1 (Mac) pushes to GitHub (`origin`).
 - The build server pulls from GitHub and runs builds manually.
 
+## Toolchain
+
+Versions come from `.tool-versions` (asdf format), which is **upstream-owned**:
+`erlang 28.5.0.3`, `elixir 1.18.4`, `nodejs 24.18.0` at the time of writing.
+
+The workflow reads that file directly (`version-file` / `node-version-file`), so
+merging upstream moves the compiler along with the code. **Never pin
+`otp-version`, `elixir-version` or `node-version` in `release.yml` again** — that
+is how the build silently rots behind the app's requirements.
+
+`mix.exs` enforces Elixir (`elixir: "~> 1.17"`), but nothing enforces OTP, and
+hackney 4 needs OTP 27+. The `Verify toolchain` step prints the three versions
+and fails the build if OTP is too old.
+
 ## Pushing to staging
 
 ```bash
@@ -12,18 +26,15 @@ git push origin ftdev
 
 # On the build server
 ssh server
-cd /develop/FTrepo
-git fetch origin
-git reset --hard origin/ftdev
-./scripts/stage-deploy.sh
+cd /develop/FTbuildscripts
+./ft-deploy-staging.sh --pull
 ```
 
-`stage-deploy.sh`:
-1. Freezes the version string (`git describe --tags --dirty > .build_version`)
-2. Runs `act` to compile the release inside Docker
-3. Extracts the tarball to `/develop/FTdeploy/releases/`
-4. Archives it in `/freezer/2/FT/builds/`
-5. Runs `ansible-playbook -i inv/staging.yml upgrade.yml`
+`/develop/FTbuildscripts/ft-deploy-staging.sh`:
+1. `--pull` resets `/develop/FTrepo` to `origin/ftdev`
+2. Runs `act` to build the release inside Docker (versions from `.tool-versions`)
+3. Extracts the tarball to `/freezer/2/FT/builds/` and updates `latest.tar.gz`
+4. Runs `ansible-playbook -i inv/staging.yml upgrade.yml` with that tarball
 
 ## Tagging a release for production
 
@@ -42,18 +53,19 @@ Then on the build server:
 
 ```bash
 ssh server
-cd /develop/FTrepo
-./scripts/build-release.sh "${UPSTREAM}-ft.1"
+cd /develop/FTbuildscripts
+./ft-build-release.sh "${UPSTREAM}-ft.1"
 ```
 
-That checks out the tag, freezes the version, runs `act`, and archives the artifact in the freezer.
+That checks out the tag, runs `act`, and archives the artifact in the freezer.
 
 ### Deploy to production
 
 ```bash
-# On Machine 2 or the build server
+# On the build server
 cd /develop/FTdeploy
-ansible-playbook -i inv/production.yml site.yml
+ansible-playbook -i inv/production.yml upgrade.yml \
+  -e "mobilizon_release_tarball=/freezer/2/FT/builds/mobilizon-${UPSTREAM}-ft.1.tar.gz"
 ```
 
 ## Server architecture
