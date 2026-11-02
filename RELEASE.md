@@ -26,12 +26,12 @@ git push origin ftdev
 
 # On the build server
 ssh server
-cd /develop/FTbuildscripts
+cd /develop/FT/buildscripts
 ./ft-deploy-staging.sh --pull
 ```
 
-`/develop/FTbuildscripts/ft-deploy-staging.sh`:
-1. `--pull` resets `/develop/FTrepo` to `origin/ftdev`
+`/develop/FT/buildscripts/ft-deploy-staging.sh`:
+1. `--pull` resets `/develop/FT/repo` to `origin/ftdev`
 2. Runs `act` to build the release inside Docker (versions from `.tool-versions`)
 3. Extracts the tarball to `/freezer/2/FT/builds/` and updates `latest.tar.gz`
 4. Runs `ansible-playbook -i inv/staging.yml upgrade.yml` with that tarball
@@ -53,7 +53,7 @@ Then on the build server:
 
 ```bash
 ssh server
-cd /develop/FTbuildscripts
+cd /develop/FT/buildscripts
 ./ft-build-release.sh "${UPSTREAM}-ft.1"
 ```
 
@@ -63,7 +63,7 @@ That checks out the tag, runs `act`, and archives the artifact in the freezer.
 
 ```bash
 # On the build server
-cd /develop/FTdeploy
+cd /develop/FT/deploy
 ansible-playbook -i inv/production.yml upgrade.yml \
   -e "mobilizon_release_tarball=/freezer/2/FT/builds/mobilizon-${UPSTREAM}-ft.1.tar.gz"
 ```
@@ -78,13 +78,13 @@ ansible-playbook -i inv/production.yml upgrade.yml \
                                           │  git pull / fetch
                                           ▼
                                 ┌────────────────────┐
-                                │  /develop/FTrepo   │  manual checkout
+                                │  /develop/FT/repo  │  manual checkout
                                 │  (builds here)     │  on build server
                                 └─────────┬──────────┘
                                           │
-                        act build → ┌─────┴───────┐
+                        act build → ┌─────┴─────────┐
                                     │  /freezer/…  │  rollback archive
-                                    │  /FTdeploy/  │  ansible deploy
+                                    │  /FT/deploy/ │  ansible deploy
                                     └──────────────┘
 ```
 
@@ -92,8 +92,8 @@ ansible-playbook -i inv/production.yml upgrade.yml \
 
 ```bash
 # 1. Clone the repo
-git clone git@github.com:marcusskjold/FTmobilizon.git /develop/FTrepo
-cd /develop/FTrepo
+git clone git@github.com:marcusskjold/FTmobilizon.git /develop/FT/repo
+cd /develop/FT/repo
 git checkout ftdev
 
 # 2. Ensure act is available
