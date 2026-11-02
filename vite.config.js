@@ -82,6 +82,20 @@ export default defineConfig(({ command }) => {
 
   return {
     plugins,
+    server: {
+      // The Phoenix page (port 4005) loads modules from the Vite dev server (5173).
+      cors: true,
+      // Elixir build/dependency dirs are huge and irrelevant to the front-end;
+      // watching them exhausts inotify watches (ENOSPC).
+      watch: {
+        ignored: [
+          "**/_build/**",
+          "**/deps/**",
+          "**/priv/static/**",
+          "**/uploads/**",
+        ],
+      },
+    },
     build,
     resolve: {
       alias: {
