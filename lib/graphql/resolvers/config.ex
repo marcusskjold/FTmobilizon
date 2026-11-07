@@ -61,7 +61,7 @@ defmodule Mobilizon.GraphQL.Resolvers.Config do
   @spec event_categories(any(), map(), Absinthe.Resolution.t()) :: {:ok, [map()]}
   def event_categories(_parent, _args, _resolution) do
     categories =
-      Categories.list()
+      Categories.selectable()
       |> Enum.map(fn %{id: id, label: label} ->
         %{id: id |> to_string |> String.upcase(), label: label}
       end)

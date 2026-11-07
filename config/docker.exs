@@ -65,6 +65,12 @@ config :mobilizon, :instance,
   disable_database_login:
     System.get_env("MOBILIZON_INSTANCE_DISABLE_DATABASE_LOGIN", "false") == "true",
   default_language: System.get_env("MOBILIZON_INSTANCE_DEFAULT_LANGUAGE", "en"),
+  visible_categories:
+    System.get_env(
+      "MOBILIZON_INSTANCE_VISIBLE_CATEGORIES",
+      "arts,music,party,movements_politics,meeting,lgbtq"
+    )
+    |> String.split(",", trim: true),
   demo: System.get_env("MOBILIZON_INSTANCE_DEMO", "false") == "true",
   allow_relay: System.get_env("MOBILIZON_INSTANCE_ALLOW_RELAY", "true") == "true",
   federating: System.get_env("MOBILIZON_INSTANCE_FEDERATING", "true") == "true",

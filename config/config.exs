@@ -22,6 +22,10 @@ config :mobilizon, :instance,
   registration_email_denylist: [],
   disable_database_login: false,
   languages: [],
+  # Event categories offered in the UI (floor.tips). An empty list means all.
+  # `MOBILIZON_INSTANCE_VISIBLE_CATEGORIES` overrides this in dev/docker.
+  # See `Mobilizon.Events.Categories.list/0` for the built-in ids.
+  visible_categories: ["arts", "music", "party", "movements_politics", "meeting", "lgbtq"],
   default_language: "en",
   demo: false,
   repository: Mix.Project.config()[:source_url],

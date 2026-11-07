@@ -63,6 +63,7 @@ const promotedCategories = computed((): CategoryStatsModel[] | null => {
       number,
       label: eventCategoryLabel(key),
     }))
+    .filter(({ label }) => label !== undefined)
     .slice(0, 9);
 });
 </script>

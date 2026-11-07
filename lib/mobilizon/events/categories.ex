@@ -16,6 +16,53 @@ defmodule Mobilizon.Events.Categories do
     build_in_categories() ++ extra_categories()
   end
 
+  @doc """
+  Categories that should be offered to users.
+
+  This is `list/0` narrowed by the optional `:visible_categories` instance
+  setting (a comma-separated string or a list of category ids). When the setting
+  is absent, empty, or `"all"`, every category is returned.
+
+  `list/0` itself is left untouched on purpose: it still drives the GraphQL
+  `EventCategory` enum, the labels of existing events, and the mapping of
+  incoming federated events. Hiding a category here therefore never breaks
+  existing or remote data.
+  """
+  @spec selectable :: [%{id: atom(), label: String.t()}]
+  def selectable do
+    case visible_category_ids() do
+      nil -> list()
+      ids -> Enum.filter(list(), fn %{id: id} -> to_string(id) in ids end)
+    end
+  end
+
+  defp visible_category_ids do
+    :mobilizon
+    |> Application.get_env(:instance, [])
+    |> Keyword.get(:visible_categories)
+    |> normalize_category_ids()
+  end
+
+  defp normalize_category_ids(nil), do: nil
+  defp normalize_category_ids([]), do: nil
+  defp normalize_category_ids("all"), do: nil
+
+  defp normalize_category_ids(ids) when is_binary(ids) do
+    ids
+    |> String.split(",", trim: true)
+    |> normalize_category_ids()
+  end
+
+  defp normalize_category_ids(ids) when is_list(ids) do
+    ids
+    |> Enum.map(&(&1 |> to_string() |> String.trim() |> String.downcase()))
+    |> Enum.reject(&(&1 == ""))
+    |> case do
+      [] -> nil
+      normalized -> normalized
+    end
+  end
+
   @spec get_category(String.t() | nil) :: String.t()
   def get_category(category) do
     if category in Enum.map(list(), &String.upcase(to_string(&1.id))) do

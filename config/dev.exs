@@ -88,6 +88,12 @@ config :mobilizon, :instance,
   registrations_open: System.get_env("MOBILIZON_INSTANCE_REGISTRATIONS_OPEN") == "true",
   registrations_moderation:
     System.get_env("MOBILIZON_INSTANCE_REGISTRATIONS_MODERATION", "false") == "true",
+  visible_categories:
+    System.get_env(
+      "MOBILIZON_INSTANCE_VISIBLE_CATEGORIES",
+      "arts,music,party,movements_politics,meeting,lgbtq"
+    )
+    |> String.split(",", trim: true),
   groups: true
 
 config :mobilizon, Mobilizon.Web.Auth.Guardian,
