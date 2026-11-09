@@ -111,7 +111,7 @@ exports[`GroupView > Show simple 1`] = `
         <div data-v-63850a71="" class="flex flex-col justify-center h-full">
           <!--v-if-->
           <div data-v-63850a71="" class="">
-            <h2 data-v-63850a71="" class="text-center">1 members</h2>
+            <h2 data-v-63850a71="" class="text-center">One member</h2>
           </div>
         </div>
       </div>
@@ -177,7 +177,7 @@ exports[`GroupView > Show simple 1`] = `
             </p>
           </div><!-- <o-skeleton animated v-else></o-skeleton> -->
         </div>
-        <div class="flex flex-wrap justify-end p-2"><a href="/@example/events?showPassedEvents=true" class="o-button o-button--text button" data-oruga="button" role="button" tabindex="0"><span class="o-button__wrapper"><!----><span class="o-button__label">Past events</span>
+        <div class="flex flex-wrap justify-end p-2"><a href="/@example/events?showPassedEvents=true" class="o-button o-button--text button" data-oruga="button" role="button" tabindex="0"><span class="o-button__wrapper"><!----><span class="o-button__label">Passed events</span>
             <!----></span>
           </a>
           <!--v-if-->

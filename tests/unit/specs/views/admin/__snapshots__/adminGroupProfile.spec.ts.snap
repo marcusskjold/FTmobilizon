@@ -205,7 +205,7 @@ exports[`AdminGroupProfile > Show simple 1`] = `
     </div>
   </section>
   <section>
-    <h2>0 posts</h2>
+    <h2>No posts</h2>
     <div data-oruga="table" class="o-table__root">
       <div style="display: none;"><span data-oruga="table-column" data-id="table-1">Title <!----></span><span data-oruga="table-column" data-id="table-2">Publication date <!----></span></div>
       <!---->

@@ -32,10 +32,7 @@ const supportedLocale = [
   language.split(/[-_]/)[0],
 ].find((candidate) => Object.prototype.hasOwnProperty.call(langs, candidate));
 
-export const locale =
-  !supportedLocale || supportedLocale === DEFAULT_LANGUAGE
-    ? DEFAULT_LOCALE
-    : supportedLocale;
+export const locale = supportedLocale ?? DEFAULT_LANGUAGE;
 
 export const i18n = createI18n<false>({
   legacy: false,

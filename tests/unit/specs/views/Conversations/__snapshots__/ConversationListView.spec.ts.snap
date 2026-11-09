@@ -10,7 +10,7 @@ exports[`ConversationListView > Show simple 1`] = `
     </button>
     <div class="flex flex-col items-center mt-80" role="note"><span data-oruga="icon" class="o-icon"><i class="mdi mdi-chat 48"></i></span>
       <h2 class="mb-3">
-        <!-- @slot Mandatory title -->There's no conversations yet
+        <!-- @slot Mandatory title -->There are no conversations yet
       </h2>
       <p class="" style="display: none;">
         <!-- @slot Optional description -->

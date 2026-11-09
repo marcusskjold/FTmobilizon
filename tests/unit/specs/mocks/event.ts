@@ -56,7 +56,7 @@ export const joinEventMock = {
   actorId: "1",
   email: "some@email.tld",
   message: "a message long enough",
-  locale: "en_US",
+  locale: "en",
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 };
 

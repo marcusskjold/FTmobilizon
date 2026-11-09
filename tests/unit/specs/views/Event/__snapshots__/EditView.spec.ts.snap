@@ -340,7 +340,7 @@ exports[`EditView > Create event - draft 1`] = `
         <legend>Who can post a comment?</legend>
         <div data-oruga="field" class="o-field">
           <!---->
-          <div data-oruga="radio" class="o-radio o-radio--checked"><input aria-labelledby="v-0-41" id="v-0-43" type="radio" data-oruga-input="radio" class="o-radio__input" name="commentModeration" autocomplete="off" aria-checked="true" value="ALLOW_ALL"><label id="v-0-41" for="v-0-43" class="o-radio__label">Allow all comments from users with accounts</label></div>
+          <div data-oruga="radio" class="o-radio o-radio--checked"><input aria-labelledby="v-0-41" id="v-0-43" type="radio" data-oruga-input="radio" class="o-radio__input" name="commentModeration" autocomplete="off" aria-checked="true" value="ALLOW_ALL"><label id="v-0-41" for="v-0-43" class="o-radio__label">Allow all comments from logged-in users</label></div>
           <!---->
         </div><!--          <div class="field">-->
         <!--            <o-radio v-model="eventOptions.commentModeration"-->
@@ -767,7 +767,7 @@ exports[`EditView > Create event - draft 2`] = `
         <legend>Who can post a comment?</legend>
         <div data-oruga="field" class="o-field">
           <!---->
-          <div data-oruga="radio" class="o-radio o-radio--checked"><input aria-labelledby="v-0-41" id="v-0-43" type="radio" data-oruga-input="radio" class="o-radio__input" name="commentModeration" autocomplete="off" aria-checked="true" value="ALLOW_ALL"><label id="v-0-41" for="v-0-43" class="o-radio__label">Allow all comments from users with accounts</label></div>
+          <div data-oruga="radio" class="o-radio o-radio--checked"><input aria-labelledby="v-0-41" id="v-0-43" type="radio" data-oruga-input="radio" class="o-radio__input" name="commentModeration" autocomplete="off" aria-checked="true" value="ALLOW_ALL"><label id="v-0-41" for="v-0-43" class="o-radio__label">Allow all comments from logged-in users</label></div>
           <!---->
         </div><!--          <div class="field">-->
         <!--            <o-radio v-model="eventOptions.commentModeration"-->
@@ -1194,7 +1194,7 @@ exports[`EditView > Update old event 1`] = `
         <legend>Who can post a comment?</legend>
         <div data-oruga="field" class="o-field">
           <!---->
-          <div data-oruga="radio" class="o-radio o-radio--checked"><input aria-labelledby="v-0-41" id="v-0-43" type="radio" data-oruga-input="radio" class="o-radio__input" name="commentModeration" autocomplete="off" aria-checked="true" value="ALLOW_ALL"><label id="v-0-41" for="v-0-43" class="o-radio__label">Allow all comments from users with accounts</label></div>
+          <div data-oruga="radio" class="o-radio o-radio--checked"><input aria-labelledby="v-0-41" id="v-0-43" type="radio" data-oruga-input="radio" class="o-radio__input" name="commentModeration" autocomplete="off" aria-checked="true" value="ALLOW_ALL"><label id="v-0-41" for="v-0-43" class="o-radio__label">Allow all comments from logged-in users</label></div>
           <!---->
         </div><!--          <div class="field">-->
         <!--            <o-radio v-model="eventOptions.commentModeration"-->
@@ -1621,7 +1621,7 @@ exports[`EditView > Update old event 2`] = `
         <legend>Who can post a comment?</legend>
         <div data-oruga="field" class="o-field">
           <!---->
-          <div data-oruga="radio" class="o-radio o-radio--checked"><input aria-labelledby="v-0-41" id="v-0-43" type="radio" data-oruga-input="radio" class="o-radio__input" name="commentModeration" autocomplete="off" aria-checked="true" value="ALLOW_ALL"><label id="v-0-41" for="v-0-43" class="o-radio__label">Allow all comments from users with accounts</label></div>
+          <div data-oruga="radio" class="o-radio o-radio--checked"><input aria-labelledby="v-0-41" id="v-0-43" type="radio" data-oruga-input="radio" class="o-radio__input" name="commentModeration" autocomplete="off" aria-checked="true" value="ALLOW_ALL"><label id="v-0-41" for="v-0-43" class="o-radio__label">Allow all comments from logged-in users</label></div>
           <!---->
         </div><!--          <div class="field">-->
         <!--            <o-radio v-model="eventOptions.commentModeration"-->

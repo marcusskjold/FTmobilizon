@@ -77,7 +77,7 @@ describe("Register page", () => {
     await wrapper.vm.$nextTick();
     expect(requestHandlers.createUserHandler).toHaveBeenCalledWith({
       email: "some@email.tld",
-      locale: "en_US",
+      locale: "en",
       moderation: "",
       password: "somepassword",
     });
@@ -99,7 +99,7 @@ describe("Register page", () => {
     expect(requestHandlers.createUserHandler).toBeCalledTimes(1);
     expect(requestHandlers.createUserHandler).toHaveBeenCalledWith({
       email: "some@email.tld",
-      locale: "en_US",
+      locale: "en",
       moderation: "",
       password: "somepassword",
     });
@@ -124,7 +124,7 @@ describe("Register page", () => {
     expect(requestHandlers.createUserHandler).toBeCalledTimes(1);
     expect(requestHandlers.createUserHandler).toHaveBeenCalledWith({
       email: "some@email.tld",
-      locale: "en_US",
+      locale: "en",
       moderation: "",
       password: "somepassword",
     });
@@ -148,7 +148,7 @@ describe("Register page", () => {
     await wrapper.vm.$nextTick();
     expect(requestHandlers.createUserHandler).toHaveBeenCalledWith({
       email: "some@email.tld",
-      locale: "en_US",
+      locale: "en",
       moderation: "text for moderation",
       password: "somepassword",
     });
@@ -172,7 +172,7 @@ describe("Register page", () => {
     expect(requestHandlers.createUserHandler).toBeCalledTimes(1);
     expect(requestHandlers.createUserHandler).toHaveBeenCalledWith({
       email: "some@email.tld",
-      locale: "en_US",
+      locale: "en",
       moderation: "text for moderation",
       password: "somepassword",
     });

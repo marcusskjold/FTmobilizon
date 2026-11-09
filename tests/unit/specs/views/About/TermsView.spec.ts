@@ -47,7 +47,7 @@ describe("TermsView", () => {
     expect(htmlRemoveId(wrapper.html())).toMatchSnapshot();
     expect(requestHandlers.handle_0).toHaveBeenCalledTimes(1);
     expect(requestHandlers.handle_0).toHaveBeenCalledWith({
-      locale: "en_US",
+      locale: "en",
     });
   });
 });
