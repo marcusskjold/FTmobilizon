@@ -29,34 +29,8 @@ exports[`PreferencesView > Show simple 1`] = `
       <div data-v-3e2fccdc="" data-oruga="select" class="o-select">
         <!----><select aria-labelledby="v-0-9" loading="false" id="setting-language" data-oruga-input="select" class="o-select__input o-select__input--arrowed" autocomplete="off">
           <!---->
-          <option data-v-3e2fccdc="" value="ar">العربية</option>
-          <option data-v-3e2fccdc="" value="bn">বাংলা</option>
-          <option data-v-3e2fccdc="" value="ca">Català</option>
-          <option data-v-3e2fccdc="" value="cs">čeština</option>
-          <option data-v-3e2fccdc="" value="cy">Cymraeg</option>
-          <option data-v-3e2fccdc="" value="de">Deutsch</option>
+          <option data-v-3e2fccdc="" value="da">Dansk</option>
           <option data-v-3e2fccdc="" value="en">English</option>
-          <option data-v-3e2fccdc="" value="es">Español</option>
-          <option data-v-3e2fccdc="" value="fa">فارسی</option>
-          <option data-v-3e2fccdc="" value="fi">suomi</option>
-          <option data-v-3e2fccdc="" value="fr">Français</option>
-          <option data-v-3e2fccdc="" value="gd">Gàidhlig</option>
-          <option data-v-3e2fccdc="" value="gl">Galego</option>
-          <option data-v-3e2fccdc="" value="hr">Hrvatski</option>
-          <option data-v-3e2fccdc="" value="hu">Magyar</option>
-          <option data-v-3e2fccdc="" value="id">Bahasa Indonesia</option>
-          <option data-v-3e2fccdc="" value="it">Italiano</option>
-          <option data-v-3e2fccdc="" value="ja">日本語</option>
-          <option data-v-3e2fccdc="" value="nl">Nederlands</option>
-          <option data-v-3e2fccdc="" value="nn">Nynorsk</option>
-          <option data-v-3e2fccdc="" value="oc">Occitan</option>
-          <option data-v-3e2fccdc="" value="pl">Polski</option>
-          <option data-v-3e2fccdc="" value="pt_BR">Português brasileiro</option>
-          <option data-v-3e2fccdc="" value="ru">Русский</option>
-          <option data-v-3e2fccdc="" value="sl">Slovenščina</option>
-          <option data-v-3e2fccdc="" value="sv">Svenska</option>
-          <option data-v-3e2fccdc="" value="zh_Hans">简体字</option>
-          <option data-v-3e2fccdc="" value="zh_Hant">繁體字</option>
         </select>
         <!---->
       </div>

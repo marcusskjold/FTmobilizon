@@ -21,10 +21,21 @@ language =
     "_"
   );
 
+const DEFAULT_LANGUAGE = "en";
+
+// fork: langs.json is the allowlist. `language` may be region-qualified
+// ("da-DK" / "da_DK"), so try the value, its underscored form and the primary
+// subtag; anything not listed falls back to English.
+const supportedLocale = [
+  language,
+  language.replace(/-/g, "_"),
+  language.split(/[-_]/)[0],
+].find((candidate) => Object.prototype.hasOwnProperty.call(langs, candidate));
+
 export const locale =
-  language && Object.prototype.hasOwnProperty.call(langs, language)
-    ? language
-    : language.split("-")[0];
+  !supportedLocale || supportedLocale === DEFAULT_LANGUAGE
+    ? DEFAULT_LOCALE
+    : supportedLocale;
 
 export const i18n = createI18n<false>({
   legacy: false,
