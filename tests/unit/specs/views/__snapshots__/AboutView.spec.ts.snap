@@ -41,31 +41,7 @@ exports[`AboutView > Show simple 1`] = `
         <section class="container mx-auto px-2 my-3">
           <h1 class="dark:text-white font-bold">Gather ⋅ Organize ⋅ Mobilize</h1>
           <p class="dark:text-white mb-2">Mobilizon.fr est l'instance Mobilizon de Framasoft.</p>
-        </section><!-- Search fields -->
-        <form id="short-search" class="container mx-auto p-2 flex flex-wrap flex-col sm:flex-row items-stretch gap-2 justify-center dark:text-slate-100" role="search"><label class="sr-only" for="short_search_field_input">Keyword, event title, group name, etc.</label>
-          <div class="flex-auto sm:max-w-xl">
-            <div data-oruga="input" class="o-input o-input--expanded">
-              <!----><input autofocus="" autocapitalize="off" autocorrect="off" id="short_search_field_input" type="text" data-oruga-input="text" class="o-input__input o-input__input--placeholder" maxlength="1024" autocomplete="off" placeholder="Keyword, event title, group name, etc.">
-              <!---->
-              <!---->
-            </div>
-          </div><button data-oruga="button" type="submit" role="button" tabindex="0" class="o-button search-Event min-w-40 sm:w-auto"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><i class="mdi mdi-magnify mdi-24px"></i></span><span class="o-button__label">Search</span>
-            <!----></span>
-          </button>
-        </form>
-        <form data-v-a19720a3="" id="search-anchor" class="container mx-auto p-2 flex flex-col flex-wrap items-stretch gap-2 justify-center dark:text-slate-100" role="search">
-          <div data-v-a19720a3="" class="flex flex-col flex-wrap sm:flex-row gap-2 justify-center"><label data-v-a19720a3="" class="sr-only" for="search_field_input">Keyword, event title, group name, etc.</label>
-            <!--v-if-->
-            <!---->
-          </div>
-          <div data-v-a19720a3="" class="flex flex-col flex-wrap sm:flex-row gap-2 justify-center"><button data-v-a19720a3="" data-oruga="button" type="submit" role="button" tabindex="0" class="o-button search-Event min-w-40"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><i class="mdi mdi-calendar mdi-24px"></i></span><span class="o-button__label">Events</span>
-              <!----></span>
-            </button>
-            <!--v-if--><button data-v-a19720a3="" data-oruga="button" type="submit" role="button" tabindex="0" class="o-button search-Group min-w-40"><span class="o-button__wrapper"><span data-oruga="icon" class="o-icon o-button__icon o-button__icon-left"><i class="mdi mdi-account-multiple mdi-24px"></i></span><span class="o-button__label">Groups</span>
-              <!----></span>
-            </button>
-          </div>
-        </form><!-- Welcome back -->
+        </section><!-- Welcome back -->
         <!--v-if-->
         <!-- Your upcoming events -->
         <!--v-if-->

@@ -30,17 +30,6 @@
   <!-- Unlogged introduction -->
   <unlogged-introduction :config="config" v-if="config && !isLoggedIn" />
 
-  <!-- Search fields -->
-  <short-search></short-search>
-  <search-fields
-    v-model:search="search"
-    v-model:address="userAddress"
-    v-model:distance="distance"
-    v-on:update:address="updateAddress"
-    :fromLocalStorage="true"
-    :addressDefaultText="userLocation?.name"
-    :key="increated"
-  />
   <!-- Welcome back -->
   <section
     class="container mx-auto"
@@ -187,20 +176,15 @@ import {
 } from "@/graphql/location";
 import { LocationType } from "@/types/user-location.model";
 import UnloggedIntroduction from "@/components/Home/UnloggedIntroduction.vue";
-import SearchFields from "@/components/Home/SearchFields.vue";
 import { useHead } from "@unhead/vue";
 import {
   addressToLocation,
   geoHashToCoords,
   getAddressFromLocal,
   getRadiusFromLocal,
-  locationToAddress,
-  storeAddressInLocal,
-  storeRadiusInLocal,
 } from "@/utils/location";
 import { useServerProvidedLocation } from "@/composition/apollo/config";
 import QuickPublish from "@/components/Home/QuickPublish.vue";
-import ShortSearch from "@/components/Home/ShortSearch.vue";
 import { CONFIG } from "@/graphql/config";
 import { IConfig } from "@/types/config.model";
 import { useI18n } from "vue-i18n";
@@ -254,16 +238,6 @@ const followedGroupEvents = computed(
 
 const currentUserParticipations = computed(
   () => loggedUser.value?.participations.elements
-);
-
-const increated = ref(0);
-const address = ref(null);
-const search = ref(null);
-const noAddress = ref(false);
-const current_distance = ref(null);
-
-watch(address, (newAdd, oldAdd) =>
-  console.debug("ADDRESS UPDATED from", { ...oldAdd }, " to ", { ...newAdd })
 );
 
 const isToday = (date: string): boolean => {
@@ -466,17 +440,6 @@ const currentUserLocation = computed(() => {
 
 const userLocation = computed(() => {
   console.debug("new userLocation");
-  if (noAddress.value) {
-    return {
-      lon: null,
-      lat: null,
-      name: null,
-    };
-  }
-  if (address.value) {
-    console.debug("userLocation is typed location");
-    return addressToLocation(address.value);
-  }
   const local_address = getAddressFromLocal();
   if (local_address) {
     return addressToLocation(local_address);
@@ -491,51 +454,15 @@ const userLocation = computed(() => {
   return userSettingsLocation.value;
 });
 
-const userAddress = computed({
-  get(): IAddress | null {
-    if (noAddress.value) {
-      return null;
-    }
-    if (address.value) {
-      return address.value;
-    }
-    const local_address = getAddressFromLocal();
-    if (local_address) {
-      return local_address;
-    }
-    if (
-      !userSettingsLocation.value ||
-      (userSettingsLocation.value?.isIPLocation &&
-        currentUserLocation.value?.name)
-    ) {
-      return locationToAddress(currentUserLocation.value);
-    }
-    return locationToAddress(userSettingsLocation.value);
-  },
-  set(newAddress: IAddress | null) {
-    address.value = newAddress;
-    noAddress.value = newAddress == null;
-  },
-});
-
-const distance = computed({
-  get(): number | null {
-    if (noAddress.value || !userLocation.value?.name) {
-      return null;
-    }
-    if (current_distance.value == null) {
-      const local_radius = getRadiusFromLocal();
-      if (local_radius) {
-        return local_radius;
-      }
-      return userLocation.value?.isIPLocation ? 150 : 25;
-    }
-    return current_distance.value;
-  },
-  set(newDistance: number) {
-    current_distance.value = newDistance;
-    storeRadiusInLocal(newDistance);
-  },
+const distance = computed((): number | null => {
+  if (!userLocation.value?.name) {
+    return null;
+  }
+  const local_radius = getRadiusFromLocal();
+  if (local_radius) {
+    return local_radius;
+  }
+  return userLocation.value?.isIPLocation ? 150 : 25;
 });
 
 const { mutate: saveCurrentUserLocation } = useMutation<any, LocationType>(
@@ -595,15 +522,6 @@ const performGeoLocation = () => {
       doingGeoloc.value = false;
     }
   );
-};
-
-const updateAddress = (newAddress: IAddress | null) => {
-  if (address.value?.geom != newAddress?.geom || newAddress == null) {
-    increated.value += 1;
-    storeAddressInLocal(newAddress);
-  }
-  address.value = newAddress;
-  noAddress.value = newAddress == null;
 };
 
 /**
