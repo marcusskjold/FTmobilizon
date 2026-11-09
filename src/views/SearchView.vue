@@ -237,60 +237,6 @@
           </template>
         </filter-section>
 
-        <filter-section
-          v-model:opened="searchFilterSectionsOpenStatus.eventLanguage"
-          :title="t('Languages')"
-        >
-          <template #options>
-            <fieldset class="flex flex-col">
-              <legend class="sr-only">{{ t("Languages") }}</legend>
-              <div v-for="(language, key) in langs" :key="key">
-                <input
-                  :id="key"
-                  type="checkbox"
-                  name="eventStartDateRange"
-                  :value="key"
-                  v-model="languageOneOf"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label
-                  :for="key"
-                  class="cursor-pointer ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >{{ language }}</label
-                >
-              </div>
-            </fieldset>
-          </template>
-          <template #preview>
-            <span
-              class="bg-blue-100 text-blue-800 text-sm font-semibold p-0.5 rounded dark:bg-blue-200 dark:text-blue-800 grow-0"
-              v-if="languageOneOf.length > 2"
-            >
-              {{
-                t("{numberOfLanguages} selected", {
-                  numberOfLanguages: languageOneOf.length,
-                })
-              }}
-            </span>
-            <span
-              class="bg-blue-100 text-blue-800 text-sm font-semibold p-0.5 rounded dark:bg-blue-200 dark:text-blue-800 grow-0"
-              v-else-if="languageOneOf.length > 0"
-            >
-              {{
-                listShortDisjunctionFormatter(
-                  languageOneOf.map((lang) => langs[lang])
-                )
-              }}
-            </span>
-            <span
-              class="bg-blue-100 text-blue-800 text-sm font-semibold p-0.5 rounded dark:bg-blue-200 dark:text-blue-800 grow-0"
-              v-else-if="languageOneOf.length === 0"
-            >
-              {{ t("Languages", "All") }}
-            </span>
-          </template>
-        </filter-section>
-
         <div class="sr-only">
           <button
             tabindex="-1"
@@ -938,7 +884,6 @@ const eventStatuses = computed(() => {
 
 const searchFilterSectionsOpenStatus = ref({
   eventDate: true,
-  eventLanguage: false,
   eventCategory: false,
   eventStatus: false,
   eventDistance: false,
