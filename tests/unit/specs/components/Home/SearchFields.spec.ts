@@ -22,7 +22,9 @@ beforeEach(async () => {
   // await router.isReady();
 });
 
-const generateWrapper = () => {
+const generateWrapper = (
+  props: { showAddress?: boolean; showTypeButtons?: boolean } = {}
+) => {
   const global_data = getMockClient([]);
   global_data.provide.dateFnsLocale = enUS;
   global_data.plugins = [router];
@@ -30,6 +32,7 @@ const generateWrapper = () => {
     props: {
       search: "",
       location: {},
+      ...props,
     },
     global: {
       ...global_data,
@@ -43,6 +46,18 @@ const generateWrapper = () => {
 describe("SearchFields", () => {
   it("Show simple", async () => {
     const wrapper = generateWrapper();
+    await wrapper.vm.$nextTick();
+    await flushPromises();
+    expect(htmlRemoveId(wrapper.html())).toMatchSnapshot();
+  });
+
+  // /search renders the bar in this mode; keep it under snapshot so an
+  // upstream change to the component cannot silently break the compact form.
+  it("Show compact", async () => {
+    const wrapper = generateWrapper({
+      showAddress: false,
+      showTypeButtons: false,
+    });
     await wrapper.vm.$nextTick();
     await flushPromises();
     expect(htmlRemoveId(wrapper.html())).toMatchSnapshot();

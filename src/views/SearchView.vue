@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-4xl mx-auto">
+  <div class="container mx-auto md:px-4">
     <search-fields
       v-model:search="search"
       v-model:address="userAddress"
@@ -7,6 +7,8 @@
       :numberOfSearch="numberOfSearch"
       :addressDefaultText="addressName"
       :fromLocalStorage="true"
+      :showAddress="false"
+      :showTypeButtons="false"
     />
   </div>
   <div

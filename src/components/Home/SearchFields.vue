@@ -10,7 +10,8 @@
         t("Keyword, event title, group name, etc.")
       }}</label>
       <o-input
-        class="min-w-48"
+        inputClass="min-w-48"
+        :rootClass="showTypeButtons === false ? 'flex-1' : undefined"
         v-if="search != null"
         v-model="search"
         :placeholder="t('Keyword, event title, group name, etc.')"
@@ -20,9 +21,10 @@
         autocomplete="off"
         autocorrect="off"
         maxlength="1024"
-        expanded
+        :expanded="showTypeButtons !== false"
       />
       <full-address-auto-complete
+        v-if="showAddress !== false"
         :resultType="AddressSearchType.ADMINISTRATIVE"
         v-model="address"
         :hide-map="true"
@@ -50,8 +52,19 @@
           </template>
         </o-dropdown>
       </full-address-auto-complete>
+      <o-button
+        v-if="showTypeButtons === false"
+        type="submit"
+        icon-left="magnify"
+        class="search-Event min-w-40"
+      >
+        {{ t("Search") }}
+      </o-button>
     </div>
-    <div class="flex flex-col flex-wrap sm:flex-row gap-2 justify-center">
+    <div
+      v-if="showTypeButtons !== false"
+      class="flex flex-col flex-wrap sm:flex-row gap-2 justify-center"
+    >
       <o-button
         :class="'search-Event min-w-40 ' + select_button_class('EVENTS')"
         type="submit"
@@ -98,14 +111,22 @@ const FullAddressAutoComplete = defineAsyncComponent(
   () => import("@/components/Event/FullAddressAutoComplete.vue")
 );
 
-const props = defineProps<{
-  address: IAddress | null;
-  addressDefaultText?: string | null;
-  search: string | null;
-  distance: number | null;
-  fromLocalStorage?: boolean | false;
-  numberOfSearch: object | null;
-}>();
+const props = withDefaults(
+  defineProps<{
+    address: IAddress | null;
+    addressDefaultText?: string | null;
+    search: string | null;
+    distance: number | null;
+    fromLocalStorage?: boolean | false;
+    numberOfSearch: object | null;
+    showAddress?: boolean;
+    showTypeButtons?: boolean;
+  }>(),
+  {
+    showAddress: true,
+    showTypeButtons: true,
+  }
+);
 
 const router = useRouter();
 const route = useRoute();
@@ -213,9 +234,9 @@ const modelValueUpdate = (newaddress: IAddress | null) => {
   emit("update:address", newaddress);
 };
 
-const submit = (event) => {
+const submit = (event: SubmitEvent) => {
   emit("submit");
-  const btn_classes = event.submitter.getAttribute("class").split(" ");
+  const btn_classes = event.submitter?.getAttribute("class")?.split(" ") ?? [];
   const search_query = {
     locationName: undefined,
     lat: undefined,
