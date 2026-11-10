@@ -20,9 +20,7 @@ jobs:
         uses: erlef/setup-beam@v1
         with:
           # Single source of truth: upstream's .tool-versions.
-          # Never pin otp-version/elixir-version here — see RELEASE.md § Toolchain.
-          # version-type must be strict when a version file is used (setup-beam
-          # refuses to run otherwise; its default is "loose").
+          # version-type must be strict when a version file is used (default is "loose").
           version-file: .tool-versions
           version-type: strict
 
