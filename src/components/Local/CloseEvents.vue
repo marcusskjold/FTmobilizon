@@ -34,7 +34,7 @@
     <template #content>
       <skeleton-event-result
         v-for="i in 6"
-        class="scroll-ml-6 snap-center shrink-0 w-[18rem] my-4"
+        class="scroll-ml-6 snap-center shrink-0 w-full my-4"
         :key="i"
         v-show="loading"
       />

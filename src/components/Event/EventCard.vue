@@ -4,7 +4,7 @@
     :class="{
       'event-card': mode === 'column',
       'sm:flex sm:items-start': mode === 'row',
-      'sm:max-w-xs w-[18rem] shrink-0 flex flex-col': mode === 'column',
+      'sm:max-w-xs w-full shrink-0 flex flex-col': mode === 'column',
     }"
     :to="to"
     :isInternal="isInternal"
