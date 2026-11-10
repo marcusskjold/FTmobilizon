@@ -4,30 +4,9 @@ exports[`PreferencesView > Show simple 1`] = `
 "<div data-v-3e2fccdc="">
   <breadcrumbs-nav data-v-3e2fccdc="" links="[object Object],[object Object]"></breadcrumbs-nav>
   <div data-v-3e2fccdc="">
-    <div data-v-3e2fccdc="" data-oruga="field" class="o-field"><label id="v-0-0" class="o-field__label">Theme</label>
-      <div class="o-field__body">
-        <div class="o-field">
-          <div data-v-3e2fccdc="" data-oruga="field" class="o-field">
-            <!---->
-            <div data-v-3e2fccdc="" data-oruga="checkbox" class="o-checkbox o-checkbox--checked"><input aria-labelledby="v-0-19" id="v-0-21" type="checkbox" data-oruga-input="checkbox" class="o-checkbox__input" true-value="true" false-value="false" autocomplete="off" aria-checked="true"><label id="v-0-19" for="v-0-21" class="o-checkbox__label">Adapt to system theme</label></div>
-            <!---->
-          </div>
-          <div data-v-3e2fccdc="" data-oruga="field" class="o-field">
-            <!---->
-            <fieldset data-v-3e2fccdc="">
-              <legend data-v-3e2fccdc="" class="sr-only">Theme</legend>
-              <div data-v-3e2fccdc="" data-oruga="radio" class="o-radio o-radio--disabled"><input aria-labelledby="v-0-22" class="p-4 bg-white text-zinc-800 rounded-md mt-2 mr-2 border-2 o-radio__input" id="v-0-24" type="radio" data-oruga-input="radio" name="theme" disabled="" autocomplete="off" aria-checked="false" value="light"><label id="v-0-22" for="v-0-24" class="o-radio__label">Light</label></div>
-              <div data-v-3e2fccdc="" data-oruga="radio" class="o-radio o-radio--disabled"><input aria-labelledby="v-0-22" class="p-4 bg-zinc-800 rounded-md text-white mt-2 ml-2 border-2 o-radio__input" id="v-0-25" type="radio" data-oruga-input="radio" name="theme" disabled="" autocomplete="off" aria-checked="false" value="dark"><label id="v-0-22" for="v-0-25" class="o-radio__label">Dark</label></div>
-            </fieldset>
-            <!---->
-          </div>
-        </div>
-      </div>
-      <!---->
-    </div>
-    <div data-v-3e2fccdc="" data-oruga="field" class="o-field o-field--filled"><label id="v-0-9" for="setting-language" class="o-field__label">Language</label>
+    <div data-v-3e2fccdc="" data-oruga="field" class="o-field o-field--filled"><label id="v-0-0" for="setting-language" class="o-field__label">Language</label>
       <div data-v-3e2fccdc="" data-oruga="select" class="o-select">
-        <!----><select aria-labelledby="v-0-9" loading="false" id="setting-language" data-oruga-input="select" class="o-select__input o-select__input--arrowed" autocomplete="off">
+        <!----><select aria-labelledby="v-0-0" loading="false" id="setting-language" data-oruga-input="select" class="o-select__input o-select__input--arrowed" autocomplete="off">
           <!---->
           <option data-v-3e2fccdc="" value="da">Dansk</option>
           <option data-v-3e2fccdc="" value="en">English</option>
@@ -36,9 +15,9 @@ exports[`PreferencesView > Show simple 1`] = `
       </div>
       <!---->
     </div>
-    <div data-v-3e2fccdc="" data-oruga="field" class="o-field o-field--filled"><label id="v-0-11" for="setting-timezone" class="o-field__label">Timezone</label>
+    <div data-v-3e2fccdc="" data-oruga="field" class="o-field o-field--filled"><label id="v-0-2" for="setting-timezone" class="o-field__label">Timezone</label>
       <div data-v-3e2fccdc="" data-oruga="select" class="o-select">
-        <!----><select aria-labelledby="v-0-11" loading="false" id="setting-timezone" data-oruga-input="select" class="o-select__input o-select__input--arrowed" autocomplete="off">
+        <!----><select aria-labelledby="v-0-2" loading="false" id="setting-timezone" data-oruga-input="select" class="o-select__input o-select__input--arrowed" autocomplete="off">
           <!---->
         </select>
         <!---->
@@ -50,13 +29,13 @@ exports[`PreferencesView > Show simple 1`] = `
       <!---->
       <div class="o-field__body">
         <div class="o-field o-field--grouped">
-          <div data-v-3e2fccdc="" data-oruga="field" class="o-field" expanded=""><label id="v-0-15" for="setting-city" class="o-field__label">City or region</label>
+          <div data-v-3e2fccdc="" data-oruga="field" class="o-field" expanded=""><label id="v-0-6" for="setting-city" class="o-field__label">City or region</label>
             <!---->
             <!---->
           </div>
-          <div data-v-3e2fccdc="" data-oruga="field" class="o-field"><label id="v-0-17" for="setting-radius" class="o-field__label">Radius</label>
+          <div data-v-3e2fccdc="" data-oruga="field" class="o-field"><label id="v-0-8" for="setting-radius" class="o-field__label">Radius</label>
             <div data-v-3e2fccdc="" data-oruga="select" class="o-select">
-              <!----><select aria-labelledby="v-0-17" id="setting-radius" data-oruga-input="select" class="o-select__input o-select__input--placeholder o-select__input--arrowed" autocomplete="off">
+              <!----><select aria-labelledby="v-0-8" id="setting-radius" data-oruga-input="select" class="o-select__input o-select__input--placeholder o-select__input--arrowed" autocomplete="off">
                 <option disabled="" hidden="" value="">Select a radius</option>
                 <option data-v-3e2fccdc="" value="1">1 km</option>
                 <option data-v-3e2fccdc="" value="5">5 km</option>

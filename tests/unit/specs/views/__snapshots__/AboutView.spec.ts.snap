@@ -56,7 +56,7 @@ exports[`AboutView > Show simple 1`] = `
             </div>
             <div>No events found</div>
           </div>
-          <div class="grid auto-rows-[1fr] gap-x-2 gap-y-2 grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] justify-items-center">
+          <div class="grid auto-rows-[1fr] gap-x-2 gap-y-12 grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] justify-items-center">
             <div class="bg-white dark:bg-slate-800 shadow rounded-md max-w-4xl w-full mx-auto scroll-ml-6 snap-center shrink-0 w-[18rem] my-4" style="display: none;">
               <div class="animate-pulse flex flex-col items-center md:flex-row">
                 <div class="object-cover h-56 w-full md:max-w-[20rem] bg-slate-700"></div>
@@ -152,7 +152,7 @@ exports[`AboutView > Show simple 1`] = `
                   <!--v-if-->
                 </div>
               </div>
-            </div><a href="/search?contentType=ALL" class="mbz-card flex flex-col items-center dark:border-gray-700 shadow-md md:flex-col snap-center shrink-0 first:pl-8 w-[18rem] dark:bg-mbz-purple">
+            </div><a href="/search?contentType=ALL" class="mbz-card event-card flex flex-col items-center dark:border-gray-700 shadow-md md:flex-col snap-center shrink-0 first:pl-8 w-[18rem] dark:bg-mbz-purple">
               <div class="relative w-full group">
                 <!--v-if-->
                 <div class="absolute top-0 left-0 h-full w-full">

@@ -13,36 +13,6 @@
       ]"
     />
     <div>
-      <o-field :label="t('Theme')" addonsClass="flex flex-col">
-        <o-field>
-          <o-checkbox v-model="systemTheme">{{
-            t("Adapt to system theme")
-          }}</o-checkbox>
-        </o-field>
-        <o-field>
-          <fieldset>
-            <legend class="sr-only">{{ t("Theme") }}</legend>
-            <o-radio
-              :class="{ 'border-mbz-bluegreen': theme === 'light' }"
-              class="p-4 bg-white text-zinc-800 rounded-md mt-2 mr-2 border-2"
-              :disabled="systemTheme"
-              v-model="theme"
-              name="theme"
-              native-value="light"
-              >{{ t("Light") }}</o-radio
-            >
-            <o-radio
-              :class="{ 'border-mbz-bluegreen': theme === 'dark' }"
-              class="p-4 bg-zinc-800 rounded-md text-white mt-2 ml-2 border-2"
-              :disabled="systemTheme"
-              v-model="theme"
-              name="theme"
-              native-value="dark"
-              >{{ t("Dark") }}</o-radio
-            >
-          </fieldset>
-        </o-field>
-      </o-field>
       <o-field :label="t('Language')" label-for="setting-language">
         <o-select
           :loading="loadingTimezones || loadingUserSettings"
@@ -169,48 +139,10 @@ useHead({
 
 // langs: Record<string, string> = langs;
 
-const theme = ref(localStorage.getItem("theme"));
-const systemTheme = ref(!("theme" in localStorage));
-
 const { mutate: doUpdateLocale } = updateLocale();
 
 const updateLanguage = (newLocale: string) => {
   doUpdateLocale({ locale: newLocale });
-};
-
-watch(systemTheme, (newSystemTheme) => {
-  console.debug("changing system theme", newSystemTheme);
-  if (newSystemTheme) {
-    theme.value = null;
-    localStorage.removeItem("theme");
-  } else {
-    theme.value = "light";
-    localStorage.setItem("theme", theme.value);
-  }
-  changeTheme();
-});
-
-watch(theme, (newTheme) => {
-  console.debug("changing theme value", newTheme);
-  if (newTheme) {
-    localStorage.setItem("theme", newTheme);
-  }
-  changeTheme();
-});
-
-const changeTheme = () => {
-  console.debug("changing theme to apply");
-  if (
-    localStorage.getItem("theme") === "dark" ||
-    (!("theme" in localStorage) &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches)
-  ) {
-    console.debug("applying dark theme");
-    document.documentElement.classList.add("dark");
-  } else {
-    console.debug("removing dark theme");
-    document.documentElement.classList.remove("dark");
-  }
 };
 
 const selectedTimezone = computed({

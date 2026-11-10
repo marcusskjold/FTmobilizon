@@ -234,17 +234,11 @@ watch(config, async (configWatched: IConfig | undefined) => {
 
 const isDemoMode = computed(() => config.value?.demoMode);
 
+// floor.tips is dark-only: the class must stay on regardless of the stored
+// preference, so no UI may remove it. Re-applying on OS theme changes keeps
+// the class there even for a visitor whose system theme switches.
 const changeTheme = () => {
-  console.debug("changing theme");
-  if (
-    localStorage.getItem("theme") === "dark" ||
-    (!("theme" in localStorage) &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches)
-  ) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
+  document.documentElement.classList.add("dark");
 };
 
 onBeforeUnmount(() => {

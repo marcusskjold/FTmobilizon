@@ -115,28 +115,4 @@ config :mobilizon, :anonymous,
     allowed: true
   ]
 
-# Mirror the production html_hooks (see deploy/roles/mobilizon_deploy/templates/config.exs.j2)
-# so the local dev instance looks like floor.tips: custom theme CSS + forced dark mode.
-# The files are copied into priv/static/assets by /develop/FT/dev-sync-assets.sh
-# Set MOBILIZON_DISABLE_CUSTOM_HOOKS=1 to compare against stock Mobilizon styling.
-#
-# Dev-only extra script: in production the Vite build emits one main-*.css <link> in
-# <head> and custom.css comes after it, so custom.css wins specificity ties. In dev,
-# Vite injects its CSS as <style> tags at runtime, which land *after* our <link> and
-# would win those ties. Moving the stylesheet to the end of <body> reproduces the
-# production cascade order. Keep this in sync with the hook above.
-if System.get_env("MOBILIZON_DISABLE_CUSTOM_HOOKS") != "1" do
-  config :mobilizon, :html_hooks,
-    app_index_html_head_last: """
-    <script src="/assets/custom.js"></script>
-    <link rel="stylesheet" href="/assets/custom.css">
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var link = document.querySelector('link[href="/assets/custom.css"]');
-        if (link) document.body.appendChild(link);
-      });
-    </script>
-    """
-end
-
 config :unplug, :init_mode, :runtime

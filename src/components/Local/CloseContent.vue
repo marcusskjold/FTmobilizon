@@ -21,7 +21,7 @@
     </div>
 
     <div
-      class="grid auto-rows-[1fr] gap-x-2 gap-y-2 grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] justify-items-center"
+      class="grid auto-rows-[1fr] gap-x-2 gap-y-12 grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] justify-items-center"
     >
       <slot name="content" />
     </div>

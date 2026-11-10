@@ -20,11 +20,15 @@ import "floating-vue/dist/style.css";
 import Oruga from "@oruga-ui/oruga-next";
 import "@oruga-ui/theme-oruga/dist/oruga.css";
 import "./assets/oruga-tailwindcss.css";
+import "./assets/floor-tips.scss";
 import { orugaConfig } from "./oruga-config";
 import MaterialIcon from "./components/core/MaterialIcon.vue";
 import { createHead } from "@unhead/vue/client";
 import { CONFIG } from "./graphql/config";
 import { IConfig } from "./types/config.model";
+
+// The app is dark-only for now; this replaces the old injected custom.js.
+document.documentElement.classList.add("dark");
 
 // Vue.use(VueAnnouncer);
 // Vue.use(VueSkipTo);

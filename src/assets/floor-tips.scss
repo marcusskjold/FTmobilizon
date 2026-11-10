@@ -1,0 +1,283 @@
+/*
+ * floor.tips theme
+ *
+ */
+
+/* Palette */
+:root {
+  --primary: #dde809;
+  --secondary: #c1cb00;
+  --tertiary: #798000;
+  --blackish: #231f20;
+  --greyish: #aaa;
+
+  --nav-bg: var(--blackish);
+  --main-bg: var(--blackish);
+
+  --card-bg: var(--blackish);
+  --card-edge: var(--secondary);
+
+  --text: #eee;
+  --link: var(--primary);
+  --mute: var(--greyish);
+
+  --btn-bg: black;
+  --btn-text: var(--primary);
+  --btn-mute: var(--greyish);
+
+  --tags: var(--secondary);
+
+  /* Oruga controls inherit the floor.tips accent instead of the stock teal. */
+  --oruga-primary: var(--primary);
+  --oruga-variant-primary: var(--primary);
+  --oruga-radio-active-background-color: var(--primary);
+  --oruga-switch-checked-background: var(--primary);
+  --oruga-focus: rgba(121, 128, 0, 0.35);
+}
+
+/* Page surface */
+html.dark body {
+  background-color: var(--main-bg);
+}
+
+html.dark,
+#mobilizon {
+  background-color: var(--main-bg);
+}
+
+/* Remove the decorative blobs from the home hero. */
+img[src="/img/shape-1.svg"],
+img[src="/img/shape-2.svg"],
+img[src="/img/shape-3.svg"] {
+  display: none !important;
+}
+
+/* Event descriptions: readable links, no background. */
+.event-description a {
+  background-color: transparent !important;
+  color: var(--link) !important;
+}
+
+/* Remove the banner above "your upcoming events". */
+.bg-mbz-yellow-alt-100 {
+  background-color: transparent !important;
+}
+
+/* Flat UI */
+* {
+  box-shadow: none !important;
+}
+
+.btn,
+.input,
+.mbz-card,
+.rounded-md,
+.rounded-lg,
+.notification {
+  border-radius: 0;
+}
+
+.text-gray-500,
+.text-gray-600,
+span:is(.dark .dark\:text-gray-200),
+p:is(.dark .dark\:text-gray-200) {
+  color: var(--greyish);
+}
+
+/* Navigation */
+#navbar {
+  background-color: var(--nav-bg);
+  padding-bottom: 1rem;
+  border-bottom: var(--tertiary) 1px solid;
+}
+
+#navbar a,
+#navbar a:visited,
+#navbar button {
+  color: var(--link);
+}
+
+#navbar a.border-b {
+  border: none;
+}
+
+#navbar a.border-b:hover,
+#navbar button.hover\:bg-zinc-100:hover {
+  background-color: var(--blackish);
+}
+
+#navbar button.focus\:ring-gray-200:focus {
+  --tw-ring-color: var(--tertiary);
+}
+
+#mobile-menu-2 {
+  margin: auto;
+}
+
+#navbar ul li a span.absolute.right-0.text-xs {
+  display: none;
+}
+
+/* Main */
+main {
+  background-color: var(--main-bg);
+}
+
+/* Oruga's stock focus ring is blue; keep focus visible in the brand colour. */
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+  --tw-ring-color: var(--tertiary) !important;
+}
+
+main,
+.text-gray-900,
+.text-violet-title,
+.text-violet-3 {
+  color: var(--text);
+}
+
+main a,
+main a:visited {
+  color: var(--secondary);
+}
+
+.btn,
+button:is(.dark .btn-text) {
+  background-color: var(--btn-bg) !important;
+  color: var(--btn-text) !important;
+}
+
+.btn-text {
+  text-decoration: none;
+}
+
+.btn:hover,
+button:is(.dark .btn-text):hover {
+  background-color: var(--btn-text) !important;
+  color: var(--btn-bg) !important;
+}
+
+a.btn {
+  background-color: initial !important;
+}
+
+section > div {
+  margin-top: 2rem;
+}
+
+.mb-2 {
+  margin-bottom: 1rem;
+}
+
+/* Event cards */
+.mbz-card figure div.absolute {
+  display: none; /* hide tags on card images */
+}
+
+.mbz-card,
+:is(.dark .mbz-card) {
+  margin-top: 0.5rem;
+  border-top: var(--card-edge) 4px solid;
+  background-color: var(--card-bg);
+  padding-top: 0.2rem;
+}
+
+.event-card {
+  border-bottom: 1px solid rgba(193, 203, 0, 0.18);
+  padding-bottom: 0.75rem;
+}
+
+.mbz-card.event-card,
+:is(.dark .mbz-card.event-card) {
+  background-color: #2c2728;
+}
+
+.mbz-card:hover,
+:is(.dark :is(.dark .mbz-card):hover) {
+  background-color: var(--card-bg);
+}
+
+.mbz-card span,
+:is(.dark .mbz-card) span {
+  color: var(--greyish);
+}
+
+.mbz-card .text-violet-3,
+.text-violet-title {
+  color: var(--text);
+}
+
+div.datetime-container .datetime-container-header,
+div.starttime-container,
+.datetime-container-content,
+.starttime-container,
+.starttime-container:is(.dark .dark\:text-white),
+.starttime-container:is(.dark .dark\:bg-gray-700) {
+  background-color: black;
+  color: var(--text);
+}
+
+.mbz-card .clock-icon svg,
+.mbz-card time {
+  color: var(--text);
+}
+
+/* Event page */
+.bg-white,
+.bg-white:is(.dark .dark\:bg-zinc-700),
+.bg-white:is(.dark .dark\:bg-mbz-purple) {
+  background-color: var(--card-bg);
+}
+
+section.event-description h2.text-2xl,
+aside h2,
+h2:is(.dark .dark\:text-white) {
+  color: var(--mute);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+a > h2#comments {
+  color: var(--mute);
+}
+
+.addressDescription {
+  font-weight: bold;
+}
+
+.prose,
+.prose :where(h3):not(:where([class~="not-prose"], [class~="not-prose"] *)),
+.prose :where(strong):not(:where([class~="not-prose"], [class~="not-prose"] *)),
+.prose :where(h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  color: var(--text);
+}
+
+.dark\:bg-mbz-purple:is(.dark *) {
+  background-color: var(--blackish);
+}
+
+/* Banners */
+.notification-info {
+  color: var(--text);
+  background-color: var(--blackish);
+  border: thin solid var(--secondary);
+}
+
+/* Footer */
+footer ul {
+  margin-top: 3rem;
+}
+
+footer.bg-violet-2 {
+  background-color: var(--nav-bg);
+}
+
+footer .text-yellow-1 {
+  color: var(--mute);
+}
+
+footer .decoration-yellow-1 {
+  text-decoration-color: var(--primary);
+  color: var(--primary);
+}
