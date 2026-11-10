@@ -165,6 +165,12 @@ section > div {
   margin-top: 2rem;
 }
 
+/* Keep the first section flush with the top, as the old custom.css did. */
+main > section:first-of-type,
+main > section:first-of-type > div:first-of-type {
+  margin-top: 0;
+}
+
 .mb-2 {
   margin-bottom: 1rem;
 }
